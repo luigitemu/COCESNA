@@ -11,16 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/','MainController@index')->name('pagina.inicio');     //pagina inicial
 
-Route::get('/laravel', function () {
-    return view('welcome');
-})->name('laravel');
+Route::put('/verif','MainController@verificar')->name('verificar.empleadoContrasena');    //verificar numero de empleado y contraseña
 
-Route::put("/la","UserController@verificar");
+Route::get('/laravel','MainController@paginaLaravel')->name('pagina.Laravel');      //pagina de laravel
 
-Route::get('/pregunta_filtro','UserController@preguntar')->name('pregunta');
+Route::get('/preguntaFiltro','MainController@preguntar')->name('encuesta.preguntaFiltro');  //dirige hacia la pregunta filtro
 
-Route::get('/fin','UserController@finalizar')->name('fin');
+Route::get('/fin','MainController@finalizar')->name('encuesta.fin');    //dirige hacia el final de la encuesta
