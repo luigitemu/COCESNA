@@ -29,7 +29,7 @@
                     </div>
                     <div class="form-group mb-4">
                         <label for="exampleInputPassword1">Contraseña</label>
-                        <input type="password" name="contrasena" id="contrasena" class="form-control" placeholder="Ingrese su contraseña" value="{{ old('contrasena') }}">
+                        <input type="password" name="contrasena" id="contrasena" class="form-control" placeholder="Ingrese su contraseña">
                         
                         @if ($errors->has('contrasena'))
                             <br>
