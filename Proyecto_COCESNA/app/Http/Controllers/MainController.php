@@ -90,6 +90,18 @@ class MainController extends Controller
             ])->withInput();
         }else
         {
+            //Almacenar la hora de entrada al sistema
+            DB::select('call Guardar_reg_entrada(?,?,?,?,?)',
+            array(
+                $usuario->nombres,
+                substr(env('APP_KEY'),57),
+                Hash::make($usuario->contrasena),
+                $usuario->email,
+                $usuario->activo,
+                //strval(date('ymdHi')),
+                //strval(date('ymdHi')),
+            ));
+
             $posicion = $usuario->id_posicion;
             if($posicion == 1)
             {

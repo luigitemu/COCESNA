@@ -21,6 +21,7 @@ class Personal extends Model
         'sexo',
         'no_empleado',
         'contrasena',
+        'email',
     ];
 
     //definir las relaciones con otras tablas

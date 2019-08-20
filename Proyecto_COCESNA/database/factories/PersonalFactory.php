@@ -16,6 +16,7 @@ $factory->define(Personal::class, function (Faker $faker) {
         'sexo' => rand(1,2),
         'no_empleado' => $faker->unique()->randomNumber($nbDigits = 3),
         'contrasena' => Metodos::encryptPassword('0000'),
+        'email' => $faker->email(),
     ];
 });
 

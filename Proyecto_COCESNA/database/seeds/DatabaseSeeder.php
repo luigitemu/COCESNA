@@ -11,24 +11,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        //llamamos a una funcion la cual se encarga de borrar los registros en las tablas mencionadas
         $this->truncateTables([
             'posicion',
             'turnos',
             'personal',
+            'user',
         ]);
-        //llamamos a una funcion la cual se encarga de borrar los registros en las tablas mencionadas
-     
-        //dd(ClaseSeeder::class);
+
+
+        //llamamos a los seeders de cada entidad
         $this->call(PosicionSeeder::class);
         $this->call(TurnoSeeder::class);
         $this->call(PersonalSeeder::class);
     }
 
+    //Esta funcion se encarga de borrar los registros de las tablas
     protected function truncateTables(array $tables){
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         foreach ($tables as $table) {
             DB::table($table)->truncate();
         }
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
-    }//Esta funcion se encarga de borrar los registros de las tablas
+    }
 }
