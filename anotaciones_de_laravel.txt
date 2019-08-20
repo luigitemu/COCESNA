@@ -1,0 +1,128 @@
+
+
+Creación
+=========================================================================
+Para crear un nuevo proyecto de laravel:
+
+$ composer create-project --prefer-dist laravel/laravel NOMBRE_PROYECTO
+=========================================================================
+
+
+Llaves de encriptacion
+=========================================================================
+Las llaves de encriptación permiten encriptar y desencriptar contraseñas,
+opcional, si se desea cambiar la llave que trae por defecto ejecutamos
+el comando:
+
+$ php artisan key:generate
+=========================================================================
+
+
+Conexiones
+=========================================================================
+Para conectar laravel a una base de datos con contraseña
+es mejor cambiar 127.0.0.1 por localhost en el archivo /.env
+y agregar la contraseña
+
+DB_CONNECTION=mysql
+DB_HOST=localhost
+DB_PORT=3306
+DB_DATABASE=NOMBRE-DE-LA-BASE-DE-DATOS
+DB_USERNAME=NOMBRE-DE-USUARIO
+DB_PASSWORD=CONTRASEÑA-DE-LA-BASE-DE-DATOS
+=========================================================================
+
+
+Servidor local
+=========================================================================
+artisan es un comando y funcionalidad que nos permite hacer varias 
+actividades, basta con abrir una terminal en la
+carpeta de un proyecto.
+
+Para ejecutar un servidor local al proyecto:
+
+$ php artisan serve
+
+Para detener este servidor desde consola:
+
+$ sudo kill $(sudo lsof -t -i:8000)
+=========================================================================
+
+
+Modelos Eloquent
+=========================================================================
+El módulo Eloquent nos permite crear clases que trabajan como tablas de 
+una base de datos, de ellos parten varias funcionalidades bastante
+útiles por ejemplo, nos sirven para llenar una base de datos con datos de 
+prueba. 
+para crear estos modelos:
+
+$ php artisan make:model Sujeto -m
+
+El sujeto debe ir en singular y -m significa que ejecutara una migracion 
+al crearse el modelo
+=========================================================================
+
+
+Factories
+=========================================================================
+Los factories son aquellos archivos que definen de que tipo de información
+llevarán las columnas de los modelos eloquent, es decir, las reglas para 
+crear información de prueba para la base de datos.
+Para crear un factory:
+
+$ php artisan make:factory NOMBRE_DE_TABLA+Factory
+=========================================================================
+
+
+Seeders
+=========================================================================
+Los seeders son aquellos archivos que se encargan de llenar la parte DML
+de una base de datos, podemos crear varios, pero solo hay uno que es el 
+principal se llama DataBaseSeeder.php, en este archivo llamamos a los 
+demas seeders.
+Deben existir factories previamente creados.
+Para crear un seeder:
+
+$ php artisan make:seeder NOMBRE_DE_TABLA+Seeder
+
+Para ejecutar un seeder ejecutamos:
+
+$ php artisan db:seed
+=========================================================================
+
+
+Controladores
+=========================================================================
+Los controladores llevan la lógica back-end y están para realizar las acciones. 
+Comando para crear un controlador:
+
+$ php artisan make:controller NOMBRE_DEL_CONTROLADOR
+=========================================================================
+
+
+Reglas de validación
+=========================================================================
+Son aquellas que permiten verificar la información ingresada por medio de 
+etiquetas <input> y que es enviada al servidor de manera sincrona.
+
+$data = request()->validate([
+            'numeroEmpleado' => ['required','exists:personal,no_empleado'],
+            'contrasena' => ['required'],
+        ]);
+
+Por ejemplo una de las reglas de validación anteriores 
+menciona que la contraseña debe ser obligatoria.
+=========================================================================
+
+
+Blade
+=========================================================================
+Es aquella funcionalidad que nos permite implantar código de Laravel
+en páginas HTML, para usarlo hacemos debemos cambiar la extension
+de .html a .blade.php, para escribir dicho código hacemos
+uso de dobles llaves:
+HTML
+HTML {{ CODIGO_DE_LARAVEL_ACA }} HTML
+HTML
+=========================================================================
