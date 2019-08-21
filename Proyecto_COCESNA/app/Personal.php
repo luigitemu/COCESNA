@@ -20,19 +20,5 @@ class Personal extends Model
         'fecha_ingreso',
         'sexo',
         'no_empleado',
-        'contrasena',
-        'email',
     ];
-
-    //definir las relaciones con otras tablas
-    public function posicion()
-    {
-        return $this->belongsTo('App\Posicion');   //relacion muchos a uno
-    }
-
-    public function clases_x_alumno()
-    {
-        return $this->belongsTo('App\Turno');   //relacion muchos a uno
-    }
-    
 }

@@ -12,8 +12,8 @@ class Posicion extends Model
         'posicion',
     ];
 
-    public function personal()
+    public function usuarios()
     {
-        return $this->hasMany('App\Personal'); //relacion uno a muchos
+        return $this->hasMany('App\Usuarios'); //relacion uno a muchos
     }
 }

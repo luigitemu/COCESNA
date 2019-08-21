@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Personal;
+use App\Usuarios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB; //Importar DB
 use Illuminate\Support\Facades\Crypt; //Encriptar/Desencriptar contraseñas
@@ -76,12 +77,14 @@ class MainController extends Controller
          *  */
         //Busca la contraseña perteneciente al numero de empleado y la desencripta
         //se almacena en la variable $pass
-        $usuario = DB::table('personal')
+        $usuario = DB::table('usuarios')
+                    ->join('personal','usuarios.id_personal','=','personal.id_personal')
                     ->where('no_empleado',$data['numeroEmpleado'])
                     ->first();
+        //dd($usuario);
         $pass = Crypt::decryptString($usuario->contrasena);
         //Compara la contraseña ingresada con la obtenida en la consulta, si son iguales
-        //entonces pasa a la pregunta filtro, sino, entonces regresa a iniciar sesion
+        //entonces ingresa al sistema, sino entonces regresa a iniciar sesion
         //mostrando el error de contraseña incorrecta
         if($pass != $data['contrasena'])
         {
@@ -98,8 +101,6 @@ class MainController extends Controller
                 Hash::make($usuario->contrasena),
                 $usuario->email,
                 $usuario->activo,
-                //strval(date('ymdHi')),
-                //strval(date('ymdHi')),
             ));
 
             $posicion = $usuario->id_posicion;

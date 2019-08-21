@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             'turnos',
             'personal',
             'user',
+            'usuarios',
         ]);
 
 
@@ -24,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PosicionSeeder::class);
         $this->call(TurnoSeeder::class);
         $this->call(PersonalSeeder::class);
+        $this->call(UsuariosSeeder::class);
     }
 
     //Esta funcion se encarga de borrar los registros de las tablas
