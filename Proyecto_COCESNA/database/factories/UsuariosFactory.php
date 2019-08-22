@@ -10,10 +10,11 @@ use Illuminate\Support\Facades\Hash;
 $factory->define(Usuarios::class, function (Faker $faker) {
     return [
         'email' => $faker->email(),
-        'contrasena' => Metodos::encryptPassword('0000'),
+        'contrasena' => Crypt::encryptString('0000'),
     ];
 });
 
+/*
 class Metodos
 {
     Public static function randomPassword()
@@ -30,4 +31,4 @@ class Metodos
     {
         return Hash::make($datos);
     }
-}
+}*/
