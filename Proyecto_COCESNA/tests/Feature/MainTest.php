@@ -11,6 +11,7 @@ use Tests\TestCase;
 use Illuminate\Support\Facades\DB; //Importar DB
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Crypt;
 
 class MainTest extends TestCase
 {
@@ -23,14 +24,52 @@ class MainTest extends TestCase
      */
 
 
+
+
     //Esta funcion se encarga de borrar los registros de las tablas
-    protected function truncateTables(array $tables){
+    protected function borrarTodasLasTablas()
+    {
+        $tables = [
+            'personal',
+            'posicion',
+            'turnos',
+            'usuarios',
+            'user',
+            'areas_de_preguntas',
+            'preguntas',
+        ];
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         foreach ($tables as $table) {
             DB::table($table)->truncate();
         }
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
+
+
+
+    //Genera un usuario para las pruebas
+    protected function usuarioDePrueba($idPer, $noEmp, $cont, $pos, $tur)
+    {
+        //$this->borrarTodasLasTablas();
+        factory(Personal::class)->create([
+            'id_personal' => $idPer,
+            'no_empleado'=> $noEmp,
+        ]);
+        factory(Posicion::class)->create([
+            'id_posicion' => $pos
+        ]);
+        factory(Turno::class)->create([
+            'id_turno' => $tur
+        ]);
+        factory(Usuarios::class)->create([
+            'id_personal' => $idPer,
+            'contrasena' => Crypt::encryptString($cont),
+            'id_posicion' => $pos,
+            'id_turno' => $tur,
+        ]);
+    }
+
+
 
 
     /**
@@ -41,18 +80,17 @@ class MainTest extends TestCase
         ->assertStatus(200)
         ->assertSee('Número de empleado')
         ->assertSee('Contraseña');
+        $this->borrarTodasLasTablas();
     }
+
+
 
 
     /**
      @test*/
     public function el_usuario_ingresa_texto_en_la_entrada_de_numeroEmpleado()
     {
-
-        //$this->withoutExceptionHandling();
-        factory(Personal::class)->create([
-            'no_empleado'=>'3'
-        ]);
+        $this->usuarioDePrueba(1,3,'23',1,1);
         $this->from('/')
             ->put('/verif',[
                 'numeroEmpleado' => 'n',
@@ -61,19 +99,17 @@ class MainTest extends TestCase
             ->assertSessionHasErrors([
                 'numeroEmpleado' => 'El número de empleado es invalido',
                 ]);
-        $this->truncateTables([
-            'personal',
-        ]);
+        $this->borrarTodasLasTablas();
     }
+
+
 
 
     /**
      @test*/
     public function el_usuario_no_ingresa_numero_de_empleado_en_la_entrada_de_numeroEmpleado()
     {
-        factory(Personal::class)->create([
-            'no_empleado'=>'3'
-        ]);
+        $this->usuarioDePrueba(1,3,'Ra34$',1,1);
         $this->from('/')
             ->put('/verif',[
                 'numeroEmpleado' => '',
@@ -82,37 +118,17 @@ class MainTest extends TestCase
             ->assertSessionHasErrors([
                 'numeroEmpleado' => 'El número de empleado es obligatorio',
                 ]);
-        $this->truncateTables([
-            'personal',
-        ]);
+        $this->borrarTodasLasTablas();
     }
+
+
 
 
     /**
      @test*/
     public function el_usuario_no_ingresa_su_contrasena()
     {
-        $this->truncateTables([
-            'personal',
-            'posicion',
-            'turnos',
-            'usuarios',
-        ]);
-        factory(Personal::class)->create([
-            'id_personal' => '1',
-            'no_empleado'=> '3',
-        ]);
-        factory(Posicion::class)->create([
-            'id_posicion' => '1'
-        ]);
-        factory(Turno::class)->create([
-            'id_turno' => '1'
-        ]);
-        factory(Usuarios::class)->create([
-            'id_personal' => '1',
-            'id_posicion' => '1',
-            'id_turno' => '1',
-        ]);
+        $this->usuarioDePrueba(1,3,'Ra34$',1,1);
         $this->from('/')
             ->put('/verif',[
                 'numeroEmpleado' => '3',
@@ -122,100 +138,87 @@ class MainTest extends TestCase
             ->assertSessionHasErrors([
                 'contrasena' => 'La contraseña es obligatoria',
                 ]);
-        $this->truncateTables([
-            'personal',
-            'posicion',
-            'turnos',
-            'usuarios',
-        ]);
+        $this->borrarTodasLasTablas();
     }
+
+
 
 
     /**
      @test*/
-     public function el_usuario_no_ingresa_una_contrasena_incorrecta()
+     public function el_usuario_ingresa_una_contrasena_incorrecta()
      {
-         $this->truncateTables([
-             'personal',
-             'posicion',
-             'turnos',
-             'usuarios',
-         ]);
-         factory(Personal::class)->create([
-             'id_personal' => '1',
-             'no_empleado'=> '3',
-         ]);
-         factory(Posicion::class)->create([
-             'id_posicion' => '1'
-         ]);
-         factory(Turno::class)->create([
-             'id_turno' => '1'
-         ]);
-         factory(Usuarios::class)->create([
-             'id_personal' => '1',
-             'id_posicion' => '1',
-             'id_turno' => '1',
-         ]);
-         $this->from('/')
-             ->put('/verif',[
-                 'numeroEmpleado' => '3',
-                 'contrasena' => '222a2s',
-             ])
-             ->assertRedirect("/")
-             ->assertSessionHasErrors([
-                 'contrasena' => 'La contraseña es incorrecta',
-                 ]);
-         $this->truncateTables([
-             'personal',
-             'posicion',
-             'turnos',
-             'usuarios',
-         ]);
+        //$this->withoutExceptionHandling();
+        //$this->borrarTodasLasTablas();
+        $this->usuarioDePrueba(1,3,'Ra34$',1,1);
+        $this->from('/')
+            ->put('/verif',[
+                'numeroEmpleado' => '3',
+                'contrasena' => '222a2s',
+            ])
+            ->assertRedirect("/")
+            ->assertSessionHasErrors([
+                'contrasena' => 'La contraseña es incorrecta',
+                ]);
+        $this->borrarTodasLasTablas();
      }
+
+
 
 
     /**
     @test*/
-    public function el_usuario_ingresa_correctamente_su_informacion_y_almacena_la_hora_de_entrada()
+    public function el_usuario_ingresa_correctamente_su_informacion_y_se_almacena_la_hora_de_entrada()
     {
-        $this->truncateTables([
-            'personal',
-            'posicion',
-            'turnos',
-            'usuarios',
-            'user',
-        ]);
-        factory(Personal::class)->create([
-            'id_personal' => '1',
-            'no_empleado'=> '3',
-        ]);
-        factory(Posicion::class)->create([
-            'id_posicion' => '1'
-        ]);
-        factory(Turno::class)->create([
-            'id_turno' => '1'
-        ]);
-        factory(Usuarios::class)->create([
-            'id_personal' => '1',
-            'id_posicion' => '1',
-            'id_turno' => '1',
-        ]);
+        $this->usuarioDePrueba(1,3,'Ra34$',1,1);
         $this->from('/')
             ->put('/verif',[
                 'numeroEmpleado' => '3',
-                'contrasena' => '0000',
+                'contrasena' => 'Ra34$',
             ])
             ->assertRedirect("/pagPriAdm");
 
         $this->assertSame(1,RegEntrada::count());
 
-        $this->truncateTables([
-            'personal',
-            'posicion',
-            'turnos',
-            'usuarios',
-            'user',
-        ]);
+        $this->borrarTodasLasTablas();
     }
+
+
+
+
+    /**
+    @test*/
+    public function el_controlador_contesta_no_en_la_pregunta_filtro()
+    {
+        //$this->usuarioDePrueba(1,3,'Ra34$',2,1);
+        $this->from('/preguntaFiltro')
+            ->put('/si-no',[
+                'btn' => '1',
+            ])
+            ->assertRedirect("/areas");
+
+        $this->borrarTodasLasTablas();
+    }
+
+
+
+
+    /**
+    @test*/
+    public function el_controlador_contesta_si_en_la_pregunta_filtro()
+    {
+        //$this->withoutExceptionHandling();
+        //$this->usuarioDePrueba(1,3,'Ra34$',2,1);
+        $this->from('/preguntaFiltro')
+            ->put('/si-no',[
+                'btn' => '0',
+            ])
+            ->assertRedirect("/fin");
+
+        $this->borrarTodasLasTablas();
+    }
+
+
+
 
 }

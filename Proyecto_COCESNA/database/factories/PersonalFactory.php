@@ -7,8 +7,8 @@ use Faker\Generator as Faker;
 
 $factory->define(Personal::class, function (Faker $faker) {
     return [
-        'nombres' => $faker->sentence(1),
-        'apellidos' => $faker->sentence(1),
+        'nombres' => $faker->word." ".$faker->word,
+        'apellidos' => $faker->word." ".$faker->word,
         'fecha_nacimiento' => $faker->date($format = 'Y-m-d', $max = 'now'),
         'fecha_ingreso' => $faker->date($format = 'Y-m-d', $max = 'now'),
         'sexo' => rand(1,2),

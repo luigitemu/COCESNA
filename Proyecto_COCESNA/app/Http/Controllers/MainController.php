@@ -93,14 +93,16 @@ class MainController extends Controller
             ])->withInput();
         }else
         {
+            //dd(substr(env('APP_KEY'),7,40));
             //Almacenar la hora de entrada al sistema
-            DB::select('call Guardar_reg_entrada(?,?,?,?,?)',
+            DB::select('call reg_entrada_guardar(?,?,?,?,?,?)',
             array(
-                $usuario->nombres,
-                substr(env('APP_KEY'),57),
+                $usuario->nombres." ".$usuario->apellidos,
+                substr(env('APP_KEY'),7,-12),
                 Hash::make($usuario->contrasena),
                 $usuario->email,
                 $usuario->activo,
+                request()->_token,
             ));
 
             $posicion = $usuario->id_posicion;
@@ -142,7 +144,30 @@ class MainController extends Controller
         */
 
         
-    }  
+    }
+    
+    
+
+
+    public function seleccionarEstado()
+    {
+        $respuesta = request()->btn;
+        if ($respuesta)
+        {
+            return redirect()->route('encuesta.mostrarAreas');
+        }else
+        {
+            return redirect()->route('encuesta.fin');
+        }
+    }
+
+
+
+
+    public function mostrarAreas()
+    {
+        return view('areasPreguntas');
+    }
 
 
 

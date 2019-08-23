@@ -18,6 +18,7 @@
             -moz-appearance:textfield; /* Firefox */
         }
     </style>
+    <link rel="stylesheet" href="@yield('scriptCSS')">
 </head>
 <body>
     @yield('cuerpoPagina')

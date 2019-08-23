@@ -4,13 +4,14 @@
 {{-- Cambia el titulo de la pagina --}}
 @section('tituloPagina','Iniciar Sesion')
 
+@section('scriptCSS','css/r34.css')
+
 {{-- Contenido de <body> --}}
 @section('cuerpoPagina')
     <div style="height:100px;"></div>
     <div class="container">
         <div class="row">
-            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 mx-auto border px-5 py-5 text-light shadow-lg rounded-lg" style="background: rgb(49,10,115);
-            background: linear-gradient(0deg, rgba(49,10,115,1) 0%, rgba(48,45,253,1) 100%); max-width:500px;">
+            <div id="box-iniciar-sesion" class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 mx-auto border px-5 py-5 text-light shadow-lg rounded-lg">
                 <h2 class="d-flex justify-content-center mb-3">Bienvenido</h2>
                 <form method="POST" action="{{ route('verificar.empleadoContrasena') }}"> {{-- al presionar "Ingresar" dirige la informacion a la ruta /verif --}}
                     {{method_field('PUT')}}     {{-- cambia de method="POST" a method="PUT" --}}
@@ -39,7 +40,7 @@
 
                     </div>
                     <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-light py-3" style="width:100%; height:100%;">Ingresar</button>
+                        <button id="btn-ingresar-sistema" type="submit" class="btn btn-light py-3 btn-largo">Ingresar</button>
                     </div>
                 </form>
             </div>
