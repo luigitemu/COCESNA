@@ -21,7 +21,9 @@ Route::get('/laravel','MainController@paginaLaravel')->name('pagina.Laravel');  
 
 Route::get('/pagPriAdm','MainController@ingresarComoAdmin')->name('pagina.principalAdmin');
 
-Route::get('/preguntaFiltro','MainController@preguntar')->name('encuesta.preguntaFiltro');  //dirige hacia la pregunta filtro
+Route::get('/preguntaFiltro/{noEmp}','MainController@preguntar')->name('encuesta.preguntaFiltro');  //dirige hacia la pregunta filtro
+
+Route::get('/send/email', 'MainController@mail');
 
 Route::put('/si-no','MainController@seleccionarEstado')->name('encuesta.seleccionar');   //dirige de acuerdo a la respuesta
 

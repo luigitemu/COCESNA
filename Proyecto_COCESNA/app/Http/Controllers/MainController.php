@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB; //Importar DB
 use Illuminate\Support\Facades\Crypt; //Encriptar/Desencriptar contraseñas
 use Illuminate\Support\Facades\Hash;  //Manejo de hashes
+use Mail;
+use App\Mail\SendMailable;
 
 class MainController extends Controller
 {
@@ -110,7 +112,9 @@ class MainController extends Controller
             {
                 return redirect()->route('pagina.principalAdmin');
             }
-            return redirect()->route('encuesta.preguntaFiltro');   
+            //$datos = ['noEmpleado' => $data['numeroEmpleado']];
+            //return redirect()->route('encuesta.preguntaFiltro')->with('noEmp',$data['numeroEmpleado']);
+            return view('preguntaFiltro')->with('datos',$data['numeroEmpleado']);   
         } 
         
         /**
@@ -154,10 +158,12 @@ class MainController extends Controller
         $respuesta = request()->btn;
         if ($respuesta)
         {
-            return redirect()->route('encuesta.mostrarAreas');
+            //dd(request()->noEmpleado);
+            $this->enviarCorreo(request()->noEmpleado);
+            return redirect()->route('encuesta.fin');
         }else
         {
-            return redirect()->route('encuesta.fin');
+            return redirect()->route('encuesta.mostrarAreas');
         }
     }
 
@@ -171,5 +177,29 @@ class MainController extends Controller
 
 
 
+    //Ejemplo de envío de correos
+    public function mail()
+    {
+        $name = 'Ale';
+        Mail::to('alejandroclaros@uanh.hn')->send(new SendMailable($name));
+        return "Email fue enviado";
+    }
 
+    protected function enviarCorreo($noEmp)
+    {
+        $controlador = DB::table('personal')->where('no_empleado',$noEmp)->join('usuarios','usuarios.id_personal','=','personal.id_personal')->first();
+        //dd($controlador);
+        Mail::to( $controlador->email )
+                ->send(new SendMailable(
+                        $controlador->nombres." ".$controlador->apellidos,
+                        $noEmp
+                    ));
+        dd('hola');
+        $correoAdmin = DB::table('usuarios')
+                            ->join('personal','usuarios.id_personal','=','personal.id_personal')
+                            ->where('no_empleado',$data['numeroEmpleado'])
+                            ->first();
+        Mail::to('alejandroclaros@uanh.hn')->send(new SendMailable($nombreControlador));
+        return "Mensaje enviado";
+    }
 }

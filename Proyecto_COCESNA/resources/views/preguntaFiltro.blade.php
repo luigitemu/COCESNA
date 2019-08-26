@@ -13,6 +13,7 @@
         <form method="POST" action="{{ route('encuesta.seleccionar') }}" id="box-repuestas-filtro" class="d-flex justify-content-center p-3">
           {{method_field('PUT')}}     {{-- cambia de method="POST" a method="PUT" --}}
           {!! csrf_field() !!}        <!--Proteccion de ataques csrf-->
+          <input name="noEmpleado" type="hidden" value="{{ $datos }}">
           <button name="btn" type="submit" value="1" id="btn-filtro-si" class="btn btn-success mr-3">Si</button>
           <button name="btn" type="submit" value="0" id="btn-filtro-no" class="btn btn-danger">No</button>
         </form>

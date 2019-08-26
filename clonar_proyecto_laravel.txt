@@ -1,0 +1,49 @@
+Se describirá acontinuación los pasos para clonar un proyecto Laravel de un repositorio como Github
+Se deben tener los servicios de Apache y MySQL activados
+
+1. Descargar el repositorio en la carpeta IngSoftware
+
+	$ git clone https://github.com/Arbert407/Ingenieria-de-Software.git/ IngSoftware
+
+2. Moverse hasta la carpeta del proyecto (Proyecto_COCESNA)
+
+	$ cd IngSoftware/Proyecto_COCESNA
+
+3. Instalar las dependencias de Composer
+	
+	$ composer install
+
+4. Instalar dependencias NPM
+
+	$ npm install
+
+5. Copiar el archivo .env.example a .env
+	
+	$ cp .env.example .env
+
+6. Generar llave de encriptación 
+	
+	$ php artisan key:generate
+
+7. Modificar las variables en el archivo .env con la siguiente información:
+
+	DB_CONNECTION=mysql
+	DB_HOST=localhost
+	DB_PORT=3306
+	DB_DATABASE=db_is
+	DB_USERNAME=NOMBRE-DE-USUARIO
+	DB_PASSWORD=CONTRASEÑA-DE-LA-BASE-DE-DATOS
+
+	Por lo general el nombre de usuario es root y si no se tiene contrasena se deja en blanco ('')
+
+8.	Crear la base de datos, para ello tenemos 2 formas: 
+	a) Buscar db_is.sql en la carpeta "Proyecto_COCESNA" y ejecutarlo en PHPMyAdmin  
+    b) Desde MySQL Workbench abrir archivo db_is.mwb y presionar Ctrl+G para crear la base de datos 
+
+9. Llenar la base con datos de prueba y clonar la base para realizar el testeo
+
+	$ php artisan db:seed
+
+10. Iniciar el servidor de prueba
+
+	$ php artisan serve

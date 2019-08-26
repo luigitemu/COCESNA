@@ -193,7 +193,7 @@ class MainTest extends TestCase
         //$this->usuarioDePrueba(1,3,'Ra34$',2,1);
         $this->from('/preguntaFiltro')
             ->put('/si-no',[
-                'btn' => '1',
+                'btn' => '0',
             ])
             ->assertRedirect("/areas");
 
@@ -211,7 +211,7 @@ class MainTest extends TestCase
         //$this->usuarioDePrueba(1,3,'Ra34$',2,1);
         $this->from('/preguntaFiltro')
             ->put('/si-no',[
-                'btn' => '0',
+                'btn' => '1',
             ])
             ->assertRedirect("/fin");
 

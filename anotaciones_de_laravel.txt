@@ -126,3 +126,41 @@ HTML
 HTML {{ CODIGO_DE_LARAVEL_ACA }} HTML
 HTML
 =========================================================================
+
+
+Servidor de correos
+=========================================================================
+Con laravel podemos enviar correos, primero necesitamos registrarnos en
+mailtrap, luego nos vamos a la opción de inbox y nos dara la siguiente
+información:
+
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=UN?USUARIO
+MAIL_PASSWORD=UNA?CONTRASENA
+MAIL_FROM_ADDRESS=from@example.com
+MAIL_FROM_NAME=Example
+
+Copiamos esta información en el archivo .env:
+
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=UN?USUARIO
+MAIL_PASSWORD=UNA?CONTRASENA
+MAIL_ENCRYPTION=null
+
+Ejecutamos el comando el la consola:
+
+$ php artisan make:mail SendMailable
+
+Y en el controlador lo siguiente:
+
+$name = 'Krunal';
+Mail::to('krunal@appdividend.com')->send(new SendMailable($name)); 
+=========================================================================
+=========================================================================
+=========================================================================
+=========================================================================
+=========================================================================
