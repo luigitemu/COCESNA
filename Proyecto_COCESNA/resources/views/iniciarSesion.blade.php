@@ -4,7 +4,10 @@
 {{-- Cambia el titulo de la pagina --}}
 @section('tituloPagina','Iniciar Sesion')
 
-@section('scriptCSS','css/r34.css')
+{{--Agrega al head--}}
+@section('head')
+  <link rel="stylesheet" href="css/r34.css">
+@endsection
 
 {{-- Contenido de <body> --}}
 @section('cuerpoPagina')

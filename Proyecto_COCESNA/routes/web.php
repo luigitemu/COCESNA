@@ -17,9 +17,13 @@ Route::get('/areas','MainController@mostrarAreas')->name('encuesta.mostrarAreas'
 
 Route::get('/fin','MainController@finalizar')->name('encuesta.fin');    //dirige hacia el final de la encuesta
 
+Route::get('/agregarArea','MainController@agregarArea')->name('encuesta.agregarArea');
+
 Route::get('/laravel','MainController@paginaLaravel')->name('pagina.Laravel');      //pagina de laravel
 
 Route::get('/pagPriAdm','MainController@ingresarComoAdmin')->name('pagina.principalAdmin');
+
+Route::get( '/preguntasArea','MainController@verPreguntas') ->name('encuesta.preguntasArea');
 
 Route::get('/preguntaFiltro/{noEmp}','MainController@preguntar')->name('encuesta.preguntaFiltro');  //dirige hacia la pregunta filtro
 

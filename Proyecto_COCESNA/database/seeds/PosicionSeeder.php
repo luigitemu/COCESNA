@@ -12,6 +12,16 @@ class PosicionSeeder extends Seeder
      */
     public function run()
     {
-        factory(Posicion::class)->times(2)->create([]);
+        factory(Posicion::class)->create([
+            'posicion' => 'Administrador',
+        ]);
+
+        factory(Posicion::class)->create([
+            'posicion' => 'Controlador',
+        ]);
+
+        factory(Posicion::class)->create([
+            'posicion' => 'Supervisor',
+        ]);
     }
 }

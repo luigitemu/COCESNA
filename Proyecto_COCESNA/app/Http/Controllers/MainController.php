@@ -83,7 +83,6 @@ class MainController extends Controller
                     ->join('personal','usuarios.id_personal','=','personal.id_personal')
                     ->where('no_empleado',$data['numeroEmpleado'])
                     ->first();
-        //dd($usuario);
         $pass = Crypt::decryptString($usuario->contrasena);
         //Compara la contraseña ingresada con la obtenida en la consulta, si son iguales
         //entonces ingresa al sistema, sino entonces regresa a iniciar sesion
@@ -95,7 +94,6 @@ class MainController extends Controller
             ])->withInput();
         }else
         {
-            //dd(substr(env('APP_KEY'),7,40));
             //Almacenar la hora de entrada al sistema
             DB::select('call reg_entrada_guardar(?,?,?,?,?,?)',
             array(
@@ -112,9 +110,11 @@ class MainController extends Controller
             {
                 return redirect()->route('pagina.principalAdmin');
             }
-            //$datos = ['noEmpleado' => $data['numeroEmpleado']];
-            //return redirect()->route('encuesta.preguntaFiltro')->with('noEmp',$data['numeroEmpleado']);
-            return view('preguntaFiltro')->with('datos',$data['numeroEmpleado']);   
+            $pregFiltro = DB::table('pregunta_filtro')->first();
+            return view('preguntaFiltro')->with([
+                    'datos' => $data['numeroEmpleado'],
+                    'preguntaFiltro' => $pregFiltro->pregunta,
+                ]);   
         } 
         
         /**
@@ -155,14 +155,31 @@ class MainController extends Controller
 
     public function seleccionarEstado()
     {
+        $query = DB::table('personal')->select('id_personal')->where('no_empleado',request()->noEmpleado)->first();
+
         $respuesta = request()->btn;
         if ($respuesta)
         {
-            //dd(request()->noEmpleado);
+            DB::select('call log_usuarios_guardar(?,?,?,?,?)',
+            array(
+                $query->id_personal,
+                '1',
+                NULL,
+                NULL,
+                '1',
+            ));
             $this->enviarCorreo(request()->noEmpleado);
             return redirect()->route('encuesta.fin');
         }else
         {
+            DB::select('call log_usuarios_guardar(?,?,?,?,?)',
+            array(
+                $query->id_personal,
+                '2',
+                NULL,
+                NULL,
+                '1',
+            ));
             return redirect()->route('encuesta.mostrarAreas');
         }
     }
@@ -181,7 +198,7 @@ class MainController extends Controller
     public function mail()
     {
         $name = 'Ale';
-        Mail::to('alejandroclaros@uanh.hn')->send(new SendMailable($name));
+        Mail::to('e@s.x')->send(new SendMailable($name));
         return "Email fue enviado";
     }
 
@@ -194,12 +211,33 @@ class MainController extends Controller
                         $controlador->nombres." ".$controlador->apellidos,
                         $noEmp
                     ));
-        dd('hola');
+        dd('correo enviado al controlador');
         $correoAdmin = DB::table('usuarios')
                             ->join('personal','usuarios.id_personal','=','personal.id_personal')
                             ->where('no_empleado',$data['numeroEmpleado'])
                             ->first();
-        Mail::to('alejandroclaros@uanh.hn')->send(new SendMailable($nombreControlador));
+        Mail::to('e@s.x')->send(new SendMailable($nombreControlador));
         return "Mensaje enviado";
+    }
+
+
+
+
+    public function agregarArea()
+    {
+        DB::select('call area_guardar(?,?)',
+        array(
+            request()->nombre,
+            request()->descripcion,
+        ));
+
+        
+        
+        return 'si funciono';
+    }
+
+    public function verPreguntas()
+    {
+        return view('preguntasArea');
     }
 }

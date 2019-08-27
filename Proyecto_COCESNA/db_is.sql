@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `areas_de_preguntas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `areas_de_preguntas` (
-  `id_area` int(6) NOT NULL,
+  `id_area` int(6) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   `descripcion` varchar(300) NOT NULL,
   `fecha_creacion` date DEFAULT NULL,
@@ -40,6 +40,44 @@ CREATE TABLE `areas_de_preguntas` (
 LOCK TABLES `areas_de_preguntas` WRITE;
 /*!40000 ALTER TABLE `areas_de_preguntas` DISABLE KEYS */;
 /*!40000 ALTER TABLE `areas_de_preguntas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `log_usuarios`
+--
+
+DROP TABLE IF EXISTS `log_usuarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `log_usuarios` (
+  `id_log_usuario` int(11) NOT NULL AUTO_INCREMENT,
+  `id_personal` int(3) NOT NULL,
+  `id_respuesta` int(6) NOT NULL,
+  `id_area` int(6) DEFAULT NULL,
+  `id_pregunta` int(6) DEFAULT NULL,
+  `es_pregunta_filtro` tinyint(4) DEFAULT '0',
+  `fecha_creacion` date DEFAULT NULL,
+  PRIMARY KEY (`id_log_usuario`),
+  UNIQUE KEY `id_log_usuario_UNIQUE` (`id_log_usuario`),
+  KEY `fk_log_usuarios_personal1_idx` (`id_personal`),
+  KEY `fk_log_usuarios_respuestas1_idx` (`id_respuesta`),
+  KEY `fk_log_usuarios_preguntas1_idx` (`id_pregunta`),
+  KEY `fk_log_usuarios_areas_de_preguntas1_idx` (`id_area`),
+  CONSTRAINT `fk_log_usuarios_areas_de_preguntas1` FOREIGN KEY (`id_area`) REFERENCES `areas_de_preguntas` (`id_area`),
+  CONSTRAINT `fk_log_usuarios_personal1` FOREIGN KEY (`id_personal`) REFERENCES `personal` (`id_personal`),
+  CONSTRAINT `fk_log_usuarios_preguntas1` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id_pregunta`),
+  CONSTRAINT `fk_log_usuarios_respuestas1` FOREIGN KEY (`id_respuesta`) REFERENCES `respuestas` (`id_respuesta`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `log_usuarios`
+--
+
+LOCK TABLES `log_usuarios` WRITE;
+/*!40000 ALTER TABLE `log_usuarios` DISABLE KEYS */;
+INSERT INTO `log_usuarios` VALUES (2,7,1,NULL,NULL,1,'2019-08-26');
+/*!40000 ALTER TABLE `log_usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -68,7 +106,7 @@ CREATE TABLE `personal` (
 
 LOCK TABLES `personal` WRITE;
 /*!40000 ALTER TABLE `personal` DISABLE KEYS */;
-INSERT INTO `personal` VALUES (1,'commodi ut','aut est','1983-10-09','2012-01-21','M','785',1),(2,'magnam iusto','nostrum inventore','1974-04-21','1973-08-31','F','888',1),(3,'sapiente ab','laudantium consequuntur','1985-12-10','1987-10-29','M','724',1),(4,'ipsum quam','non modi','2017-04-06','2004-10-27','M','840',1),(5,'sed laborum','veritatis ex','1982-02-26','2000-03-03','F','673',1),(6,'praesentium pariatur','placeat voluptatem','2009-03-31','1991-05-31','F','680',1),(7,'quaerat consequatur','similique architecto','1979-09-19','1979-07-16','F','893',1),(8,'et esse','sint architecto','1980-07-02','2004-04-16','M','972',1),(9,'aperiam recusandae','sit natus','2017-08-17','2018-12-01','F','58',1),(10,'nemo ipsum','laudantium optio','2018-01-26','1985-09-22','M','464',1);
+INSERT INTO `personal` VALUES (1,'et et','molestiae quia','1980-07-30','1990-01-02','F','223',1),(2,'excepturi necessitatibus','autem ut','1991-04-23','1991-05-10','F','662',1),(3,'quibusdam sed','maxime incidunt','2013-10-15','1978-03-22','M','183',1),(4,'illum et','sit rerum','1977-12-26','2002-03-02','F','420',1),(5,'a laborum','reprehenderit possimus','1999-12-07','1986-01-22','M','867',1),(6,'eaque et','odit velit','1985-11-29','1994-04-03','M','94',1),(7,'deserunt dolor','voluptas sit','2000-05-29','2011-07-03','F','913',1),(8,'ut itaque','quasi aut','2014-06-30','2001-10-03','F','865',1),(9,'facere labore','dolorem aut','2009-07-26','1977-11-18','M','110',1),(10,'recusandae qui','magni beatae','1997-01-01','1984-01-16','F','484',1);
 /*!40000 ALTER TABLE `personal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,7 +122,7 @@ CREATE TABLE `posicion` (
   `posicion` varchar(50) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
   PRIMARY KEY (`id_posicion`),
   UNIQUE KEY `id_posicion_UNIQUE` (`id_posicion`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,8 +131,33 @@ CREATE TABLE `posicion` (
 
 LOCK TABLES `posicion` WRITE;
 /*!40000 ALTER TABLE `posicion` DISABLE KEYS */;
-INSERT INTO `posicion` VALUES (1,'quas'),(2,'quas');
+INSERT INTO `posicion` VALUES (1,'Administrador'),(2,'Controlador'),(3,'Supervisor');
 /*!40000 ALTER TABLE `posicion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pregunta_filtro`
+--
+
+DROP TABLE IF EXISTS `pregunta_filtro`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pregunta_filtro` (
+  `pregunta` varchar(100) NOT NULL,
+  `fecha_creacion` date NOT NULL,
+  `fecha_modificacion` date NOT NULL,
+  UNIQUE KEY `pregunta_UNIQUE` (`pregunta`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pregunta_filtro`
+--
+
+LOCK TABLES `pregunta_filtro` WRITE;
+/*!40000 ALTER TABLE `pregunta_filtro` DISABLE KEYS */;
+INSERT INTO `pregunta_filtro` VALUES ('¿Estoy en forma para realizar el turno?','2019-08-26','2019-08-26');
+/*!40000 ALTER TABLE `pregunta_filtro` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -106,10 +169,10 @@ DROP TABLE IF EXISTS `preguntas`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `preguntas` (
   `id_pregunta` int(6) NOT NULL AUTO_INCREMENT,
+  `id_area` int(6) NOT NULL,
   `contenido` varchar(100) NOT NULL,
   `fecha_creacion` varchar(45) DEFAULT NULL,
-  `id_area` int(6) NOT NULL,
-  PRIMARY KEY (`id_pregunta`),
+  PRIMARY KEY (`id_pregunta`,`id_area`),
   UNIQUE KEY `id_pregunta_UNIQUE` (`id_pregunta`),
   KEY `fk_preguntas_areas_de_preguntas1_idx` (`id_area`),
   CONSTRAINT `fk_preguntas_areas_de_preguntas1` FOREIGN KEY (`id_area`) REFERENCES `areas_de_preguntas` (`id_area`)
@@ -136,12 +199,9 @@ CREATE TABLE `respuestas` (
   `id_respuesta` int(6) NOT NULL AUTO_INCREMENT,
   `contenido` varchar(100) NOT NULL,
   `fecha_creacion` varchar(45) DEFAULT NULL,
-  `id_pregunta` int(6) NOT NULL,
   PRIMARY KEY (`id_respuesta`),
-  UNIQUE KEY `id_pregunta_UNIQUE` (`id_respuesta`),
-  KEY `fk_respuestas_preguntas1_idx` (`id_pregunta`),
-  CONSTRAINT `fk_respuestas_preguntas1` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id_pregunta`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `id_pregunta_UNIQUE` (`id_respuesta`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,7 +210,34 @@ CREATE TABLE `respuestas` (
 
 LOCK TABLES `respuestas` WRITE;
 /*!40000 ALTER TABLE `respuestas` DISABLE KEYS */;
+INSERT INTO `respuestas` VALUES (1,'si',NULL),(2,'no',NULL);
 /*!40000 ALTER TABLE `respuestas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `respuestas_por_pregunta`
+--
+
+DROP TABLE IF EXISTS `respuestas_por_pregunta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `respuestas_por_pregunta` (
+  `d_pregunta` int(6) NOT NULL,
+  `id_respuesta` int(6) NOT NULL,
+  PRIMARY KEY (`d_pregunta`,`id_respuesta`),
+  KEY `fk_respuestas_por_pregunta_respuestas1_idx` (`id_respuesta`),
+  CONSTRAINT `fk_respuestas_por_pregunta_preguntas1` FOREIGN KEY (`d_pregunta`) REFERENCES `preguntas` (`id_pregunta`),
+  CONSTRAINT `fk_respuestas_por_pregunta_respuestas1` FOREIGN KEY (`id_respuesta`) REFERENCES `respuestas` (`id_respuesta`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `respuestas_por_pregunta`
+--
+
+LOCK TABLES `respuestas_por_pregunta` WRITE;
+/*!40000 ALTER TABLE `respuestas_por_pregunta` DISABLE KEYS */;
+/*!40000 ALTER TABLE `respuestas_por_pregunta` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -208,7 +295,7 @@ CREATE TABLE `turnos` (
 
 LOCK TABLES `turnos` WRITE;
 /*!40000 ALTER TABLE `turnos` DISABLE KEYS */;
-INSERT INTO `turnos` VALUES (1,'fugiat','19:36:50','02:44:15',1),(2,'perferendis','04:10:20','20:09:45',1),(3,'eveniet','23:39:27','21:40:38',1);
+INSERT INTO `turnos` VALUES (1,'exercitationem','21:18:42','00:59:41',1),(2,'optio','06:51:46','02:48:28',1),(3,'at','18:19:22','09:52:15',1);
 /*!40000 ALTER TABLE `turnos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -253,10 +340,10 @@ DROP TABLE IF EXISTS `usuarios`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuarios` (
   `id_personal` int(3) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `contrasena` varchar(200) NOT NULL DEFAULT '0000',
   `id_turno` int(3) NOT NULL,
   `id_posicion` int(3) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `contrasena` varchar(200) NOT NULL DEFAULT '0000',
   PRIMARY KEY (`id_personal`,`id_turno`,`id_posicion`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `id_personal_UNIQUE` (`id_personal`),
@@ -274,7 +361,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'johan.kunze@thiel.com','eyJpdiI6IlhHcDZubnRiYkltNnZGdGo2d09cL2RBPT0iLCJ2YWx1ZSI6IjJrVDVqQ0ZMZThVZnV4NlRXUjdWVFE9PSIsIm1hYyI6IjRlNjQwNTFlOTEyMTM3Yzg2OGVmZjE1OWM1NTY0ZThlMjlmYjQ0ZDE4N2FjYWU3NTY3M2M1ZmVjNDMyNjE5MjMifQ==',1,1),(2,'ecrona@yahoo.com','eyJpdiI6Imo5TWJhWm9md0FBQStHbjNqbnE5cXc9PSIsInZhbHVlIjoiUGV0KytSVFlZaUhQTFZUOGdWbndhQT09IiwibWFjIjoiYWZkM2E1Y2FjY2RjNjNkOTc3MjczZjliZGE0MDRjZTI1ZmU0ODhkOWIyYzEwYmM0YWM4OGM1ZGNmZWVkZTNlZSJ9',3,2),(3,'kling.bonita@hotmail.com','eyJpdiI6IlJkVFdyRTRzZk9cLzlPT3gwdHRNMjh3PT0iLCJ2YWx1ZSI6IjY3Z2pcL3pJRG9lbHNndVRyVWZwM2NBPT0iLCJtYWMiOiIxNTlhZDAyMTQwMTgwMjNjY2Q1ZjViNjdiZDRmNDAwNmVhYWE1NjVmMTdhZTI1MWY2NTY1MjZiZGQzYTVmNDNkIn0=',2,1),(4,'okeefe.precious@gmail.com','eyJpdiI6ImRqQmdsUDA3Q1JYaW1leE5GMFwvZlJnPT0iLCJ2YWx1ZSI6Ild5bjhyZzRiNVVzbXNkTFwvcGMrb3hnPT0iLCJtYWMiOiIxZGI2YzVkNmE4NmZiNGYwOTRhZjM4NjY0NWNiYTYwMTE4MTMyZDM3YzNiZmFmNTY2NzBmMWNiZGZiMDczZjU0In0=',2,1),(5,'raynor.darian@labadie.biz','eyJpdiI6Ill5VzZDTW1oTmcxNVZ2cXdTSnliSkE9PSIsInZhbHVlIjoiYVdzMmFuaWFFWGRONW1wcmxsMzkxZz09IiwibWFjIjoiN2E2MzY2NmQ5NmZiMmEyNTk4MTNhNThiMjI5NjVmOTJiNDk0NTAyZjUzOTBiMDJlMWE3OWFjNDg5NmYxZGIwMiJ9',3,1),(6,'darien.macejkovic@yahoo.com','eyJpdiI6IlJxQXd2WWZEOWp3b0MzS3BFMlNMcEE9PSIsInZhbHVlIjoiRENEMW9UcFI5em5RT0dBMkZiTERoUT09IiwibWFjIjoiYjE2MTQ5ODQwNTU3ZGZhNmQ5NGIyNjQ0ODIwMTAyZWE0MmYxMzM4NTk1ZDE2MzRiYzhlNjczYWI0MDRiN2EwZiJ9',2,2),(7,'eugenia.ledner@hotmail.com','eyJpdiI6IktpRlwvbThFR01RZmhLUGlNc28xMjdBPT0iLCJ2YWx1ZSI6InFkaUVoalB2aTdMMXR2eDVkTkMxM2c9PSIsIm1hYyI6IjkxMDJmZjRlOGQ2NjM0MDdjMmQyOTg2MDIxOWVlMDZhMDA3MjE1ODViYzVkMjFhOTNhYmU0ZWFjYmY5ZDIzOTcifQ==',3,1),(8,'elinor84@mante.com','eyJpdiI6InRpR2tOd0o4ck1ueVBWR3lnQTQwc0E9PSIsInZhbHVlIjoidWRYemtTZ1VVTjJoam1sQ3NpNVFPZz09IiwibWFjIjoiOGMyYmYyM2E3YjhiOTY3YzYzNWU5Yzg5OWUwYzI4MDVlZTNiZGZmMmFkYTMwZWM1NmJlYmM4ZjJlYjRiZDg5NSJ9',1,1),(9,'leonie.reinger@yahoo.com','eyJpdiI6IlNZd1NlMnBNc3VBMlUzWVZBdmdqdmc9PSIsInZhbHVlIjoiRlwvQ3NHMVhFTXR0aHRTVWVSVEtlN0E9PSIsIm1hYyI6IjZiZTdlZmY0ZTc3YTI5NzYxZmM1ZTI3ZDJkMzNmMzY5Zjg3OGMzYTM2ZDkyZjY5ZTc5ZDY0ZjQ0ZmZhNmEyOGMifQ==',1,2),(10,'muriel.deckow@koelpin.net','eyJpdiI6IkE2MUVtK053ZTNKbFdKVmkzeU9CQWc9PSIsInZhbHVlIjoianpGaTNGcVo1OWRKRkhDKzlHZUxNQT09IiwibWFjIjoiYWZiOGQ4ODI4MjVlZjI0ODJkNmIxMDg2M2U5OGViMTM2NmM2MTEzZTNhZjNkYjExZTdjODExMjRmZmZkNTc2OCJ9',2,1);
+INSERT INTO `usuarios` VALUES (1,3,3,'purdy.albert@gmail.com','eyJpdiI6Ik9GaFRtc1RQZklRRzBEMThEMFJHZ2c9PSIsInZhbHVlIjoiR3c1SDNocHhveHI5N21Oa29YSGNxdz09IiwibWFjIjoiY2E1YTJjNWNjYzRiMjdkMGJlOTI1NjkyODExYTA2YTRiOTlkN2M3ODBiNGQ4NzAyNGZhZDRlNzg1ZTg3ZjQ4MyJ9'),(2,1,1,'desiree.miller@yahoo.com','eyJpdiI6IjZOYjNhbmhDcEU0Qnl3SDljVTlseGc9PSIsInZhbHVlIjoiTUJWTVNQcjNBaUlZVCtkR0x0MHhBZz09IiwibWFjIjoiNjVjYTJiZWZhNTI3MzVjYmZmMzE4N2IxMTkxNDkyODdkZGMwMDVjMjZmYTc2YmI3YzljNmU0NmVmZDU4ODJmNiJ9'),(3,2,3,'mitchell.jacobi@satterfield.net','eyJpdiI6IkcxNzJXcHFBSzVhNkhSS2l1N0dxdXc9PSIsInZhbHVlIjoiUEVRN0NSWlwvOHZVRnpOV0REekZsMmc9PSIsIm1hYyI6ImM4MTVlN2NjMTRjNTFlYTFlMDFkNTY5MWE3ZGFiODY5MzBiZWQwYTRmOTY2NTY4YzFhZTMwN2ZlMzRjYWI5MTIifQ=='),(4,1,1,'skoepp@mclaughlin.com','eyJpdiI6Im11U216RXFyYm9mSHV2YVNvZ0U4UGc9PSIsInZhbHVlIjoieHh5UnZQNDBQdjRyd0dhSHVxM0xlUT09IiwibWFjIjoiMGU0MjljZjZjMDI2MjBlMWJkN2U3ZjNhMWY3OTk4NDdkODhhMDAzN2U5NmE5YmJkN2Q4ZmRhYjRiYWM5Yzk5MiJ9'),(5,2,3,'pjacobs@cormier.com','eyJpdiI6IkhoS2VwbW1CMmcrUzV1dFNyXC9MaHR3PT0iLCJ2YWx1ZSI6IlN6YmVYQ3dpYzZURnZXcHdWV0VOSVE9PSIsIm1hYyI6ImZmNTg5NDhjMjY4MjNmYWJhYmUzMzg4NjY0ODc0M2VlZWIwZTY4ZWI0ZjJkZTE5Y2MzZjkzMjllYTAxODA1MTMifQ=='),(6,3,3,'vicente.wintheiser@kerluke.info','eyJpdiI6ImRHU0VGaVhacmFadFdTaW8zZmZ4M2c9PSIsInZhbHVlIjoiOEJMbWg2OXowYkVDXC9Ha2MwZGVGenc9PSIsIm1hYyI6IjRlN2FlZjdjOGJlMDQ0MWFlZDkwMDgzMWJlOGMyMTRjNjNmM2I4N2YwNTliOTE2YzE1MjM0YjUzMjcxM2I4ZjQifQ=='),(7,1,2,'sspinka@gmail.com','eyJpdiI6IldSVU5EYnc4c3Z3TXJyS0MrSDNmV0E9PSIsInZhbHVlIjoicXdWS04yOGVwMGxTbFU1QlduRjVYUT09IiwibWFjIjoiNDk0OTc5NGY5NTZkNDkzMWY0NGM2ZGZiOWZmNGI2NDY2NjE0YTZhMzhlYTk3MmI3NDVlNzQzMTUzYzhiYjViNiJ9'),(8,1,1,'watsica.kaci@torp.com','eyJpdiI6ImYxXC9WKytRazZMSXdVYWRuXC9qWG1Sdz09IiwidmFsdWUiOiIrTGVRZE91XC83Q1wvMGlQZ1VTUjhRdnc9PSIsIm1hYyI6ImUwNTRmZWFhZmQ3YmY0ZDk2ZjRlOWE1MGY5ZDc3YWExMGMzZjQzNzhmZmNhZjkyNDdhMjlkOGY0MzRjZTUxNDYifQ=='),(9,2,2,'alexys.kertzmann@gmail.com','eyJpdiI6IlBWckVcL3dQRkJkcStXUXNOK0NqTjJnPT0iLCJ2YWx1ZSI6IlpKZU03ZVUyaVFydCtYVnQ0U3JITFE9PSIsIm1hYyI6IjM1NjZjYzEyYWQwZWFmYjJjNWUwZDAzMmVhMjAwY2YwYjgyMWM2Zjg3MjYyZTJmYzY1OWNhYzc3YzE1YjAzNDcifQ=='),(10,1,3,'zkuhn@hotmail.com','eyJpdiI6IkhFeitTaUJwOTBXZ2tmZnM5M3NtbEE9PSIsInZhbHVlIjoiZ0IzTTlMcDllV1d0OEJLMU9PaDV5QT09IiwibWFjIjoiMWVlZWNiZjg0Y2JjMjA0ODUwZGM2NWFkNmU2ZDIzMDUxYTgzZTkwZDk2NjgwNDZjNzBjY2EwNjc0ZDY3NWU2YyJ9');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -287,4 +374,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-22 21:31:03
+-- Dump completed on 2019-08-26 20:15:51

@@ -4,27 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>@yield('tituloPagina')</title> {{-- @yield permite marcar las partes donde las vistas modifican el contenido de la plantilla --}}
+    <script src="https://kit.fontawesome.com/08f90d9e82.js"></script>
+    <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"><!-- Bootstrap core CSS -->
+    
+    {{-- @yield permite marcar las partes donde las vistas modifican el contenido de la plantilla --}}
+    <title>@yield('tituloPagina')</title> 
+    
+    {{--Remueve las flechas que traen por defecto los <inputs type="number">--}}
     <style>
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
-            /* display: none; <- Crashes Chrome on hover */
             -webkit-appearance: none;
-            margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+            margin: 0;
         }
-
         input[type=number] {
-            -moz-appearance:textfield; /* Firefox */
+            -moz-appearance:textfield;
         }
     </style>
-    <link rel="stylesheet" href="@yield('scriptCSS')">
+    
+    {{-- Si hay mas elementos de <head> los llamaremos aqui --}}
+    @yield('head')
+
 </head>
 <body>
+
+    {{--Dentro de este campo se incluye el contenido que lleva la etiqueta <body>--}}
     @yield('cuerpoPagina')
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    {{--Se agregan los scripts de bootstrap y jquery--}}
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    {{--En este campo se agregan mas scripts--}}
     @yield('scripts')
+
 </body>
 </html>
+
+

@@ -1,0 +1,135 @@
+
+.card{
+    width: 100%;
+    height: 120px;
+    background-color: white;
+    padding: 12px;
+    padding-left: 35px;
+    padding-top: 28px;
+    box-shadow: 43px 31px 53px -34px rgba(0,0,0,0.25);
+    border-radius: 10px;
+    margin-bottom: 25px;
+    display: inline-table;
+}
+.form-control:disabled{
+
+    background-color: white;
+    border: 0px;
+
+}
+
+.b-w{
+    border-color: transparent;
+}
+
+.bbg{
+    border-top: 1px solid #dbdbdb;
+    margin-bottom: 1px;
+}
+
+.fc-r{
+    color: rgb(207, 109, 109);
+}
+
+.fc-r:hover{
+    color: red;
+}
+
+.fc-g{
+    color: rgb(101, 184, 84);
+}
+
+.fc-g:hover{
+    color: rgb(49, 206, 75);
+}
+
+.fc-b{
+    color: rgb(132, 132, 214)!important;
+}
+
+.fc-b:hover{
+    color: blue !important;
+}
+
+.fc-v{
+    color: rgb(238, 174, 238);
+}
+
+.fc-v:hover{
+    color: violet;
+}
+
+.btn-tran{
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.btn-tran{
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.form-tipo{
+    display: block;
+    width: 100%;
+    height: 33px;
+    padding: .375rem .75rem;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    align-items: flex-end;
+}
+
+.btn-edit{
+    color: #212529;
+    background-color: white;
+    border-color: #c1c1c1;
+    height: 34px;
+    width: 34px;
+    display: flex;
+    justify-content: center;
+}
+
+.title-tipo{
+    font-size: 20px; 
+    font-weight: 100;
+}
+
+.edi-elim{
+    display: inline;
+    background-color: white;
+    border: 1px solid;
+}
+
+.btn-eliminar-res{
+    color: #d63030;
+}
+
+.btn-edit-res{
+    color: #02a502;
+}
+
+.list-group .list-group-item:hover {
+    color: #3c3c3c;
+    background-color: #f7f7f7;
+}
+
+.input-pregunta{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+    max-width: 470px;
+}
+
+.titulo-preg{
+    flex: 1 0 33.333333% !important;
+    /* max-width: 40.333% !important; */
+}

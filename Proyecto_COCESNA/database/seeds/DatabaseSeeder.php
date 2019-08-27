@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
             'personal',
             'user',
             'usuarios',
+            'pregunta_filtro',
+            'respuestas',
         ]);
 
 
@@ -34,6 +36,8 @@ class DatabaseSeeder extends Seeder
         $this->call(TurnoSeeder::class);
         $this->call(PersonalSeeder::class);
         $this->call(UsuariosSeeder::class);
+        $this->call(PreguntaFiltroSeeder::class);
+        $this->call(RespuestaSeeder::class);
 
         $this->crearBDparaPruebas();
     }
