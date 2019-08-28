@@ -111,6 +111,7 @@ class MainController extends Controller
                 return redirect()->route('pagina.principalAdmin');
             }
             $pregFiltro = DB::table('pregunta_filtro')->first();
+            
             return view('preguntaFiltro')->with([
                     'datos' => $data['numeroEmpleado'],
                     'preguntaFiltro' => $pregFiltro->pregunta,
@@ -187,13 +188,6 @@ class MainController extends Controller
 
 
 
-    public function mostrarAreas()
-    {
-        return view('areasPreguntas');
-    }
-
-
-
     //Ejemplo de envío de correos
     public function mail()
     {
@@ -223,6 +217,14 @@ class MainController extends Controller
 
 
 
+    public function mostrarAreas()
+    {
+        return view('areasPreguntas');
+    }
+
+
+
+
     public function agregarArea()
     {
         DB::select('call area_guardar(?,?)',
@@ -231,9 +233,11 @@ class MainController extends Controller
             request()->descripcion,
         ));
 
-        
-        
-        return 'si funciono';
+        $areas = DB::table('areas_de_preguntas')->get();
+        return response()->json([
+            'Mensaje' => 'enviado',
+            'areas' => $areas,
+        ]);
     }
 
     public function verPreguntas()
