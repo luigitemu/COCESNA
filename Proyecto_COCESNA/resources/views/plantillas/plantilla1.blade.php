@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://kit.fontawesome.com/08f90d9e82.js"></script>
-    <link rel="shortcut icon" href="img/icon.png" type="image/x-icon">
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"><!-- Bootstrap core CSS -->
+    <link rel="shortcut icon" href="{{ asset('img/icon.png') }}" type="image/x-icon">
+    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet"><!-- Bootstrap core CSS -->
     
     {{-- @yield permite marcar las partes donde las vistas modifican el contenido de la plantilla --}}
     <title>@yield('tituloPagina')</title> 
@@ -33,8 +33,8 @@
     @yield('cuerpoPagina')
 
     {{--Se agregan los scripts de bootstrap y jquery--}}
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     {{--En este campo se agregan mas scripts--}}
     @yield('scripts')

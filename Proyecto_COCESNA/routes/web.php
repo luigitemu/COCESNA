@@ -25,9 +25,9 @@ Route::get('/pagPriAdm','MainController@ingresarComoAdmin')->name('pagina.princi
 
 Route::get( '/preguntasArea','MainController@verPreguntas') ->name('encuesta.preguntasArea');
 
-Route::get('/preguntaFiltro/{noEmp}','MainController@preguntar')->name('encuesta.preguntaFiltro');  //dirige hacia la pregunta filtro
+//Route::get('/preguntaFiltro','MainController@preguntar')->name('encuesta.preguntaFiltro');  //dirige hacia la pregunta filtro
 
-Route::get('/send/email', 'MainController@mail');
+Route::get('/send/email', 'MainController@mail');   //ejemplo de enviar mensajes
 
 Route::put('/si-no','MainController@seleccionarEstado')->name('encuesta.seleccionar');   //dirige de acuerdo a la respuesta
 

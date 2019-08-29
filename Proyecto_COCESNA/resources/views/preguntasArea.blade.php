@@ -1,17 +1,17 @@
 @extends('plantillas.plantilla1')
 
-@section('head')
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="shortcut icon" href="../img/icon.png" type="image/x-icon">
-<link href="css/simple-sidebar.css" rel="stylesheet"><!-- Custom styles for this template -->
-<link rel="stylesheet" href="css/crearareas.css">
-<link rel="stylesheet" href="css/preguntascss.css">
-@endsection
-
 @section('tituloPagina','COCESNA')
+
+@section('head')
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="../img/icon.png" type="image/x-icon">
+  <link href="{{ asset('css/simple-sidebar.css') }}" rel="stylesheet"><!-- Custom styles for this template -->
+  <link rel="stylesheet" href="{{ asset('css/crear-areas.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/preguntas-css.css') }}">
+@endsection
 
 @section('cuerpoPagina')
 <div class="d-flex" id="wrapper">
@@ -69,11 +69,12 @@
             <div class="row">
             <h5 class="ml-4 mb-4 mr-2 title-tipo">Tipo:</h5>
             <select id="inputState" class="form-tipo col-4">
-            <option selected>Seleccion Unica</option>
+            <option selected>Seleccion Única</option>
             <option>Seleccion Multiple</option>
+            <option>Personalizada</option>
             </select>
             </div>
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush" id="respuestasPregunta1">
             <li class="list-group-item">
             <div class="row">
             <div class="col-8">
@@ -92,7 +93,7 @@
             <div class="col-12 d-flex justify-content-center align-items-center">
             <ul class="list-group list-group-horizontal lista-preg">
             <!-- <li class="list-group-item b-w"><a href="" class="fc-r"><i class="far fa-window-close mr-1"></i>Cancelar</a></li> -->
-            <li class="list-group-item b-w"><a href="" class="fc-b"><i class="far fa-plus-square mr-1"></i>Agregar respuesta</a></li>
+            <li class="list-group-item b-w" onclick="agregarRespuestas();"><span href="" class="fc-b"><i class="far fa-plus-square mr-1"></i><span id="a-agregar-respuesta">Agregar respuesta</span></span></li>
             <!-- <li class="list-group-item b-w"><a href="" class="fc-g"><i class="far fa-save mr-1"></i>Guardar</a></li> -->
             </ul>
             </div>
@@ -172,6 +173,11 @@
 @endsection
 
 @section('scripts')
-<script src="vendor/js/mainPreguntas.js"></script>
+<script>
+  var rutaAJAX = {
+    ruta: "{{ asset('/agregarPregunta') }}"
+  }
+</script>
+<script src="{{ asset('vendor/js/mainPreguntas.js') }}"></script>
 
 @endsection

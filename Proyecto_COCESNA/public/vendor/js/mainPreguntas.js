@@ -1,3 +1,44 @@
+$(document).ready(function(){
+    var tipoPregunta = $('#inputState').find(':selected').text();
+    if(tipoPregunta == 'Seleccion Única'){
+        $('#a-agregar-respuesta').html(`Agregar respuestas si/no`);
+    } 
+});
+
+function agregarRespuestas(params) {
+    var tipoPregunta = $('#inputState').find(':selected').text();
+    if(tipoPregunta == 'Seleccion Única'){
+        console.log(tipoPregunta);
+        $('#respuestasPregunta1').html(`<li class="list-group-item">
+            <div class="row">
+                <div class="col-8">
+                    <span class="space">Si</span>
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                    <div class="btn-group" role="group" style="width: 72px">
+                        <button type="button" class="btn edi-elim btn-eliminar-res btn-sm mr-1"><i class="fas fa-trash-alt"></i></button>
+                        <button type="button" class="btn edi-elim btn-edit-res btn-sm"><i class="fas fa-pen"></i></button>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-8">
+                    <span class="space">No</span>
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                    <div class="btn-group" role="group" style="width: 72px">
+                        <button type="button" class="btn edi-elim btn-eliminar-res btn-sm mr-1"><i class="fas fa-trash-alt"></i></button>
+                        <button type="button" class="btn edi-elim btn-edit-res btn-sm"><i class="fas fa-pen"></i></button>
+                    </div>
+                </div>
+            </div>
+        </li>`);
+    }
+}
+
+
 function editarPregunta() {
 
 }
@@ -41,6 +82,29 @@ function marcar(valor) {
     
 }
 function mostrar () {
+    let pregunta = $('#'+campo.id).val();
+    
+    let parametros = `?pregunta=${pregunta}`;
+    $.ajax({
+        url: rutaAJAX.ruta,
+        method: 'GET',
+        data: parametros,
+        success: ( respuesta )=>{
+            console.log(respuesta);
+            $('#areaPreguntas').append(`
+                <div class="col-lg-4" id="area1" onclick="mifuncion(this)">
+                <div class="card card-style mb-3" >
+                <div class="card-header"><span class="mr-1 titulo-enc">Encuesta:</span>${nombre}</div>
+                <div class="card-body">
+                <h5 class="card-title descripcion-enc">Descripcion</h5>
+                <p class="card-text">${descripcion}</p>
+                </div>
+                </div>
+                </div>
+            `);
+
+        }
+    });    
     $('#card-preguntas').append(`
      
     <div class="card">

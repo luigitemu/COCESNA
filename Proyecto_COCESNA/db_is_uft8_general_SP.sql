@@ -30,7 +30,7 @@ CREATE TABLE `areas_de_preguntas` (
   PRIMARY KEY (`id_area`),
   UNIQUE KEY `id_area_UNIQUE` (`id_area`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -55,7 +55,6 @@ CREATE TABLE `log_usuarios` (
   `id_respuesta` int(6) NOT NULL,
   `id_area` int(6) DEFAULT NULL,
   `id_pregunta` int(6) DEFAULT NULL,
-  `id_turno` int(3) DEFAULT NULL,
   `es_pregunta_filtro` tinyint(4) DEFAULT '0',
   `fecha_creacion` date DEFAULT NULL,
   PRIMARY KEY (`id_log_usuario`),
@@ -64,13 +63,11 @@ CREATE TABLE `log_usuarios` (
   KEY `fk_log_usuarios_respuestas1_idx` (`id_respuesta`),
   KEY `fk_log_usuarios_preguntas1_idx` (`id_pregunta`),
   KEY `fk_log_usuarios_areas_de_preguntas1_idx` (`id_area`),
-  KEY `fk_log_usuarios_turnos1_idx` (`id_turno`),
   CONSTRAINT `fk_log_usuarios_areas_de_preguntas1` FOREIGN KEY (`id_area`) REFERENCES `areas_de_preguntas` (`id_area`),
   CONSTRAINT `fk_log_usuarios_personal1` FOREIGN KEY (`id_personal`) REFERENCES `personal` (`id_personal`),
   CONSTRAINT `fk_log_usuarios_preguntas1` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id_pregunta`),
-  CONSTRAINT `fk_log_usuarios_respuestas1` FOREIGN KEY (`id_respuesta`) REFERENCES `respuestas` (`id_respuesta`),
-  CONSTRAINT `fk_log_usuarios_turnos1` FOREIGN KEY (`id_turno`) REFERENCES `turnos` (`id_turno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `fk_log_usuarios_respuestas1` FOREIGN KEY (`id_respuesta`) REFERENCES `respuestas` (`id_respuesta`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,6 +76,7 @@ CREATE TABLE `log_usuarios` (
 
 LOCK TABLES `log_usuarios` WRITE;
 /*!40000 ALTER TABLE `log_usuarios` DISABLE KEYS */;
+INSERT INTO `log_usuarios` VALUES (2,7,1,NULL,NULL,1,'2019-08-26');
 /*!40000 ALTER TABLE `log_usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,7 +106,7 @@ CREATE TABLE `personal` (
 
 LOCK TABLES `personal` WRITE;
 /*!40000 ALTER TABLE `personal` DISABLE KEYS */;
-INSERT INTO `personal` VALUES (1,'temporibus hic','qui impedit','1986-02-09','1993-04-08','F','111',1),(2,'nostrum quam','magni a','1970-10-30','1985-04-11','F','222',1),(3,'dolor laborum','natus accusamus','1976-11-04','1990-10-03','M','973',1),(4,'quam ipsa','quia est','1982-10-27','1979-12-08','F','153',1),(5,'optio consequatur','ipsa soluta','1994-03-22','1981-04-28','M','156',1),(6,'odio voluptatem','blanditiis autem','1998-07-03','2010-01-25','F','334',1),(7,'eos doloremque','eos dolore','1990-01-04','1979-10-22','F','671',1),(8,'omnis reprehenderit','nam labore','1986-02-12','2000-03-11','F','108',1),(9,'sint culpa','quibusdam accusamus','2000-07-30','1982-02-12','M','875',1),(10,'sint voluptatibus','blanditiis itaque','1975-03-13','2000-11-11','M','564',1);
+INSERT INTO `personal` VALUES (1,'et et','molestiae quia','1980-07-30','1990-01-02','F','223',1),(2,'excepturi necessitatibus','autem ut','1991-04-23','1991-05-10','F','662',1),(3,'quibusdam sed','maxime incidunt','2013-10-15','1978-03-22','M','183',1),(4,'illum et','sit rerum','1977-12-26','2002-03-02','F','420',1),(5,'a laborum','reprehenderit possimus','1999-12-07','1986-01-22','M','867',1),(6,'eaque et','odit velit','1985-11-29','1994-04-03','M','94',1),(7,'deserunt dolor','voluptas sit','2000-05-29','2011-07-03','F','913',1),(8,'ut itaque','quasi aut','2014-06-30','2001-10-03','F','865',1),(9,'facere labore','dolorem aut','2009-07-26','1977-11-18','M','110',1),(10,'recusandae qui','magni beatae','1997-01-01','1984-01-16','F','484',1);
 /*!40000 ALTER TABLE `personal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +147,7 @@ CREATE TABLE `pregunta_filtro` (
   `fecha_creacion` date NOT NULL,
   `fecha_modificacion` date NOT NULL,
   UNIQUE KEY `pregunta_UNIQUE` (`pregunta`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,7 +156,7 @@ CREATE TABLE `pregunta_filtro` (
 
 LOCK TABLES `pregunta_filtro` WRITE;
 /*!40000 ALTER TABLE `pregunta_filtro` DISABLE KEYS */;
-INSERT INTO `pregunta_filtro` VALUES ('¿Estoy en forma para realizar el turno?','2019-08-28','2019-08-28');
+INSERT INTO `pregunta_filtro` VALUES ('¿Estoy en forma para realizar el turno?','2019-08-26','2019-08-26');
 /*!40000 ALTER TABLE `pregunta_filtro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,7 +176,7 @@ CREATE TABLE `preguntas` (
   UNIQUE KEY `id_pregunta_UNIQUE` (`id_pregunta`),
   KEY `fk_preguntas_areas_de_preguntas1_idx` (`id_area`),
   CONSTRAINT `fk_preguntas_areas_de_preguntas1` FOREIGN KEY (`id_area`) REFERENCES `areas_de_preguntas` (`id_area`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -203,7 +201,7 @@ CREATE TABLE `respuestas` (
   `fecha_creacion` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_respuesta`),
   UNIQUE KEY `id_pregunta_UNIQUE` (`id_respuesta`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -230,7 +228,7 @@ CREATE TABLE `respuestas_por_pregunta` (
   KEY `fk_respuestas_por_pregunta_respuestas1_idx` (`id_respuesta`),
   CONSTRAINT `fk_respuestas_por_pregunta_preguntas1` FOREIGN KEY (`d_pregunta`) REFERENCES `preguntas` (`id_pregunta`),
   CONSTRAINT `fk_respuestas_por_pregunta_respuestas1` FOREIGN KEY (`id_respuesta`) REFERENCES `respuestas` (`id_respuesta`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -262,7 +260,7 @@ CREATE TABLE `seglog` (
   `SegLogComando` mediumtext,
   `SegLogIp` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`SegLogKey`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -297,7 +295,7 @@ CREATE TABLE `turnos` (
 
 LOCK TABLES `turnos` WRITE;
 /*!40000 ALTER TABLE `turnos` DISABLE KEYS */;
-INSERT INTO `turnos` VALUES (1,'qui','11:52:27','07:41:50',1),(2,'id','20:48:17','12:56:02',1),(3,'corrupti','11:09:57','16:10:27',1);
+INSERT INTO `turnos` VALUES (1,'exercitationem','21:18:42','00:59:41',1),(2,'optio','06:51:46','02:48:28',1),(3,'at','18:19:22','09:52:15',1);
 /*!40000 ALTER TABLE `turnos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -354,7 +352,7 @@ CREATE TABLE `usuarios` (
   CONSTRAINT `fk_datos_adiciones_personal1` FOREIGN KEY (`id_personal`) REFERENCES `personal` (`id_personal`),
   CONSTRAINT `fk_datos_adiciones_posicion1` FOREIGN KEY (`id_posicion`) REFERENCES `posicion` (`id_posicion`),
   CONSTRAINT `fk_datos_adiciones_turnos1` FOREIGN KEY (`id_turno`) REFERENCES `turnos` (`id_turno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -363,7 +361,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,1,1,'primer@administrador.p','eyJpdiI6IjV2M3ZDT2U4QXBhdlRDdm80alh5R1E9PSIsInZhbHVlIjoiNW9DbUYwQ2JTQ2lEVjUxNVNXdld0QT09IiwibWFjIjoiMGU0NDQ3MTIzYjU0MDQ1NTdmYjBmYWJlMWQwZjNmNDI4YWViZGY4ZmIxYjI4MjAwMDk1Y2NiYTk0OTc4N2NhZiJ9'),(2,1,2,'primer@controlador.p','eyJpdiI6IlBMUVlOdCtXZU5vMkIycHlvWjdYNWc9PSIsInZhbHVlIjoiMmtsRWs1VkZVTlF5ZFhiXC9DTHZ6anc9PSIsIm1hYyI6ImE4NGJiMDhjOGZhYjE2NTgyOTYxMzM5NTRmZTYxNTQ1NzcwYzllNGMyZjU5ZWY0Mjc3ODg1NzVlZWMzMWYxMWUifQ=='),(3,1,2,'jamie77@yahoo.com','eyJpdiI6ImlYT1hEUDNMdCtDbUQrVUNIOWpjNlE9PSIsInZhbHVlIjoiRE90R2hoWTB5aHBna0diSERlR01Kdz09IiwibWFjIjoiYjgwZWQ0NTcwYjAwMjVmZjkwODkwZDNjZGFhYjllNWVjNDIyYTI0ZTcyNzMzNGRhY2E0NmJiMzYwNDQ1NzA0NCJ9'),(4,2,1,'zkessler@franecki.com','eyJpdiI6IlRqRm9ibCtIb1prVnFYN1ZQaFh2OVE9PSIsInZhbHVlIjoidm96WU4xS2JxYlprZ0ZWZzRBM1UyQT09IiwibWFjIjoiODE2MjAxM2RkNjgwMDkxZTFjOTBjZWExYTUzMzYwZTAzNWNlYWZkYjMwYTBmMmY5NmVhZjkzOGFkNGJkODg0YiJ9'),(5,2,2,'herzog.frank@schaden.com','eyJpdiI6IlVOWGhnTjM0c21aeDBvRldQOEhCcVE9PSIsInZhbHVlIjoiUHV6NEx3bjlQZVlZc1I0VTFqaEJiZz09IiwibWFjIjoiN2IwMDBmZmI5OTgxYzkzYTMwMTIxNWUwMmMyNzdmYWQyNWY2Nzc2MDYzMzRmYjdhMjkzNzEzNGY3ZGM5OGJkOSJ9'),(6,2,2,'branson.feest@hagenes.com','eyJpdiI6IitucHhcL2JKNFdCU2l3Vm1VZXJqUXZnPT0iLCJ2YWx1ZSI6Ik9ETjJVa0o2Nk1ZWGtCMjFpOUtxXC9RPT0iLCJtYWMiOiJjNDcwN2Y0YTkzZjRkZjk3ZDUyMjJiODEwZGM3NzdlODRmYjRjYzZlZGQ3NDEzNzIzYTFmNWYyODk3Y2FhZDEwIn0='),(7,1,2,'dooley.sibyl@botsford.com','eyJpdiI6ImhlMUxhZFl5bkNVdTJaQkZwK3FQUFE9PSIsInZhbHVlIjoiUjA5Z3FSdTFcL1BvOW1TTWhCT2M5Mnc9PSIsIm1hYyI6Ijk3MTA2NzRhYTg5ZjJjY2M0ZmRjYzlhNDgwNWNjNmM1NDFiZWJhZjkzZjA5NTE2NmZhMjc4ODEwNzUxMjIwM2IifQ=='),(8,2,2,'reilly.lilliana@gmail.com','eyJpdiI6ImlFV2lpRVRvemtLRzRlWlNwRis0RkE9PSIsInZhbHVlIjoiYWFUZEVmZ1dkUFRpKzhPWGNGdFhHZz09IiwibWFjIjoiODlhYWVmNzY1YjBmN2JiNjNmMWE5YTQ3MmYzMDM5NzA0MGI1YmQ0NGEwZTQzYzFkNTk3ZTk1YjUyMTQxMzM0NiJ9'),(9,1,2,'lavonne.torp@gmail.com','eyJpdiI6IkJsVW9FdUdLek82aWFhdVU5VTU2V1E9PSIsInZhbHVlIjoiOGI0OWZmbEE4d0pjZWNEdWFPMVBadz09IiwibWFjIjoiOWM0NmNlMDFkYzNhN2M5NTAwM2ZiMDBhMGI3ZmQxNzIzMTE5Y2IzZTdjZGZmZWNmM2Y0MTAzMGM3ZjFkMjUxMCJ9'),(10,1,2,'estella.rogahn@gmail.com','eyJpdiI6IjRqZ0hcL2ZzUk82Q1A5VWFsRVJpOFpnPT0iLCJ2YWx1ZSI6Ik9ndGxxMDZXV2FTRldtUXpaM1huWGc9PSIsIm1hYyI6IjA2NjZjMzY1NTJiNmI2ZGM2NjNlYzQ4NDY2MTQyMzIxMzU5MTc1NmExODIwNDY0MTcyNWI1NDYyNTliNDFiOTcifQ==');
+INSERT INTO `usuarios` VALUES (1,3,3,'purdy.albert@gmail.com','eyJpdiI6Ik9GaFRtc1RQZklRRzBEMThEMFJHZ2c9PSIsInZhbHVlIjoiR3c1SDNocHhveHI5N21Oa29YSGNxdz09IiwibWFjIjoiY2E1YTJjNWNjYzRiMjdkMGJlOTI1NjkyODExYTA2YTRiOTlkN2M3ODBiNGQ4NzAyNGZhZDRlNzg1ZTg3ZjQ4MyJ9'),(2,1,1,'desiree.miller@yahoo.com','eyJpdiI6IjZOYjNhbmhDcEU0Qnl3SDljVTlseGc9PSIsInZhbHVlIjoiTUJWTVNQcjNBaUlZVCtkR0x0MHhBZz09IiwibWFjIjoiNjVjYTJiZWZhNTI3MzVjYmZmMzE4N2IxMTkxNDkyODdkZGMwMDVjMjZmYTc2YmI3YzljNmU0NmVmZDU4ODJmNiJ9'),(3,2,3,'mitchell.jacobi@satterfield.net','eyJpdiI6IkcxNzJXcHFBSzVhNkhSS2l1N0dxdXc9PSIsInZhbHVlIjoiUEVRN0NSWlwvOHZVRnpOV0REekZsMmc9PSIsIm1hYyI6ImM4MTVlN2NjMTRjNTFlYTFlMDFkNTY5MWE3ZGFiODY5MzBiZWQwYTRmOTY2NTY4YzFhZTMwN2ZlMzRjYWI5MTIifQ=='),(4,1,1,'skoepp@mclaughlin.com','eyJpdiI6Im11U216RXFyYm9mSHV2YVNvZ0U4UGc9PSIsInZhbHVlIjoieHh5UnZQNDBQdjRyd0dhSHVxM0xlUT09IiwibWFjIjoiMGU0MjljZjZjMDI2MjBlMWJkN2U3ZjNhMWY3OTk4NDdkODhhMDAzN2U5NmE5YmJkN2Q4ZmRhYjRiYWM5Yzk5MiJ9'),(5,2,3,'pjacobs@cormier.com','eyJpdiI6IkhoS2VwbW1CMmcrUzV1dFNyXC9MaHR3PT0iLCJ2YWx1ZSI6IlN6YmVYQ3dpYzZURnZXcHdWV0VOSVE9PSIsIm1hYyI6ImZmNTg5NDhjMjY4MjNmYWJhYmUzMzg4NjY0ODc0M2VlZWIwZTY4ZWI0ZjJkZTE5Y2MzZjkzMjllYTAxODA1MTMifQ=='),(6,3,3,'vicente.wintheiser@kerluke.info','eyJpdiI6ImRHU0VGaVhacmFadFdTaW8zZmZ4M2c9PSIsInZhbHVlIjoiOEJMbWg2OXowYkVDXC9Ha2MwZGVGenc9PSIsIm1hYyI6IjRlN2FlZjdjOGJlMDQ0MWFlZDkwMDgzMWJlOGMyMTRjNjNmM2I4N2YwNTliOTE2YzE1MjM0YjUzMjcxM2I4ZjQifQ=='),(7,1,2,'sspinka@gmail.com','eyJpdiI6IldSVU5EYnc4c3Z3TXJyS0MrSDNmV0E9PSIsInZhbHVlIjoicXdWS04yOGVwMGxTbFU1QlduRjVYUT09IiwibWFjIjoiNDk0OTc5NGY5NTZkNDkzMWY0NGM2ZGZiOWZmNGI2NDY2NjE0YTZhMzhlYTk3MmI3NDVlNzQzMTUzYzhiYjViNiJ9'),(8,1,1,'watsica.kaci@torp.com','eyJpdiI6ImYxXC9WKytRazZMSXdVYWRuXC9qWG1Sdz09IiwidmFsdWUiOiIrTGVRZE91XC83Q1wvMGlQZ1VTUjhRdnc9PSIsIm1hYyI6ImUwNTRmZWFhZmQ3YmY0ZDk2ZjRlOWE1MGY5ZDc3YWExMGMzZjQzNzhmZmNhZjkyNDdhMjlkOGY0MzRjZTUxNDYifQ=='),(9,2,2,'alexys.kertzmann@gmail.com','eyJpdiI6IlBWckVcL3dQRkJkcStXUXNOK0NqTjJnPT0iLCJ2YWx1ZSI6IlpKZU03ZVUyaVFydCtYVnQ0U3JITFE9PSIsIm1hYyI6IjM1NjZjYzEyYWQwZWFmYjJjNWUwZDAzMmVhMjAwY2YwYjgyMWM2Zjg3MjYyZTJmYzY1OWNhYzc3YzE1YjAzNDcifQ=='),(10,1,3,'zkuhn@hotmail.com','eyJpdiI6IkhFeitTaUJwOTBXZ2tmZnM5M3NtbEE9PSIsInZhbHVlIjoiZ0IzTTlMcDllV1d0OEJLMU9PaDV5QT09IiwibWFjIjoiMWVlZWNiZjg0Y2JjMjA0ODUwZGM2NWFkNmU2ZDIzMDUxYTgzZTkwZDk2NjgwNDZjNzBjY2EwNjc0ZDY3NWU2YyJ9');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -376,4 +374,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-08-28 16:33:50
+-- Dump completed on 2019-08-26 20:15:51

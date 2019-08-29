@@ -3,7 +3,7 @@
 @section('tituloPagina','Pregunta filtro')
 
 @section('head')
-    <link rel="stylesheet" href="css/r34.css">
+  <link rel="stylesheet" href="{{ asset('css/r34.css') }}">
 @endsection
 
 @section('cuerpoPagina')
@@ -22,4 +22,5 @@
       </div>
     </div>
   </div>
+  <div style="height:100px;"></div>
 @endsection

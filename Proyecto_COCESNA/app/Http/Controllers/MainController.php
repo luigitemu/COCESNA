@@ -161,10 +161,11 @@ class MainController extends Controller
         $respuesta = request()->btn;
         if ($respuesta)
         {
-            DB::select('call log_usuarios_guardar(?,?,?,?,?)',
+            DB::select('call log_usuarios_guardar(?,?,?,?,?,?)',
             array(
                 $query->id_personal,
                 '1',
+                NULL,
                 NULL,
                 NULL,
                 '1',
@@ -173,10 +174,11 @@ class MainController extends Controller
             return redirect()->route('encuesta.fin');
         }else
         {
-            DB::select('call log_usuarios_guardar(?,?,?,?,?)',
+            DB::select('call log_usuarios_guardar(?,?,?,?,?,?)',
             array(
                 $query->id_personal,
                 '2',
+                NULL,
                 NULL,
                 NULL,
                 '1',
@@ -196,21 +198,34 @@ class MainController extends Controller
         return "Email fue enviado";
     }
 
+
+
+
+    //Esta funcion envía los correos a los usuarios permitidos
     protected function enviarCorreo($noEmp)
     {
         $controlador = DB::table('personal')->where('no_empleado',$noEmp)->join('usuarios','usuarios.id_personal','=','personal.id_personal')->first();
         //dd($controlador);
         Mail::to( $controlador->email )
                 ->send(new SendMailable(
-                        $controlador->nombres." ".$controlador->apellidos,
-                        $noEmp
-                    ));
-        dd('correo enviado al controlador');
+                    $controlador->nombres." ".$controlador->apellidos,
+                    $noEmp,
+                ));
+        //dd('correo enviado al controlador');
+        $administrador = DB::table('personal')
+                            ->join('usuarios','usuarios.id_personal','=','personal.id_personal')
+                            ->where('id_posicion','1')
+                            ->first();
+        //dd($administrador);
         $correoAdmin = DB::table('usuarios')
                             ->join('personal','usuarios.id_personal','=','personal.id_personal')
-                            ->where('no_empleado',$data['numeroEmpleado'])
+                            ->where('no_empleado',$noEmp)
                             ->first();
-        Mail::to('e@s.x')->send(new SendMailable($nombreControlador));
+        Mail::to($administrador->email, $controlador->email)
+                ->send(new SendMailable(
+                    $controlador->nombres." ".$controlador->apellidos,
+                    $noEmp,
+                ));
         return "Mensaje enviado";
     }
 
@@ -219,7 +234,7 @@ class MainController extends Controller
 
     public function mostrarAreas()
     {
-        return view('areasPreguntas');
+        return view('areasPreguntasControlador');
     }
 
 
@@ -242,6 +257,15 @@ class MainController extends Controller
 
     public function verPreguntas()
     {
-        return view('preguntasArea');
+        return view('preguntasArea',[''=>'']);
+    }
+
+    public function agregarPregunta()
+    {
+        DB::select('call pregunta_crear(?,?)',
+        array(
+            request()->area,
+            request()->pregunta,
+        ));
     }
 }

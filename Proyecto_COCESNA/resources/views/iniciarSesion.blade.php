@@ -6,7 +6,7 @@
 
 {{--Agrega al head--}}
 @section('head')
-  <link rel="stylesheet" href="css/r34.css">
+    <link rel="stylesheet" href="{{ asset('css/r34.css') }}">
 @endsection
 
 {{-- Contenido de <body> --}}

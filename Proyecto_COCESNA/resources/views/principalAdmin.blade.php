@@ -2,8 +2,8 @@
 
 @section('head')
   <link href="css/simple-sidebar.css" rel="stylesheet"><!-- Custom styles for this template -->
-  <link rel="stylesheet" href="css/crearareas.css">
-  <script src="vendor/FontAwesome/js/all.js"></script>
+  <link rel="stylesheet" href="{{ asset('css/crear-areas.css') }}">
+  <script src="{{ asset('vendor/FontAwesome/js/all.js') }}"></script>
 @endsection
 
 @section('tituloPagina','COCESNA-Admin')
@@ -144,5 +144,5 @@
 @endsection
 
 @section('scripts')
-  <script src="vendor/js/main.js"></script>
+  <script src="{{ asset('vendor/js/main.js') }}"></script>
 @endsection
