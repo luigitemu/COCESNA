@@ -16,17 +16,18 @@
 @section('cuerpoPagina')
 <div class="d-flex" id="wrapper">
   <div class="bg-light border-right" id="sidebar-wrapper">
-    <div class="sidebar-heading"> <i class="fas fa-users-cog mr-1"></i>Administrador </div>
+    <div class="sidebar-heading">
+      <i class="fas fa-users-cog mr-1"></i>Administrador
+    </div>
     <div class="list-group list-group-flush">
       <a href="#" class="list-group-item list-group-item-action bg-light">Area de Preguntas</a>
     </div>
   </div>
   <div id="page-content-wrapper">
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" id="navbar">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <!-- <button class="btn btn-primary" id="menu-toggle">Ocultar</button> -->
-          <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
@@ -54,59 +55,40 @@
     <div class="container-fluid">
       <!-- <h1 class="mt-4">Areas de Preguntas</h1> -->
       <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-3">
-          <h1 class="h3 mb-0 text-gray-800">Preguntas</h1>
-          <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg shadow-sm" data-toggle="modal" data-target="#modalAgregarPregunta"><i class="far fa-file-alt mr-1"></i>Agregar Preguntas</a>
+        <h1 class="h3 mb-0 text-gray-800">Preguntas del área fatiga</h1>
+        <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg shadow-sm" data-toggle="modal" data-target="#modalAgregarPregunta"><i class="far fa-file-alt mr-1"></i>Agregar Preguntas</a>
       </div>
       <hr>
-     <div class="row" id="card-preguntas">
+      <div class="row" id="card-preguntas">
+        <!--
         <div class="card">
-            <div class="row">
+          <div class="row">
             <div class="col-12">
-            <div class="row">
-            <h3 class="mr-2" id="pregunta-1">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia, eaque?</h3>
-            <button type="button" class="btn btn-edit" onclick="editarPregunta();" ><i class="fas fa-edit"></i></button>
+              <div class="row mb-4">
+                <h3 class="mr-2" id="pregunta-1">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia, eaque?</h3>
+                <button type="button" class="btn btn-edit" onclick="editarPregunta();" ><i class="fas fa-edit"></i></button>
+              </div>
+              <ul class="list-group list-group-flush" id="respuestasPregunta1">
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-8">
+                      <span class="space">Si</span>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-8">
+                      <span class="space">No</span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
             </div>
-            <div class="row">
-            <h5 class="ml-4 mb-4 mr-2 title-tipo">Tipo:</h5>
-            <select id="inputState" class="form-tipo col-4">
-            <option selected>Seleccion Única</option>
-            <option>Seleccion Multiple</option>
-            <option>Personalizada</option>
-            </select>
-            </div>
-            <ul class="list-group list-group-flush" id="respuestasPregunta1">
-            <li class="list-group-item">
-            <div class="row">
-            <div class="col-8">
-            <span class="space">Respuesta 1</span>
-            </div>
-            <div class="col-4 d-flex justify-content-end">
-            <div class="btn-group" role="group" style="width: 72px">
-            <button type="button" class="btn edi-elim btn-eliminar-res btn-sm mr-1"><i class="fas fa-trash-alt"></i></button>
-            <button type="button" class="btn edi-elim btn-edit-res btn-sm"><i class="fas fa-pen"></i></button>
-            </div>
-            </div>
-            </div>
-            </li>         
-            </ul>
-            </div>
-            <div class="col-12 d-flex justify-content-center align-items-center">
-            <ul class="list-group list-group-horizontal lista-preg">
-            <!-- <li class="list-group-item b-w"><a href="" class="fc-r"><i class="far fa-window-close mr-1"></i>Cancelar</a></li> -->
-            <li class="list-group-item b-w" onclick="agregarRespuestas();"><span href="" class="fc-b"><i class="far fa-plus-square mr-1"></i><span id="a-agregar-respuesta">Agregar respuesta</span></span></li>
-            <!-- <li class="list-group-item b-w"><a href="" class="fc-g"><i class="far fa-save mr-1"></i>Guardar</a></li> -->
-            </ul>
-            </div>
-            </div>
-            </div> 
-        
-            
-
-     </div>
-
-
-
-      
+          </div>
+        </div>
+      --> 
+      </div>
     </div>
   </div>
   <!-- /#page-content-wrapper -->
@@ -134,7 +116,16 @@
           <input type="text" class="form-control" id="pregunta">
           <div id="valida-pregunta"></div>
         </div>
-       
+        <div class="row">
+          <h5 class="ml-4 mb-4 mr-4 col-form-label">Tipo de respuesta:</h5>
+          <select id="inputState" class="form-tipo col-5">
+            <!--
+            <option>Cerrada</option>
+            <option>Escala numérica</option>
+            <option>Escala ordinal</option>
+            -->
+          </select>
+        </div>
       </form>
     </div>
     <div class="modal-footer">
@@ -174,8 +165,12 @@
 
 @section('scripts')
 <script>
-  var rutaAJAX = {
-    ruta: "{{ asset('/agregarPregunta') }}"
+  var AJAX = {
+    idArea:"1",
+    rutaMostrarTiposRespuestas: "{{ route('encuesta.tiposDeRespuesta') }}",
+    rutaMostrarRespuestasDelTipo: "{{ route('tipoRespuesta.elementos') }}",
+    rutaMostrarPreguntas: "{{ route('area.preguntasAJAX') }}",
+    rutaAgregarPreguntas: "{{ route('administrador.agregarPregunta') }}"
   }
 </script>
 <script src="{{ asset('vendor/js/mainPreguntas.js') }}"></script>

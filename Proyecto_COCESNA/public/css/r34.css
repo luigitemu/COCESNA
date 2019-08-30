@@ -2,6 +2,11 @@ a, u {
   text-decoration: none;
 }
 
+::placeholder{
+  color: lightblue;
+  opacity: 1;
+}
+
 #box-iniciar-sesion{
   background: rgb(49,10,115);
   background: linear-gradient(0deg, rgba(49,10,115,1) 0%, rgba(48,45,253,1) 100%); max-width:500px;
@@ -21,4 +26,10 @@ a, u {
 
 #box-repuestas-filtro{
   height: 80px;
+}
+
+.contrasena, .numeroEmpleado
+{
+    background: transparent;
+    color: aliceblue;
 }

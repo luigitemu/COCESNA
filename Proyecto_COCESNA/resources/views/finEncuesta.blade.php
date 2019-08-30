@@ -38,7 +38,7 @@
     la encuesta 
   --}}
   <script> 
-    var home = '{{ asset('/preguntaFiltro') }}';
+    var home = '{{ asset('/') }}';
     
     //console.log(uri);
     setTimeout(function(){

@@ -14,9 +14,9 @@
     <div style="height:100px;"></div>
     <div class="container">
         <div class="row">
-            <div id="box-iniciar-sesion" class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 mx-auto border px-5 py-5 text-light shadow-lg rounded-lg">
-                <h2 class="d-flex justify-content-center mb-3">Bienvenido</h2>
-                <form method="POST" action="{{ route('verificar.empleadoContrasena') }}"> {{-- al presionar "Ingresar" dirige la informacion a la ruta /verif --}}
+            <div id="box-iniciar-sesion" class="col-6 col-sm-8 col-md-6 col-lg-5 col-xl-4 mx-auto border px-5 py-5 text-light shadow-lg rounded-lg">
+                <h2 class="d-flex justify-content-center mb-4">Bienvenido</h2>
+                <form method="POST" action="{{ route('sistema.verificarEmpleadoContrasena') }}"> {{-- al presionar "Ingresar" dirige la informacion a la ruta /verif --}}
                     {{method_field('PUT')}}     {{-- cambia de method="POST" a method="PUT" --}}
                     {!! csrf_field() !!}        <!--Proteccion de ataques csrf-->
                     <div class="form-group mb-2">

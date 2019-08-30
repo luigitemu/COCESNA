@@ -28,6 +28,9 @@ class DatabaseSeeder extends Seeder
             'usuarios',
             'pregunta_filtro',
             'respuestas',
+            'tipos_de_respuesta',
+            'preguntas',
+            'areas_de_preguntas',
         ]);
 
 
@@ -37,8 +40,12 @@ class DatabaseSeeder extends Seeder
         $this->call(PersonalSeeder::class);
         $this->call(UsuariosSeeder::class);
         $this->call(PreguntaFiltroSeeder::class);
+        $this->call(TiposRespuestaSeeder::class);
         $this->call(RespuestaSeeder::class);
+        $this->call(AreaPreguntaSeeder::class);
+        $this->call(PreguntaSeeder::class);
 
+        //llamamos a la funcion de crear BD de prueba
         $this->crearBDparaPruebas();
     }
 

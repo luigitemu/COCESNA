@@ -60,13 +60,13 @@ function mostrar () {
     
     let parametros = `?nombre=${nombre}&descripcion=${descripcion}`;
     $.ajax({
-        url: "/agregarArea",
+        url: AJAX.rutaAgregarArea,
         method: 'GET',
         data: parametros,
         success: ( respuesta )=>{
             console.log(respuesta);
             $('#areaPreguntas').append(`
-                <div class="col-lg-4" id="area1" onclick="mifuncion(this)">
+                <div class="col-lg-4" id="area`+respuesta.id+`" onclick="mifuncion(this)">
                 <div class="card card-style mb-3" >
                 <div class="card-header"><span class="mr-1 titulo-enc">Encuesta:</span>${nombre}</div>
                 <div class="card-body">
@@ -87,7 +87,30 @@ function mostrar () {
 
 
 function mifuncion(valor){
-    window.location.href = '/preguntasArea';
+    /*let area = valor.substring(4);
     
+    let parametros = `?idArea=${area}`;
+    $.ajax({
+        url: AJAX.rutaMostrarPreguntas,
+        method: 'GET',
+        data: parametros,
+        success: ( respuesta )=>{
+            console.log(respuesta);
+            $('#areaPreguntas').append(`
+                <div class="col-lg-4" id="area`+respuesta.id+`" onclick="mifuncion(this)">
+                <div class="card card-style mb-3" >
+                <div class="card-header"><span class="mr-1 titulo-enc">Encuesta:</span>${nombre}</div>
+                <div class="card-body">
+                <h5 class="card-title descripcion-enc">Descripcion</h5>
+                <p class="card-text">${descripcion}</p>
+                </div>
+                </div>
+                </div>
+            `);
+
+        } 
+
+    })*/
+    window.location.href = Preguntas.mostrar;
   }
 

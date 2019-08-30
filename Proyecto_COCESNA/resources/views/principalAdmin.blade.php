@@ -144,5 +144,14 @@
 @endsection
 
 @section('scripts')
+  <script>
+    var Preguntas = {
+      mostrar: "{{ route('pagina.preguntas') }}"
+    }
+    var AJAX = {
+      rutaAgregarArea:"{{ asset('/agregarArea') }}",
+      rutaMostrarPreguntas: "{{ asset('/preguntas') }}" 
+    }
+  </script>
   <script src="{{ asset('vendor/js/main.js') }}"></script>
 @endsection

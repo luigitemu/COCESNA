@@ -11,27 +11,35 @@
 |
 */
 
-Route::get('/','MainController@index')->name('pagina.inicio');     //pagina inicial
+Route::get('/','MainController@index')->name('sistema.inicio');     //pagina inicial
+
+Route::get('/agregarArea','MainController@agregarArea')->name('administrador.agregarArea');  //agrega un area
+
+Route::get('/agregarPregunta','MainController@agregarPreguntaAJAX')->name('administrador.agregarPregunta'); //agrega una pregunta a un area
 
 Route::get('/areas','MainController@mostrarAreas')->name('encuesta.mostrarAreas');    //dirige a la pagina de areas de preguntas
 
+Route::get('/elementosDelTipo','MainController@mostrarRespuestasDelTipo')->name('tipoRespuesta.elementos');
+
 Route::get('/fin','MainController@finalizar')->name('encuesta.fin');    //dirige hacia el final de la encuesta
 
-Route::get('/agregarArea','MainController@agregarArea')->name('encuesta.agregarArea');
+Route::get('/PreguntasAJAX','MainController@verPreguntasAJAX')->name('area.preguntasAJAX');
 
-Route::get('/laravel','MainController@paginaLaravel')->name('pagina.Laravel');      //pagina de laravel
+Route::get('/pagPriAdm','MainController@ingresarComoAdmin')->name('administrador.principal');
 
-Route::get('/pagPriAdm','MainController@ingresarComoAdmin')->name('pagina.principalAdmin');
+Route::get('/preguntas', 'MainController@paginaPreguntas')->name('pagina.preguntas');
 
-Route::get( '/preguntasArea','MainController@verPreguntas') ->name('encuesta.preguntasArea');
+//Route::get('/preguntasArea','MainController@verPreguntas') ->name('encuesta.preguntasArea');
 
 //Route::get('/preguntaFiltro','MainController@preguntar')->name('encuesta.preguntaFiltro');  //dirige hacia la pregunta filtro
 
-Route::get('/send/email', 'MainController@mail');   //ejemplo de enviar mensajes
+//Route::get('/send/email', 'MainController@mail');   //ejemplo de enviar mensajes
 
 Route::put('/si-no','MainController@seleccionarEstado')->name('encuesta.seleccionar');   //dirige de acuerdo a la respuesta
 
-Route::put('/verif','MainController@verificar')->name('verificar.empleadoContrasena');    //verificar numero de empleado y contraseña
+Route::get('/tiposRespuesta','MainController@obtenerTiposRespuesta')->name('encuesta.tiposDeRespuesta');
+
+Route::put('/verif','MainController@verificar')->name('sistema.verificarEmpleadoContrasena');    //verificar numero de empleado y contraseña
 
 
 

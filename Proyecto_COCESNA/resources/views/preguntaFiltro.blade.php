@@ -19,6 +19,15 @@
           <button name="btn" type="submit" value="1" id="btn-filtro-si" class="btn btn-success mr-3">Si</button>
           <button name="btn" type="submit" value="0" id="btn-filtro-no" class="btn btn-danger">No</button>
         </form>
+        
+        {{-- Para pasar campos a una plantilla llamada por @include, primero
+             definimos las secciones @section y por ultimo hacemos el llamado 
+             @include a dicha plantilla --}}
+        @section('masTexto')
+            Este texto es agregado con la directiva section
+        @endsection
+        @include('plantillas.engranaje') {{-- Este es un llamado a una vista que contiene HTML que es incrustado en esta parte --}}
+
       </div>
     </div>
   </div>

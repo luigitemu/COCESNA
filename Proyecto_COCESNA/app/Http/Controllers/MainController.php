@@ -33,14 +33,6 @@ class MainController extends Controller
 
 
 
-    public function paginaLaravel()
-    {
-        return view('welcome');
-    }
-
-
-
-
     public function ingresarComoAdmin()
     {
         return view('principalAdmin');
@@ -59,8 +51,6 @@ class MainController extends Controller
 
     public function verificar()
     {
-
-
         //Valida la informacion entrante, de no cumplirse las reglas
         //regresa a la pagina de iniciar sesion con los errores
         $data = request()->validate([
@@ -83,7 +73,9 @@ class MainController extends Controller
                     ->join('personal','usuarios.id_personal','=','personal.id_personal')
                     ->where('no_empleado',$data['numeroEmpleado'])
                     ->first();
+
         $pass = Crypt::decryptString($usuario->contrasena);
+        
         //Compara la contraseña ingresada con la obtenida en la consulta, si son iguales
         //entonces ingresa al sistema, sino entonces regresa a iniciar sesion
         //mostrando el error de contraseña incorrecta
@@ -92,7 +84,8 @@ class MainController extends Controller
             return back()->withErrors([
                 'contrasena'=>'La contraseña es incorrecta',
             ])->withInput();
-        }else
+        }
+        else
         {
             //Almacenar la hora de entrada al sistema
             DB::select('call reg_entrada_guardar(?,?,?,?,?,?)',
@@ -108,7 +101,7 @@ class MainController extends Controller
             $posicion = $usuario->id_posicion;
             if($posicion == 1)
             {
-                return redirect()->route('pagina.principalAdmin');
+                return redirect()->route('administrador.principal');
             }
             $pregFiltro = DB::table('pregunta_filtro')->first();
             
@@ -136,7 +129,7 @@ class MainController extends Controller
             $posicion = $usuario->id_posicion;
             if($posicion == 1)
             {
-                return redirect()->route('pagina.principalAdmin');
+                return redirect()->route('administrador.principal');
             }
             return redirect()->route('encuesta.preguntaFiltro');   
         }else
@@ -153,12 +146,16 @@ class MainController extends Controller
     
     
 
-
+    //Define que ruta se tomará de acuerdo a la respuesta de la pregunta filtro 
     public function seleccionarEstado()
     {
-        $query = DB::table('personal')->select('id_personal')->where('no_empleado',request()->noEmpleado)->first();
+        $query = DB::table('personal')
+                    ->select('id_personal')
+                    ->where('no_empleado',request()->noEmpleado)
+                    ->first();
 
         $respuesta = request()->btn;
+
         if ($respuesta)
         {
             DB::select('call log_usuarios_guardar(?,?,?,?,?,?)',
@@ -170,9 +167,10 @@ class MainController extends Controller
                 NULL,
                 '1',
             ));
-            $this->enviarCorreo(request()->noEmpleado);
+            //$this->enviarCorreo(request()->noEmpleado);
             return redirect()->route('encuesta.fin');
-        }else
+        }
+        else
         {
             DB::select('call log_usuarios_guardar(?,?,?,?,?,?)',
             array(
@@ -255,17 +253,73 @@ class MainController extends Controller
         ]);
     }
 
-    public function verPreguntas()
+
+
+
+    public function paginaPreguntas()
     {
-        return view('preguntasArea',[''=>'']);
+        return view('preguntasArea');
     }
 
-    public function agregarPregunta()
+
+
+
+    public function obtenerTiposRespuesta()
     {
-        DB::select('call pregunta_crear(?,?)',
+        $tipos = DB::table('tipos_de_respuesta')
+                    ->get();
+        return $tipos;
+    }
+
+
+
+
+    public function verPreguntasAJAX()
+    {
+        $preguntas = DB::table('preguntas')
+                        ->where('id_area','1')->get();
+        return $preguntas;
+    }
+
+
+
+
+    public function mostrarRespuestasDelTipo()
+    {
+        $elementos = DB::table('respuestas')
+                        ->where('id_tipo',request()->id_tipo)
+                        ->get();
+        return $elementos;
+    }
+
+
+
+
+    public function agregarPreguntaAJAX()
+    {
+        //$tipo = DB::table('personal')->get();//->where('tipo',request()->tipo);
+        DB::select('call pregunta_crear(?,?,?)',
         array(
             request()->area,
-            request()->pregunta,
+            request()->tipo,
+            request()->contenido,
         ));
+
+        return "Agregado con exito";
+    }
+
+
+
+    
+    public function agregarRespuesta()
+    {
+        
+        /*DB::select('call respuesta_crear(?,?)',
+        array(
+            request()->area,
+            request()->tipo,
+        ));*/
+
+        return response()->json('realizado exitosamente');
     }
 }

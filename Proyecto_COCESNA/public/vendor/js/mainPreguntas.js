@@ -1,53 +1,47 @@
-$(document).ready(function(){
-    var tipoPregunta = $('#inputState').find(':selected').text();
-    if(tipoPregunta == 'Seleccion Única'){
-        $('#a-agregar-respuesta').html(`Agregar respuestas si/no`);
-    } 
+/**
+ * Evita ataques CSRF
+ */
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
 });
 
-function agregarRespuestas(params) {
-    var tipoPregunta = $('#inputState').find(':selected').text();
-    if(tipoPregunta == 'Seleccion Única'){
-        console.log(tipoPregunta);
-        $('#respuestasPregunta1').html(`<li class="list-group-item">
-            <div class="row">
-                <div class="col-8">
-                    <span class="space">Si</span>
-                </div>
-                <div class="col-4 d-flex justify-content-end">
-                    <div class="btn-group" role="group" style="width: 72px">
-                        <button type="button" class="btn edi-elim btn-eliminar-res btn-sm mr-1"><i class="fas fa-trash-alt"></i></button>
-                        <button type="button" class="btn edi-elim btn-edit-res btn-sm"><i class="fas fa-pen"></i></button>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="list-group-item">
-            <div class="row">
-                <div class="col-8">
-                    <span class="space">No</span>
-                </div>
-                <div class="col-4 d-flex justify-content-end">
-                    <div class="btn-group" role="group" style="width: 72px">
-                        <button type="button" class="btn edi-elim btn-eliminar-res btn-sm mr-1"><i class="fas fa-trash-alt"></i></button>
-                        <button type="button" class="btn edi-elim btn-edit-res btn-sm"><i class="fas fa-pen"></i></button>
-                    </div>
-                </div>
-            </div>
-        </li>`);
-    }
-}
 
 
-function editarPregunta() {
 
-}
+/**
+ * Al iniciar la pagina, muestra las preguntas previamente creadas
+ * y los tipos de respuestas permitidas
+ */
+$(document).ready(function(){ 
+    mostrarPreguntasDelArea();
+    let parametros = `area=${AJAX.idArea}`;
+    $.ajax({
+        url: AJAX.rutaMostrarTiposRespuestas,
+        method: 'GET',
+        data: parametros,
+        success: ( respuesta )=>{
+            //console.log(respuesta);
+            mostrarTipos(respuesta);
+        }
+    });
+});
+
+
+
 
 var campo = {
     id: 'pregunta',
     valido: false
 }
 
+
+
+
+/**
+ * valida la informacion del modal
+ */
 function validar() {
     ($('#'+campo.id).val() === '')?campo.valido = false: campo.valido=true;
     marcar(campo);
@@ -55,14 +49,19 @@ function validar() {
     if(campo.valido== false)
     return;
 
-    mostrar();
+    //mostrar($('#'+campo.id).val());
+    guardarPregunta();
+    $('#card-preguntas').html('');
+    mostrarPreguntasDelArea();
 
 }
 
 
+
+/**
+ * resalta si la informacion es valida o invalida
+ */
 function marcar(valor) {
-    
-    // (valor.valido == false)?console.log('no es valido'):console.log(' es valido');
     
     if(valor.valido == false){
          $('#'+valor.id).addClass('is-invalid');
@@ -81,75 +80,98 @@ function marcar(valor) {
     }
     
 }
-function mostrar () {
-    let pregunta = $('#'+campo.id).val();
-    
-    let parametros = `?pregunta=${pregunta}`;
+
+
+
+/**
+ * muestra una pregunta
+ */
+function mostrar (contenido,id,idTipo) {    
+    $('#card-preguntas').append(`
+      <div class="card">
+        <div class="row">
+          <div class="col-12">
+            <div class="row mb-4">
+              <h3 class="mr-2" id="pregunta${id}">${contenido}</h3>
+              <button type="button" class="btn btn-edit" onclick="editarPregunta();" ><i class="fas fa-edit"></i></button>
+            </div>
+            <ul class="list-group list-group-flush" id="respuestasPregunta${id}">
+            </ul>
+          </div>
+        </div>
+      </div> 
+    `);
+    mostrarRespuestasDelTipo(id,idTipo);
+}
+
+
+
+
+/**
+ * Muestra todas las preguntas del area seleccionada
+ */
+function mostrarPreguntasDelArea() {
+    let parametros = `area=${AJAX.idArea}`;
+    //console.log(parametros);
     $.ajax({
-        url: rutaAJAX.ruta,
+        url: AJAX.rutaMostrarPreguntas,
         method: 'GET',
         data: parametros,
         success: ( respuesta )=>{
             console.log(respuesta);
-            $('#areaPreguntas').append(`
-                <div class="col-lg-4" id="area1" onclick="mifuncion(this)">
-                <div class="card card-style mb-3" >
-                <div class="card-header"><span class="mr-1 titulo-enc">Encuesta:</span>${nombre}</div>
-                <div class="card-body">
-                <h5 class="card-title descripcion-enc">Descripcion</h5>
-                <p class="card-text">${descripcion}</p>
-                </div>
-                </div>
-                </div>
-            `);
-
+            respuesta.forEach(element => {
+                mostrar(element.contenido,element.id_pregunta,element.id_tipo);
+            });
         }
-    });    
-    $('#card-preguntas').append(`
-     
-    <div class="card">
-    <div class="row">
-    <div class="col-12">
-    <div class="row">
-    <h3 class="mr-2" id="pregunta-1">${$('#pregunta').val()}</h3>
-    <button type="button" class="btn btn-edit" onclick="editarPregunta();" ><i class="fas fa-edit"></i></button>
-    </div>
-    <div class="row">
-    <h5 class="ml-4 mb-4 mr-2 title-tipo">Tipo:</h5>
-    <select id="inputState" class="form-tipo col-4">
-    <option selected>Seleccion Unica</option>
-    <option>Seleccion Multiple</option>
-    </select>
-    </div>
-    <ul class="list-group list-group-flush">
-    <li class="list-group-item">
-    <div class="row">
-    <div class="col-8">
-    <span class="space">Respuesta 1</span>
-    </div>
-    <div class="col-4 d-flex justify-content-end">
-    <div class="btn-group" role="group" style="width: 72px">
-    <button type="button" class="btn edi-elim btn-eliminar-res btn-sm mr-1"><i class="fas fa-trash-alt"></i></button>
-    <button type="button" class="btn edi-elim btn-edit-res btn-sm"><i class="fas fa-pen"></i></button>
-    </div>
-    </div>
-    </div>
-    </li>         
-    </ul>
-    </div>
-    <div class="col-12 d-flex justify-content-center align-items-center">
-    <ul class="list-group list-group-horizontal lista-preg">
-    <!-- <li class="list-group-item b-w"><a href="" class="fc-r"><i class="far fa-window-close mr-1"></i>Cancelar</a></li> -->
-    <li class="list-group-item b-w"><a href="" class="fc-b"><i class="far fa-plus-square mr-1"></i>Agregar respuesta</a></li>
-    <!-- <li class="list-group-item b-w"><a href="" class="fc-g"><i class="far fa-save mr-1"></i>Guardar</a></li> -->
-    </ul>
-    </div>
-    </div>
-    </div> 
-
-    
-    `);
+    });
 }
+
+
+
+
+/**
+ * muestra los tipos de respuestas en el modal
+ */
+function mostrarTipos(array) {
+    array.forEach(element => {
+        $('#inputState').append(
+            `<option value="${element.id_tipo}">${element.tipo}</option>`
+        );
+    });
+}
+
+
+
+
+/**
+ * muestra las respuestas que tiene una pregunta
+ */
+function mostrarRespuestasDelTipo(idPregunta,tipo) {
+    let parametros = `id_tipo=${tipo}`;
+    $.ajax({
+        url: AJAX.rutaMostrarRespuestasDelTipo,
+        method: 'GET',
+        data: parametros,
+        success: ( respuesta )=>{
+            //console.log(respuesta);
+            respuesta.forEach(element => {
+                $('#respuestasPregunta'+idPregunta).append(`
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-8">
+                      <span class="space">${element.contenido}</span>
+                    </div>
+                  </div>
+                </li>
+                `);
+            });
+        }
+    });
+}
+
+
+
+
 function editar () {
   let elemento = document.querySelector('#titulo');
      elemento.toggleAttribute('disabled');
@@ -157,3 +179,19 @@ function editar () {
 
 
 
+
+/**
+ * cuando la informacion ingresada en el modal es correcta, se almacena en la base de datos
+ */
+function guardarPregunta(){
+    let parametros = `area=1&tipo=${$('#inputState').val()}&contenido=${$('#'+campo.id).val()}`;
+    //console.log(parametros);
+    $.ajax({
+        url: AJAX.rutaAgregarPreguntas,
+        method: 'GET',
+        data: parametros,
+        success: ( respuesta )=>{
+            console.log(respuesta);
+        }
+    });
+}
