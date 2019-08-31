@@ -68,6 +68,7 @@ class DatabaseSeeder extends Seeder
     //mediante la clonación de la base principal
     protected function crearBDparaPruebas()
     {
+        //dd(env('DB_HOST')." ".env('DB_USERNAME')." ".env('DB_PASSWORD'));
         $conexion = mysqli_connect(env('DB_HOST'), env('DB_USERNAME'), env('DB_PASSWORD'));
         echo "Conectando a mysql\n";
         $sql = 'DROP DATABASE IF EXISTS '.env('DB_DATABASE').'_test;';

@@ -29,7 +29,7 @@ class SendMailable extends Mailable
      */
     public function build()
     {
-        return $this->view('email.reporte',[
+        return $this->subject('Resultados de encuesta')->view('email.reporte',[
             "nombre" => $this->name,
             "noEmp" => $this->noEmp]);
     }

@@ -18,7 +18,7 @@ class UsuariosSeeder extends Seeder
             'id_personal'=>'1',
             'id_turno'=>'1',
             'id_posicion'=>'1',
-            'email'=>'primer@administrador.p',
+            'email'=>'el@administrador.p',
             'contrasena'=> Crypt::encryptString('123'),
         ]);
 
@@ -30,12 +30,28 @@ class UsuariosSeeder extends Seeder
             'contrasena'=> Crypt::encryptString('123'),
         ]);
 
+        factory(Usuarios::class)->create([
+            'id_personal'=>'3',
+            'id_turno'=>'1',
+            'id_posicion'=>'3',
+            'email'=>'el@supervisor.p',
+            'contrasena'=> Crypt::encryptString('123'),
+        ]);
+
+        factory(Usuarios::class)->create([
+            'id_personal'=>'4',
+            'id_turno'=>'1',
+            'id_posicion'=>'4',
+            'email'=>'RR@HH.p',
+            'contrasena'=> Crypt::encryptString('123'),
+        ]);
+
         $id1 = DB::table('personal')->get('id_personal');
         $id2 = DB::table('posicion')->get('id_posicion');
         $id3 = DB::table('turnos')->get('id_turno');
         //dd($id1[0]->id_personal);
         //dd($id2);
-        for( $i=2 ; $i<count($id1) ; $i++)
+        for( $i=4 ; $i<count($id1) ; $i++)
         {
             $x = $id2->random()->id_posicion;
             $y = $id3->random()->id_turno;

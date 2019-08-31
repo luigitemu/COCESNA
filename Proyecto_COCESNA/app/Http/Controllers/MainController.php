@@ -167,7 +167,7 @@ class MainController extends Controller
                 NULL,
                 '1',
             ));
-            //$this->enviarCorreo(request()->noEmpleado);
+            $this->enviarCorreo(request()->noEmpleado);
             return redirect()->route('encuesta.fin');
         }
         else
@@ -188,42 +188,29 @@ class MainController extends Controller
 
 
 
-    //Ejemplo de envío de correos
-    public function mail()
-    {
-        $name = 'Ale';
-        Mail::to('e@s.x')->send(new SendMailable($name));
-        return "Email fue enviado";
-    }
 
-
-
-
-    //Esta funcion envía los correos a los usuarios permitidos
+    // Esta funcion envía los correos a los usuarios permitidos
     protected function enviarCorreo($noEmp)
     {
-        $controlador = DB::table('personal')->where('no_empleado',$noEmp)->join('usuarios','usuarios.id_personal','=','personal.id_personal')->first();
-        //dd($controlador);
-        Mail::to( $controlador->email )
-                ->send(new SendMailable(
-                    $controlador->nombres." ".$controlador->apellidos,
-                    $noEmp,
-                ));
-        //dd('correo enviado al controlador');
+        $controlador = DB::table('personal')
+                        ->join('usuarios','usuarios.id_personal','=','personal.id_personal')
+                        ->where('no_empleado',$noEmp)
+                        ->first();
+
         $administrador = DB::table('personal')
                             ->join('usuarios','usuarios.id_personal','=','personal.id_personal')
                             ->where('id_posicion','1')
                             ->first();
-        //dd($administrador);
-        $correoAdmin = DB::table('usuarios')
-                            ->join('personal','usuarios.id_personal','=','personal.id_personal')
-                            ->where('no_empleado',$noEmp)
-                            ->first();
-        Mail::to($administrador->email, $controlador->email)
+
+        Mail::to([
+                    $administrador->email, 
+                    $controlador->email,
+                ])
                 ->send(new SendMailable(
                     $controlador->nombres." ".$controlador->apellidos,
                     $noEmp,
                 ));
+                
         return "Mensaje enviado";
     }
 
@@ -258,7 +245,14 @@ class MainController extends Controller
 
     public function paginaPreguntas()
     {
-        return view('preguntasArea');
+        $area = DB::table('areas_de_preguntas')
+                ->where('id_area','1')
+                ->first();
+        //dd($area);
+        return view('preguntasArea')
+                ->with([
+                    'nombreArea' => $area->nombre, 
+                ]);
     }
 
 

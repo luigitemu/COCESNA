@@ -19,6 +19,14 @@ class PersonalSeeder extends Seeder
         factory(Personal::class)->create([
             'no_empleado'=>'222',
         ]);
+
+        factory(Personal::class)->create([
+            'no_empleado'=>'333',
+        ]);
+
+        factory(Personal::class)->create([
+            'no_empleado'=>'444',
+        ]);
         
         factory(Personal::class)->times(8)->create([]);
     }

@@ -55,7 +55,7 @@
     <div class="container-fluid">
       <!-- <h1 class="mt-4">Areas de Preguntas</h1> -->
       <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-3">
-        <h1 class="h3 mb-0 text-gray-800">Preguntas del área fatiga</h1>
+        <h1 class="h3 mb-0 text-gray-800">Preguntas del área {{ $nombreArea }}</h1>
         <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg shadow-sm" data-toggle="modal" data-target="#modalAgregarPregunta"><i class="far fa-file-alt mr-1"></i>Agregar Preguntas</a>
       </div>
       <hr>

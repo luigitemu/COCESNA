@@ -23,5 +23,9 @@ class PosicionSeeder extends Seeder
         factory(Posicion::class)->create([
             'posicion' => 'Supervisor',
         ]);
+
+        factory(Posicion::class)->create([
+            'posicion' => 'RRHH',
+        ]);
     }
 }
