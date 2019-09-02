@@ -28,6 +28,6 @@ class PersonalSeeder extends Seeder
             'no_empleado'=>'444',
         ]);
         
-        factory(Personal::class)->times(8)->create([]);
+        factory(Personal::class)->times(30)->create([]);
     }
 }

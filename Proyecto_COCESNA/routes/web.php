@@ -27,17 +27,23 @@ Route::get('/PreguntasAJAX','MainController@verPreguntasAJAX')->name('area.pregu
 
 Route::get('/pagPriAdm','MainController@ingresarComoAdmin')->name('administrador.principal');
 
+Route::get('pagPriAdm/{id}','MainController@destroy')->name('administrador.destroy');
+
 Route::get('/preguntas', 'MainController@paginaPreguntas')->name('pagina.preguntas');
 
 //Route::get('/preguntasArea','MainController@verPreguntas') ->name('encuesta.preguntasArea');
 
-//Route::get('/preguntaFiltro','MainController@preguntar')->name('encuesta.preguntaFiltro');  //dirige hacia la pregunta filtro
+Route::get('/preguntaFiltro','MainController@preguntar')->name('encuesta.preguntaFiltro');  //dirige hacia la pregunta filtro
 
 //Route::get('/send/email', 'MainController@mail');   //ejemplo de enviar mensajes
 
 Route::put('/si-no','MainController@seleccionarEstado')->name('encuesta.seleccionar');   //dirige de acuerdo a la respuesta
 
 Route::get('/tiposRespuesta','MainController@obtenerTiposRespuesta')->name('encuesta.tiposDeRespuesta');
+
+Route::get('/usuarios','MainController@mostrarUsuarios')->name('usuarios.mostrar');
+
+Route::get('/verReportes','ReportesController@mostrar')->name('reportes.mostrar');
 
 Route::put('/verif','MainController@verificar')->name('sistema.verificarEmpleadoContrasena');    //verificar numero de empleado y contraseña
 

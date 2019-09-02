@@ -12,6 +12,7 @@ function validarCampoVacio(){
         });
 }
 
+var idEliminar;
 
 function validar(){
     validarCampoVacio();
@@ -22,7 +23,7 @@ function validar(){
 
     for(let i = 0;i<campos.length;i++)
         marcar(campos[i]);
-    
+
     for(let i =0 ;i<campos.length;i++){
         if(campos[i].valido == false)
         return;
@@ -34,9 +35,9 @@ function validar(){
 
 
 function marcar(valor) {
-    
+
     // (valor.valido == false)?console.log('no es valido'):console.log(' es valido');
-    
+
     if(valor.valido == false){
          $('#'+valor.id).addClass('is-invalid');
          $('#'+valor.id).removeClass('is-valid');
@@ -44,7 +45,7 @@ function marcar(valor) {
         $('#valida-'+valor.id).addClass('invalid-feedback');
         $('#valida-'+valor.id).html('El campo no debe de ir vacio');
 
-    
+
     }else{
        $('#'+valor.id).addClass('is-valid');
        $('#'+valor.id).removeClass('is-invalid');
@@ -52,65 +53,84 @@ function marcar(valor) {
         $('#valida-'+valor.id).addClass('valid-feedback');
         $('#valida-'+valor.id).html('Campo Correcto');
     }
-    
+
 }
 function mostrar () {
     let nombre = $('#'+campos[0].id).val();
     let descripcion = $('#'+campos[1].id).val();
-    
-    let parametros = `?nombre=${nombre}&descripcion=${descripcion}`;
+
+    let parametros = `nombre=${nombre}&descripcion=${descripcion}`;
     $.ajax({
-        url: AJAX.rutaAgregarArea,
+        // url: '/agregarArea',
+        url: rutas.AgregarArea,
         method: 'GET',
         data: parametros,
-        success: ( respuesta )=>{
-            console.log(respuesta);
-            $('#areaPreguntas').append(`
-                <div class="col-lg-4" id="area`+respuesta.id+`" onclick="mifuncion(this)">
-                <div class="card card-style mb-3" >
-                <div class="card-header"><span class="mr-1 titulo-enc">Encuesta:</span>${nombre}</div>
-                <div class="card-body">
-                <h5 class="card-title descripcion-enc">Descripcion</h5>
-                <p class="card-text">${descripcion}</p>
-                </div>
-                </div>
-                </div>
-            `);
-
-        } 
-
-    })
+        dataType: 'json',
+       success: (res)=>{
+        $('#areaPreguntas').html('');
+        res.forEach((e)=>{
+        mostrarAreas(e);
+        });
+    }
 
 
-    
+    });
+
+
+
 }
 
+function mostrarAreas (elemento) {
 
-function mifuncion(valor){
-    /*let area = valor.substring(4);
-    
-    let parametros = `?idArea=${area}`;
-    $.ajax({
-        url: AJAX.rutaMostrarPreguntas,
-        method: 'GET',
-        data: parametros,
-        success: ( respuesta )=>{
-            console.log(respuesta);
-            $('#areaPreguntas').append(`
-                <div class="col-lg-4" id="area`+respuesta.id+`" onclick="mifuncion(this)">
-                <div class="card card-style mb-3" >
-                <div class="card-header"><span class="mr-1 titulo-enc">Encuesta:</span>${nombre}</div>
-                <div class="card-body">
-                <h5 class="card-title descripcion-enc">Descripcion</h5>
-                <p class="card-text">${descripcion}</p>
-                </div>
-                </div>
-                </div>
-            `);
+    $('#areaPreguntas').append(`
+    <div class="col-lg-4"  style="z-index:1;">
+    <div class="card card-style mb-3">
+    <div class="card-header"><span class="mr-1 titulo-enc">Encuesta:</span>${elemento.nombre}</div>
+    <div class="card-body"  id="${elemento.id_area}" onclick="mostrarPreguntas(this)">
+    <h5 class="card-title descripcion-enc">Descripcion</h5>
+    <p class="card-text">${elemento.descripcion}</p>
+    </div>
+    <div class="card-footer">
+    <button type="button" class="btn btn-danger form-control" onclick="eliminar(${elemento.id_area})" style="z-index:2" data-toggle="modal" > Eliminar </button>
+    </div>
+    </div>
+    </div>
+`);
 
-        } 
 
-    })*/
-    window.location.href = Preguntas.mostrar;
+}
+
+function mostrarPreguntas(valor){
+
+    //window.location.href = `/preguntas?id=${valor.id}`;
+    window.location.href = `${rutas.MostrarPreguntas}?id=${valor.id}`;
   }
 
+  function eliminar (id) {
+    console.log('se eliminara este elemento '+ id);
+    $('#modal-eliminar').modal('show');
+    $('#contenido-modal').html(`¿Esta seguro que desea eliminar el Area ${id}?`);
+    idEliminar = id;
+  }
+
+  function confirmarEliminar(){
+      let id = idEliminar;
+      console.log('entra aqui ' +id);
+      $.ajax({
+        //url: `pagPriAdm/${id}`,
+        url: `${rutas.principalAdmin}/${id}`,
+        method: 'get',
+        dataType: 'json',
+        success: (res)=>{
+            console.log(res);
+        $('#areaPreguntas').html('');
+                 res.forEach((e)=>{
+                mostrarAreas(e);
+        });
+        }
+
+    });
+    $('#modal-eliminar').modal('hide');
+    return;
+
+  };

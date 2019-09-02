@@ -190,12 +190,17 @@ class MainTest extends TestCase
     @test*/
     public function el_controlador_contesta_no_en_la_pregunta_filtro()
     {
-        //$this->usuarioDePrueba(1,3,'Ra34$',2,1);
-        $this->from('/preguntaFiltro')
-            ->put('/si-no',[
-                'btn' => '0',
-            ])
-            ->assertRedirect("/areas");
+        // //$this->usuarioDePrueba(1,3,'Ra34$',2,1);
+        // $this->fromView('preguntaFiltro')
+        //     ->put('/si-no',[
+        //         'btn' => '0',
+        //     ])
+        //     ->assertRedirect("/areas");
+
+        $this->put('/si-no',[
+                    'btn' => '0',
+                ])
+                ->assertSee('aqui');
 
         $this->borrarTodasLasTablas();
     }
@@ -209,16 +214,20 @@ class MainTest extends TestCase
     {
         //$this->withoutExceptionHandling();
         //$this->usuarioDePrueba(1,3,'Ra34$',2,1);
-        $this->from('/preguntaFiltro')
-            ->put('/si-no',[
+        $this->put('/si-no',[
                 'btn' => '1',
             ])
-            ->assertRedirect("/fin");
+            ->assertSee("Gracias por su participación");
 
         $this->borrarTodasLasTablas();
     }
 
-
+    /**
+    @test*/
+    public function FunctionName(Type $var = null)
+    {
+        # code...
+    }
 
 
 }

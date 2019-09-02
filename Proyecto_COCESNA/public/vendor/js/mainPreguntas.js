@@ -112,7 +112,7 @@ function mostrar (contenido,id,idTipo) {
  */
 function mostrarPreguntasDelArea() {
     let parametros = `area=${AJAX.idArea}`;
-    //console.log(parametros);
+    console.log(parametros);
     $.ajax({
         url: AJAX.rutaMostrarPreguntas,
         method: 'GET',
@@ -184,7 +184,7 @@ function editar () {
  * cuando la informacion ingresada en el modal es correcta, se almacena en la base de datos
  */
 function guardarPregunta(){
-    let parametros = `area=1&tipo=${$('#inputState').val()}&contenido=${$('#'+campo.id).val()}`;
+    let parametros = `area=${AJAX.idArea}&tipo=${$('#inputState').val()}&contenido=${$('#'+campo.id).val()}`;
     //console.log(parametros);
     $.ajax({
         url: AJAX.rutaAgregarPreguntas,

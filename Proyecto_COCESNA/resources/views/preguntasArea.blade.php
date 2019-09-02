@@ -166,7 +166,7 @@
 @section('scripts')
 <script>
   var AJAX = {
-    idArea:"1",
+    idArea:"{{ $id }}",
     rutaMostrarTiposRespuestas: "{{ route('encuesta.tiposDeRespuesta') }}",
     rutaMostrarRespuestasDelTipo: "{{ route('tipoRespuesta.elementos') }}",
     rutaMostrarPreguntas: "{{ route('area.preguntasAJAX') }}",

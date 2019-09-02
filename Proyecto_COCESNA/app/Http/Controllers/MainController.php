@@ -35,6 +35,12 @@ class MainController extends Controller
 
     public function ingresarComoAdmin()
     {
+        $areas  = array();
+        $areas = DB::table('areas_de_preguntas')->get();
+
+        return view('principalAdmin', [
+            'areas'=> $areas
+        ]);
         return view('principalAdmin');
     }
 
@@ -234,10 +240,8 @@ class MainController extends Controller
         ));
 
         $areas = DB::table('areas_de_preguntas')->get();
-        return response()->json([
-            'Mensaje' => 'enviado',
-            'areas' => $areas,
-        ]);
+        $areas = DB::table('areas_de_preguntas')->get();
+        return json_encode($areas);
     }
 
 
@@ -245,14 +249,14 @@ class MainController extends Controller
 
     public function paginaPreguntas()
     {
-        $area = DB::table('areas_de_preguntas')
-                ->where('id_area','1')
-                ->first();
-        //dd($area);
-        return view('preguntasArea')
-                ->with([
-                    'nombreArea' => $area->nombre, 
-                ]);
+        $nombreArea = DB::table('areas_de_preguntas')
+                        ->select('nombre')
+                        ->where('id_area',request()->id)
+                        ->first();
+        return view('preguntasArea',[
+            'id' => request()->id,
+            'nombreArea' => $nombreArea->nombre,
+        ]);
     }
 
 
@@ -271,7 +275,7 @@ class MainController extends Controller
     public function verPreguntasAJAX()
     {
         $preguntas = DB::table('preguntas')
-                        ->where('id_area','1')->get();
+                        ->where('id_area',request()->area)->get();
         return $preguntas;
     }
 
@@ -315,5 +319,28 @@ class MainController extends Controller
         ));*/
 
         return response()->json('realizado exitosamente');
+    }
+
+
+
+
+    public function destroy($id)
+    {
+        DB::table('areas_de_preguntas')->where('id_area', '=', $id)->delete();
+        $areas = DB::table('areas_de_preguntas')->get();
+        return json_encode($areas);
+    }
+
+
+
+
+    public function mostrarUsuarios()
+    {
+        $user = array();
+        $user = DB::table('personal')->get();
+
+        return view('usuarios' , [
+            'usuarios' => $user
+        ]);
     }
 }

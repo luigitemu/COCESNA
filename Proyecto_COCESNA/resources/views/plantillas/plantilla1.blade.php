@@ -35,7 +35,6 @@
     {{--Se agregan los scripts de bootstrap y jquery--}}
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
     {{--En este campo se agregan mas scripts--}}
     @yield('scripts')
 
