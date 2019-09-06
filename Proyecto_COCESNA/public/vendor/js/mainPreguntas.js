@@ -51,9 +51,9 @@ function validar() {
 
     //mostrar($('#'+campo.id).val());
     guardarPregunta();
-    $('#card-preguntas').html('');
+    $('#areaPreguntas').html('');
     mostrarPreguntasDelArea();
-
+    $('#'+campo.id).val('');
 }
 
 
@@ -87,7 +87,7 @@ function marcar(valor) {
  * muestra una pregunta
  */
 function mostrar (contenido,id,idTipo) {    
-    $('#card-preguntas').append(`
+    $('#areaPreguntas').append(`
       <div class="card">
         <div class="row">
           <div class="col-12">
@@ -119,9 +119,15 @@ function mostrarPreguntasDelArea() {
         data: parametros,
         success: ( respuesta )=>{
             console.log(respuesta);
-            respuesta.forEach(element => {
-                mostrar(element.contenido,element.id_pregunta,element.id_tipo);
-            });
+            if(respuesta.length == 0){
+                $('#areaPreguntas').html(`
+                <h4 class="ml-5">Sin preguntas aún</h4>
+                `);
+            }else{
+                respuesta.forEach(element => {
+                    mostrar(element.contenido,element.id_pregunta,element.id_tipo);
+                });
+            }
         }
     });
 }

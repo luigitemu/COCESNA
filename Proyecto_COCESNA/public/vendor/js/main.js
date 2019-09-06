@@ -101,15 +101,14 @@ function mostrarAreas (elemento) {
 }
 
 function mostrarPreguntas(valor){
-
     //window.location.href = `/preguntas?id=${valor.id}`;
     window.location.href = `${rutas.MostrarPreguntas}?id=${valor.id}`;
-  }
+}
 
   function eliminar (id) {
     console.log('se eliminara este elemento '+ id);
     $('#modal-eliminar').modal('show');
-    $('#contenido-modal').html(`¿Esta seguro que desea eliminar el Area ${id}?`);
+    $('#contenido-modal').html(`¿Esta seguro que desea eliminar el Area?`);
     idEliminar = id;
   }
 
