@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Personal;
 use App\Usuarios;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB; //Importar DB
-use Illuminate\Support\Facades\Crypt; //Encriptar/Desencriptar contraseñas
-use Illuminate\Support\Facades\Hash;  //Manejo de hashes
+use Illuminate\Support\Facades\DB;      // Importar DB
+use Illuminate\Support\Facades\Crypt;   // Encriptar/Desencriptar contraseñas
+use Illuminate\Support\Facades\Hash;    // Manejo de hashes
 use Mail;
 use App\Mail\SendMailable;
 
@@ -17,31 +17,44 @@ class MainController extends Controller
 
 
 
-    public function index()
+    public function index(Request $request)
     {
+        $request->session()->flush();
         return view('iniciarSesion');
     }
 
 
 
 
-    public function finalizar()
+    public function finalizar(Request $request)
     {
+        if(request()->session()->get('auth')!='1' || request()->session()->get('auth')!='2')
+        {
+            return redirect()->route('sistema.inicio');
+        }
+        
+        $request->session()->flush();
         return view('finEncuesta');
     }
 
 
 
 
-    public function ingresarComoAdmin()
+    public function ingresarComoAdmin(Request $request)
     {
+        //$request->session()->flush();
+        if(request()->session()->get('auth')!='1')
+        {
+            return redirect()->route('sistema.inicio');
+        }
+        //print_r($request->session()->get('autenticado'));
+        //print_r($request->session()->get('autenticado'));
         $areas  = array();
         $areas = DB::table('areas_de_preguntas')->get();
 
         return view('principalAdmin', [
             'areas'=> $areas
         ]);
-        return view('principalAdmin');
     }
 
 
@@ -55,8 +68,12 @@ class MainController extends Controller
 
 
 
-    public function verificar()
+    public function verificar(Request $request)
     {
+        if(!(request()->numeroEmpleado) && !(request()->contrasena))
+        {
+            return redirect()->route('sistema.inicio');
+        }
         //Valida la informacion entrante, de no cumplirse las reglas
         //regresa a la pagina de iniciar sesion con los errores
         $data = request()->validate([
@@ -107,14 +124,27 @@ class MainController extends Controller
             $posicion = $usuario->id_posicion;
             if($posicion == 1)
             {
-                return redirect()->route('administrador.principal');
+                $areas  = array();
+                $areas = DB::table('areas_de_preguntas')->get();
+
+                $request->session()->put('auth','1');
+
+                return view('principalAdmin', [
+                    'areas'=> $areas
+                ]);
+            } else
+            {
+                $pregFiltro = DB::table('pregunta_filtro')->first();
+                
+                $request->session()->put('auth','2');
+                $request->session()->put('nombreCompleto',$usuario->nombres." ".$usuario->apellidos);
+
+                return view('preguntaFiltro')->with([
+                        'datos' => $data['numeroEmpleado'],
+                        'preguntaFiltro' => $pregFiltro->pregunta,
+                    ]);   
             }
-            $pregFiltro = DB::table('pregunta_filtro')->first();
             
-            return view('preguntaFiltro')->with([
-                    'datos' => $data['numeroEmpleado'],
-                    'preguntaFiltro' => $pregFiltro->pregunta,
-                ]);   
         } 
         
         /**
@@ -155,39 +185,45 @@ class MainController extends Controller
     //Define que ruta se tomará de acuerdo a la respuesta de la pregunta filtro 
     public function seleccionarEstado()
     {
-        $query = DB::table('personal')
-                    ->select('id_personal')
-                    ->where('no_empleado',request()->noEmpleado)
-                    ->first();
-
-        $respuesta = request()->btn;
-
-        if ($respuesta)
+        if(request()->noEmpleado)
         {
-            DB::select('call log_usuarios_guardar(?,?,?,?,?,?)',
-            array(
-                $query->id_personal,
-                '1',
-                NULL,
-                NULL,
-                NULL,
-                '1',
-            ));
-            $this->enviarCorreo(request()->noEmpleado);
-            return redirect()->route('encuesta.fin');
-        }
-        else
+            $query = DB::table('personal')
+                        ->select('id_personal')
+                        ->where('no_empleado',request()->noEmpleado)
+                        ->first();
+
+            $respuesta = request()->btn;
+
+            if ($respuesta)
+            {
+                DB::select('call log_usuarios_guardar(?,?,?,?,?,?)',
+                array(
+                    $query->id_personal,
+                    '1',
+                    NULL,
+                    NULL,
+                    NULL,
+                    '1',
+                ));
+                $this->enviarCorreo(request()->noEmpleado);
+                return redirect()->route('encuesta.fin');
+            }
+            else
+            {
+                DB::select('call log_usuarios_guardar(?,?,?,?,?,?)',
+                array(
+                    $query->id_personal,
+                    '2',
+                    NULL,
+                    NULL,
+                    NULL,
+                    '1',
+                ));
+                return redirect()->route('encuesta.mostrarAreas');
+            }
+        } else 
         {
-            DB::select('call log_usuarios_guardar(?,?,?,?,?,?)',
-            array(
-                $query->id_personal,
-                '2',
-                NULL,
-                NULL,
-                NULL,
-                '1',
-            ));
-            return redirect()->route('encuesta.mostrarAreas');
+            return abort(404);
         }
     }
 
@@ -217,130 +253,10 @@ class MainController extends Controller
                     $noEmp,
                 ));
                 
-        return "Mensaje enviado";
+        //return "Mensaje enviado";
     }
 
 
 
 
-    public function mostrarAreas()
-    {
-        return view('areasPreguntasControlador');
-    }
-
-
-
-
-    public function agregarArea()
-    {
-        DB::select('call area_guardar(?,?)',
-        array(
-            request()->nombre,
-            request()->descripcion,
-        ));
-
-        $areas = DB::table('areas_de_preguntas')->get();
-        $areas = DB::table('areas_de_preguntas')->get();
-        return json_encode($areas);
-    }
-
-
-
-
-    public function paginaPreguntas()
-    {
-        $nombreArea = DB::table('areas_de_preguntas')
-                        ->select('nombre')
-                        ->where('id_area',request()->id)
-                        ->first();
-        return view('preguntasArea',[
-            'id' => request()->id,
-            'nombreArea' => $nombreArea->nombre,
-        ]);
-    }
-
-
-
-
-    public function obtenerTiposRespuesta()
-    {
-        $tipos = DB::table('tipos_de_respuesta')
-                    ->get();
-        return $tipos;
-    }
-
-
-
-
-    public function verPreguntasAJAX()
-    {
-        $preguntas = DB::table('preguntas')
-                        ->where('id_area',request()->area)->get();
-        return $preguntas;
-    }
-
-
-
-
-    public function mostrarRespuestasDelTipo()
-    {
-        $elementos = DB::table('respuestas')
-                        ->where('id_tipo',request()->id_tipo)
-                        ->get();
-        return $elementos;
-    }
-
-
-
-
-    public function agregarPreguntaAJAX()
-    {
-        //$tipo = DB::table('personal')->get();//->where('tipo',request()->tipo);
-        DB::select('call pregunta_crear(?,?,?)',
-        array(
-            request()->area,
-            request()->tipo,
-            request()->contenido,
-        ));
-
-        return "Agregado con exito";
-    }
-
-
-
-    
-    public function agregarRespuesta()
-    {
-        
-        /*DB::select('call respuesta_crear(?,?)',
-        array(
-            request()->area,
-            request()->tipo,
-        ));*/
-
-        return response()->json('realizado exitosamente');
-    }
-
-
-
-
-    public function destroy($id)
-    {
-        DB::table('areas_de_preguntas')->where('id_area', '=', $id)->delete();
-        $areas = DB::table('areas_de_preguntas')->get();
-        return json_encode($areas);
-    }
-
-
-
-
-    public function mostrarUsuarios()
-    {
-        $user = array();
-        $user = DB::table('personal')->get();
-
-        return view('usuarios' , [
-            'usuarios' => $user
-        ]);
-    }
 }

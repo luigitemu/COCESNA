@@ -16,6 +16,11 @@ class ReportesController extends Controller
 {
     public function mostrar()
     {
+        // if(request()->session()->get('auth')!='1')
+        // {
+        //     return redirect()->route('sistema.inicio');
+        // }
+
         // obtenemos la informacion de la base de datos
         $generos = DB::table('personal')
                         ->select('sexo')

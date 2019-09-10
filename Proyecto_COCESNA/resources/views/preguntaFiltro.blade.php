@@ -7,6 +7,9 @@
 @endsection
 
 @section('cuerpoPagina')
+{{
+  Session::get('nombreCompleto')
+}}
   <div style="height:100px;"></div>
   <div class="container">
     <div class="row">
