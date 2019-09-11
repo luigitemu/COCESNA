@@ -49,9 +49,7 @@ function validar() {
     if(campo.valido== false)
     return;
 
-    //mostrar($('#'+campo.id).val());
     guardarPregunta();
-    $('#areaPreguntas').html('');
     mostrarPreguntasDelArea();
     $('#'+campo.id).val('');
 }
@@ -91,9 +89,10 @@ function mostrar (contenido,id,idTipo) {
       <div class="card">
         <div class="row">
           <div class="col-12">
-            <div class="row mb-4">
-              <h3 class="mr-2" id="pregunta${id}">${contenido}</h3>
-              <button type="button" class="btn btn-edit" onclick="editarPregunta();" ><i class="fas fa-edit"></i></button>
+            <div class="row mb-4 d-flex bd-highlight align-items-center mb-3">
+              <h3 class="mr-auto p-2 bd-highlight" id="pregunta${id}">${contenido}</h3>
+              <button type="button" class="p-2 bd-highlight mr-3 btn btn-success" onclick="editarPregunta(${id},'${contenido}',${idTipo});" >editar</button>
+              <button type="button" class="btn btn-danger p-2 bd-highlight mr-4" onclick="eliminarPregunta(${id});" >eliminar</button>
             </div>
             <ul class="list-group list-group-flush" id="respuestasPregunta${id}">
             </ul>
@@ -111,6 +110,7 @@ function mostrar (contenido,id,idTipo) {
  * Muestra todas las preguntas del area seleccionada
  */
 function mostrarPreguntasDelArea() {
+    $('#areaPreguntas').html('');
     let parametros = `area=${AJAX.idArea}`;
     console.log(parametros);
     $.ajax({
@@ -143,6 +143,9 @@ function mostrarTipos(array) {
         $('#inputState').append(
             `<option value="${element.id_tipo}">${element.tipo}</option>`
         );
+        $('#inputState2').append(
+            `<option value="${element.id_tipo}">${element.tipo}</option>`
+        );
     });
 }
 
@@ -159,7 +162,7 @@ function mostrarRespuestasDelTipo(idPregunta,tipo) {
         method: 'GET',
         data: parametros,
         success: ( respuesta )=>{
-            //console.log(respuesta);
+            //console.log(respuesta);$.().modal();
             respuesta.forEach(element => {
                 $('#respuestasPregunta'+idPregunta).append(`
                 <li class="list-group-item">
@@ -201,3 +204,80 @@ function guardarPregunta(){
         }
     });
 }
+
+
+
+/**
+ * edita una pregunta pasando los datos a un modal
+ */
+function editarPregunta(id, cont, tipo){
+    $('#modalEditarPregunta').modal('toggle');
+    $('#pregunta-editar').val(cont);
+    $('#inputState2 option[value='+tipo+']').attr("selected", "selected");
+    $('#id-pregunta-editar').val(id);
+}
+
+
+
+var campoEditar = {
+    id: 'pregunta-editar',
+    valido: false
+}
+
+
+
+
+/**
+ * valida la informacion del modal editar
+ */
+function validarEditar() {
+    ($('#'+campoEditar.id).val() === '')?campoEditar.valido = false: campoEditar.valido=true;
+    marcar(campoEditar);
+
+    if(campoEditar.valido== false)
+    return;
+    actualizarPregunta();
+}
+
+
+
+
+function actualizarPregunta() {
+    let parametros = `tipo=${$('#inputState2').val()}&contenido=${$('#pregunta-editar').val()}&id=${$('#id-pregunta-editar').val()}`;
+    //console.log(parametros);
+    $.ajax({
+        url: AJAX.rutaActualizarPreguntas,
+        method: 'GET',
+        data: parametros,
+        success: ( respuesta )=>{
+            console.log(respuesta);
+            mostrarPreguntasDelArea();
+        }
+    });
+}
+
+
+
+var idEliminar;
+function eliminarPregunta(id) {
+    $('#modalEliminarPregunta').modal('show');
+    
+    idEliminar = id;
+    $('#modal-eliminar-contenido').html(`¿Está seguro de eliminar la pregunta?`);
+}
+
+function validarElminar(){
+    let parametros = `id=${idEliminar}`;
+    //console.log(parametros);
+    $.ajax({
+        url: `${AJAX.rutaEliminar}/${idEliminar}`,
+        method: 'GET',
+        data: parametros,
+        success: ( respuesta )=>{
+            console.log(respuesta);
+            mostrarPreguntasDelArea();
+        }
+    });
+}
+
+

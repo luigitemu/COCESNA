@@ -24,7 +24,12 @@ class AreaController extends Controller
         {
             return redirect()->route('sistema.inicio');   
         }
-        return view('areasPreguntasControlador');
+
+        $areas  = array();
+        $areas = DB::table('areas_de_preguntas')->get();
+        return view('areasPreguntasControlador', [
+            'areas'=> $areas
+        ]);
     }
 
 
@@ -71,43 +76,11 @@ class AreaController extends Controller
 
 
 
-    public function obtenerTiposRespuesta()
-    {
-        if(!(request()->session()->get('auth')=='1'))
-        {
-            return abort(404);
-        }
-
-        $tipos = DB::table('tipos_de_respuesta')
-                    ->get();
-        return $tipos;
-    }
-
-
-
-
     public function verPreguntasAJAX()
     {
         $preguntas = DB::table('preguntas')
                         ->where('id_area',request()->area)->get();
         return $preguntas;
-    }
-
-
-
-
-    public function mostrarRespuestasDelTipo()
-    {
-        if (!request()->id_tipo) 
-        {
-            return abort(404);
-        }
-
-        $elementos = DB::table('respuestas')
-                    ->where('id_tipo',request()->id_tipo)
-                    ->get();
-        return $elementos;
-        
     }
 
 
@@ -131,7 +104,73 @@ class AreaController extends Controller
 
 
 
-    
+
+    public function actualizarPregunta()
+    {
+        if(!(request()->session()->get('auth')=='1'))
+        {
+            return abort(404);
+        }
+        DB::table('preguntas')
+            ->where('id_pregunta', request()->id)
+            ->update([
+                'contenido' => request()->contenido,
+                'id_tipo' => request()->tipo,
+            ]);
+        return request();
+    }
+
+
+
+
+    public function borrarPregunta()
+    {
+        if(!request()->id)
+        {
+            return abort(404);
+        }
+
+        DB::table('preguntas')
+            ->where('id_pregunta', request()->id)
+            ->delete();
+        return request();
+    }
+
+
+
+
+    public function obtenerTiposRespuesta()
+    {
+        if(!(request()->session()->get('auth')=='1'))
+        {
+            return abort(404);
+        }
+
+        $tipos = DB::table('tipos_de_respuesta')
+                    ->get();
+        return $tipos;
+    }
+
+
+
+
+    public function mostrarRespuestasDelTipo()
+    {
+        if (!request()->id_tipo) 
+        {
+            return abort(404);
+        }
+
+        $elementos = DB::table('respuestas')
+                    ->where('id_tipo',request()->id_tipo)
+                    ->get();
+        return $elementos;
+        
+    }
+
+
+
+
     public function agregarRespuesta()
     {
         
@@ -147,16 +186,25 @@ class AreaController extends Controller
 
 
 
-    public function destroy($id)
+    public function borrarArea($id)
     {
-        // if(!(request()->session()->get('auth')=='1'))
-        // {
-        //     return abort(404);
-        // }
+        if(!(request()->session()->get('auth')=='1'))
+        {
+            return abort(404);
+        }
 
-        DB::table('preguntas')->where('id_area', '=', $id)->delete();
-        DB::table('areas_de_preguntas')->where('id_area', '=', $id)->delete();
-        $areas = DB::table('areas_de_preguntas')->get();
+        DB::table('preguntas')
+            ->where('id_area', '=', $id)
+            ->delete();
+        DB::table('areas_de_preguntas')
+            ->where('id_area', '=', $id)
+            ->delete();
+        $areas = DB::table('areas_de_preguntas')
+                    ->get();
         return json_encode($areas);
     }
+
+
+
+
 }

@@ -4,7 +4,7 @@ function eliminarUsuario(id) {
 $('#modalEliminar').modal('show');
 
 idEliminar = id;
-$('#contenidoModal').html(`Esta seguro de eliminar el usuario con id = ${id}`);
+$('#contenidoModal').html(`Está seguro de eliminar el usuario con id = ${id}`);
 }
 
 function confirmarEliminar () {

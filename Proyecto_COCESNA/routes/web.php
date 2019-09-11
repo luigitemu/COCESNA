@@ -13,6 +13,8 @@
 
 Route::get('/','MainController@index')->name('sistema.inicio');     //pagina inicial
 
+Route::get('/actualizarPregunta','AreaController@actualizarPregunta')->name('administrador.actualizarPregunta');
+
 Route::get('/agregarArea','AreaController@agregarArea')->name('administrador.agregarArea');  //agrega un area
 
 Route::get('/agregarPregunta','AreaController@agregarPreguntaAJAX')->name('administrador.agregarPregunta'); //agrega una pregunta a un area
@@ -27,9 +29,11 @@ Route::get('/PreguntasAJAX','AreaController@verPreguntasAJAX')->name('area.pregu
 
 Route::get('/pagPriAdm','MainController@ingresarComoAdmin')->name('administrador.principal');
 
-Route::get('pagPriAdm/{id}','AreaController@destroy')->name('administrador.destroy');
+Route::get('pagPriAdm/{id}','AreaController@borrarArea')->name('administrador.destroy');
 
 Route::get('/preguntas', 'AreaController@paginaPreguntas')->name('pagina.preguntas');
+
+Route::get('/preguntas/{id}', 'AreaController@borrarPregunta')->name('administrador.borrarPreguntas');
 
 //Route::get('/preguntasArea','MainController@verPreguntas') ->name('encuesta.preguntasArea');
 
