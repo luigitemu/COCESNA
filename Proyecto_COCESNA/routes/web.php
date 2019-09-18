@@ -25,21 +25,19 @@ Route::get('/elementosDelTipo','AreaController@mostrarRespuestasDelTipo')->name(
 
 Route::get('/fin','MainController@finalizar')->name('encuesta.fin');    //dirige hacia el final de la encuesta
 
+Route::get('/grdRes','MainController@guardarRespuestas')->name('encuesta.guardar');
+
 Route::get('/PreguntasAJAX','AreaController@verPreguntasAJAX')->name('area.preguntasAJAX');
 
 Route::get('/pagPriAdm','MainController@ingresarComoAdmin')->name('administrador.principal');
 
-Route::get('pagPriAdm/{id}','AreaController@borrarArea')->name('administrador.destroy');
+Route::get('/pagPriAdm/{id}','AreaController@borrarArea')->name('administrador.destroy');
 
 Route::get('/preguntas', 'AreaController@paginaPreguntas')->name('pagina.preguntas');
 
 Route::get('/preguntas/{id}', 'AreaController@borrarPregunta')->name('administrador.borrarPreguntas');
 
-//Route::get('/preguntasArea','MainController@verPreguntas') ->name('encuesta.preguntasArea');
-
-//Route::get('/preguntaFiltro','MainController@preguntar')->name('encuesta.preguntaFiltro');  //dirige hacia la pregunta filtro
-
-//Route::get('/send/email', 'MainController@mail');   //ejemplo de enviar mensajes
+//Route::get('/preguntasControlador', 'AreaController@borrarPregunta')->name('administrador.borrarPreguntas');
 
 Route::put('/si-no','MainController@seleccionarEstado')->name('encuesta.seleccionar');   //dirige de acuerdo a la respuesta
 
@@ -52,7 +50,3 @@ Route::get('/usuarios/{id}','UserController@destroyUser')->name('usuarios.elimin
 Route::get('/verReportes','ReportesController@mostrar')->name('reportes.mostrar');
 
 Route::put('/verif','MainController@verificar')->name('sistema.verificarEmpleadoContrasena');    //verificar numero de empleado y contraseña
-
-
-
-

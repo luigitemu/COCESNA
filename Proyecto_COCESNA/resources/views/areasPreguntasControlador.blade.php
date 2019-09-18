@@ -15,12 +15,12 @@
   
   @foreach ($areas as $area)
 
-    <div class="card-type front">
+    <div class="card-type front" id="{{ $area->id_area }}"  onclick="mostrarPreguntas(this)">
       <div class="blue"></div>
       <div class="yellow"></div>
       <div class="pink"></div>
       <div class="dots"></div>
-      <div class="personal-intro" id="{{ $area->id_area }}"  onclick="mostrarPreguntas(this)">
+      <div class="personal-intro">
         <p>{{ $area->nombre }}</p>
         <p>{{ $area->descripcion }}</p>
       </div>
@@ -28,4 +28,13 @@
   
   @endforeach
 
+@endsection
+
+@section('scripts')
+  <script>
+    var rutas = {
+      MostrarPreguntas: "{{ route('pagina.preguntas') }}",
+      principalAdmin: "{{ route('administrador.principal') }}", 
+    }
+  </script>
 @endsection

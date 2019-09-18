@@ -17,10 +17,7 @@ var idEliminar;
 function validar(){
     validarCampoVacio();
     console.log(campos);
-    // campos.forEach(e => {
-    //     marcar(e);
-    // });
-
+    
     for(let i = 0;i<campos.length;i++)
         marcar(campos[i]);
 
@@ -90,8 +87,9 @@ function mostrarAreas (elemento) {
     <h5 class="card-title descripcion-enc">Descripcion</h5>
     <p class="card-text">${elemento.descripcion}</p>
     </div>
-    <div class="card-footer">
-    <button type="button" class="btn btn-danger form-control" onclick="eliminar(${elemento.id_area})" style="z-index:2" data-toggle="modal" > Eliminar </button>
+    <div class="card-footer d-flex justify-content-center">
+    <button type="button" class="btn btn-success mb-2 mr-3"  onclick="" data-toggle="modal" > Editar </button>
+    <button type="button" class="btn btn-danger mb-2 mr-3"  onclick="eliminar(${elemento.id_area})" data-toggle="modal" > Eliminar </button>
     </div>
     </div>
     </div>

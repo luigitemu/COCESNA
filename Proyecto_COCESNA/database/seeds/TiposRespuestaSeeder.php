@@ -19,8 +19,13 @@ class TiposRespuestaSeeder extends Seeder
             'tipo' => 'Escala numerica 1-5'
         ]);
         factory(TiposRespuesta::class)->create([
-            'tipo' => 'Escala ordinal'
+            'tipo' => 'Escala ordinal bajo-alto'
         ]);
-        
+        factory(TiposRespuesta::class)->create([
+            'tipo' => 'Escala ordinal bien-mal'
+        ]);
+        factory(TiposRespuesta::class)->create([
+            'tipo' => 'Escala ordinal mucho-poco'
+        ]);
     }
 }

@@ -52,5 +52,41 @@ class RespuestaSeeder extends Seeder
             'contenido' => 'alto',
             'id_tipo' => '3',
         ]);
+        factory(Respuesta::class)->create([
+            'contenido' => 'muy bien',
+            'id_tipo' => '4',
+        ]);
+        factory(Respuesta::class)->create([
+            'contenido' => 'bien',
+            'id_tipo' => '4',
+        ]);
+        factory(Respuesta::class)->create([
+            'contenido' => 'regular',
+            'id_tipo' => '4',
+        ]);
+        factory(Respuesta::class)->create([
+            'contenido' => 'mal',
+            'id_tipo' => '4',
+        ]);
+        factory(Respuesta::class)->create([
+            'contenido' => 'muy mal',
+            'id_tipo' => '4',
+        ]);
+        factory(Respuesta::class)->create([
+            'contenido' => 'mucho',
+            'id_tipo' => '5',
+        ]);
+        factory(Respuesta::class)->create([
+            'contenido' => 'medio',
+            'id_tipo' => '5',
+        ]);
+        factory(Respuesta::class)->create([
+            'contenido' => 'poco',
+            'id_tipo' => '5',
+        ]);
+        factory(Respuesta::class)->create([
+            'contenido' => 'muy poco',
+            'id_tipo' => '5',
+        ]);
     }
 }

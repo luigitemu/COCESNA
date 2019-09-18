@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             'tipos_de_respuesta',
             'preguntas',
             'areas_de_preguntas',
+            'log_usuarios',
         ]);
 
 

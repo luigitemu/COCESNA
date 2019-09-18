@@ -9,8 +9,10 @@
 @endsection
 
 @section('contenido')
+
   @foreach ($areas as $area)
-    <div class="col-lg-4"  style="z-index:1;">
+
+    <div class="col-12 col-lg-6 col-xl-4"  style="z-index:1;">
       <div class="card card-style mb-3">
         <div  id="{{ $area->id_area }}"  onclick="mostrarPreguntas(this)">
           <div class="card-header"><span class="mr-1 titulo-enc">
@@ -21,49 +23,18 @@
             <p class="card-text">{{ $area->descripcion }}</p>
           </div>
         </div>
-          <div class="card-footer">
-            <button type="button" class="btn btn-danger form-control"  onclick="eliminar({{ $area->id_area }})" style="z-index:2" data-toggle="modal" > Eliminar </button>
-          </div>
+        <div class="card-footer d-flex justify-content-center">
+          <button type="button" class="btn btn-success mb-2 mr-3"  onclick="" data-toggle="modal" > Editar </button>
+          <button type="button" class="btn btn-danger mb-2 mr-3"  onclick="eliminar({{ $area->id_area }})" data-toggle="modal" > Eliminar </button>
+        </div>
       </div>
     </div>
-  @endforeach
 
-{{--  <div class="col-lg-4" id="area1" onclick="mifuncion(this)">
-    <div class="card card-style mb-3">
-        <form action="">
-      <div class="card-header"><span class="mr-1 titulo-enc">Encuesta:</span>Fatiga</div>
-      <div class="card-body">
-        <h5 class="card-title descripcion-enc">Descripcion</h5>
-        <p class="card-text">Conocer el estado de fatiga de los empleados</p>
-      </div>
-    </form>
-    </div>
- </div>  --}}
+  @endforeach
 
 @endsection
 
 @section('modalEliminar')
-  <!-- Modal -->
-  <div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- Modal -->
   <div class="modal fade" id="modal-eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

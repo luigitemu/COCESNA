@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Personal;
-use App\Usuarios;
-use Illuminate\Http\Request;
+use App\Personal;                       // Eloquent
+use App\Usuarios;                       // Eloquent
+use Illuminate\Http\Request;            // Request()
 use Illuminate\Support\Facades\DB;      // Importar DB
 use Illuminate\Support\Facades\Crypt;   // Encriptar/Desencriptar contraseñas
 use Illuminate\Support\Facades\Hash;    // Manejo de hashes
-use Mail;
-use App\Mail\SendMailable;
+use Mail;                               // Clase Mail
+use App\Mail\SendMailable;              
 
 class MainController extends Controller
 {
@@ -19,50 +19,11 @@ class MainController extends Controller
 
     public function index(Request $request)
     {
-        $request->session()->flush();
+        $request->session()->forget('auth');
+        $request->session()->forget('noEmpleado');
+        $request->session()->forget('nombreCompleto');
+        $request->session()->forget('nombres');
         return view('iniciarSesion');
-    }
-
-
-
-
-    public function finalizar(Request $request)
-    {
-        if(request()->session()->get('auth')!='1' || request()->session()->get('auth')!='2')
-        {
-            return redirect()->route('sistema.inicio');
-        }
-        
-        $request->session()->flush();
-        return view('finEncuesta');
-    }
-
-
-
-
-    public function ingresarComoAdmin(Request $request)
-    {
-        //$request->session()->flush();
-        if(request()->session()->get('auth')!='1')
-        {
-            return redirect()->route('sistema.inicio');
-        }
-        //print_r($request->session()->get('autenticado'));
-        //print_r($request->session()->get('autenticado'));
-        $areas  = array();
-        $areas = DB::table('areas_de_preguntas')->get();
-
-        return view('principalAdmin', [
-            'areas'=> $areas
-        ]);
-    }
-
-
-
-
-    public function preguntar()
-    {
-        return view('preguntaFiltro');
     }
 
 
@@ -70,13 +31,9 @@ class MainController extends Controller
 
     public function verificar(Request $request)
     {
-        if(!(request()->numeroEmpleado) && !(request()->contrasena))
-        {
-            return redirect()->route('sistema.inicio');
-        }
-        //Valida la informacion entrante, de no cumplirse las reglas
-        //regresa a la pagina de iniciar sesion con los errores
-        $data = request()->validate([
+        // Valida la informacion entrante, de no cumplirse las reglas
+        // Regresa a la pagina de iniciar sesion con los errores
+        $data = $request->validate([
             'numeroEmpleado' => ['required','exists:personal,no_empleado'], //verifica si existe el numero de empleado en la tabla personal, en la columna no_empleado
             'contrasena' => ['required']
         ],[
@@ -90,8 +47,8 @@ class MainController extends Controller
          * Metodo 1: Usando cifrado (encrypt/decrypt)
          * 
          *  */
-        //Busca la contraseña perteneciente al numero de empleado y la desencripta
-        //se almacena en la variable $pass
+        // Busca la contraseña perteneciente al numero de empleado y la desencripta
+        // se almacena en la variable $pass
         $usuario = DB::table('usuarios')
                     ->join('personal','usuarios.id_personal','=','personal.id_personal')
                     ->where('no_empleado',$data['numeroEmpleado'])
@@ -99,9 +56,9 @@ class MainController extends Controller
 
         $pass = Crypt::decryptString($usuario->contrasena);
         
-        //Compara la contraseña ingresada con la obtenida en la consulta, si son iguales
-        //entonces ingresa al sistema, sino entonces regresa a iniciar sesion
-        //mostrando el error de contraseña incorrecta
+        // Compara la contraseña ingresada con la obtenida en la consulta, si son iguales
+        // entonces ingresa al sistema, sino entonces regresa a iniciar sesion
+        // mostrando el error de contraseña incorrecta
         if($pass != $data['contrasena'])
         {
             return back()->withErrors([
@@ -110,7 +67,7 @@ class MainController extends Controller
         }
         else
         {
-            //Almacenar la hora de entrada al sistema
+            // Almacenar la hora de entrada al sistema
             DB::select('call reg_entrada_guardar(?,?,?,?,?,?)',
             array(
                 $usuario->nombres." ".$usuario->apellidos,
@@ -118,10 +75,14 @@ class MainController extends Controller
                 Hash::make($usuario->contrasena),
                 $usuario->email,
                 $usuario->activo,
-                request()->_token,
+                $request->_token,
             ));
 
             $posicion = $usuario->id_posicion;
+
+            $request->session()->put('noEmpleado',$usuario->no_empleado);
+            $request->session()->put('nombres',$usuario->nombres);
+            
             if($posicion == 1)
             {
                 $areas  = array();
@@ -153,15 +114,13 @@ class MainController extends Controller
          * 
          *  */
         /*
-        //Busca la contraseña perteneciente al numero de empleado
         $usuario = DB::table('personal')
                     ->where('no_empleado',$data['numeroEmpleado'])
                     ->first();
-        //Crea un hash con los datos ingresados 
-        //si los hashes coinciden entonces la contraseña es correcta
+        // Crea un hash con los datos ingresados 
+        // si los hashes coinciden entonces la contraseña es correcta
         if(Hash::check($data['contrasena'],$usuario->contrasena))
         {
-            //dd($usuario->contrasena);
             $posicion = $usuario->id_posicion;
             if($posicion == 1)
             {
@@ -170,7 +129,6 @@ class MainController extends Controller
             return redirect()->route('encuesta.preguntaFiltro');   
         }else
         {
-            //dd($data['contrasena']);
             return back()->withErrors([
                 'contrasena'=>'La contraseña es incorrecta',
             ])->withInput();
@@ -179,10 +137,30 @@ class MainController extends Controller
 
         
     }
+
+
+
+
+    // Si es el administrador quien ingreso, entonces cargar las areas de preguntas
+    public function ingresarComoAdmin(Request $request)
+    {
+        if(request()->session()->get('auth')!='1')
+        {
+            return redirect()->route('sistema.inicio');
+        }
+
+        $areas  = array();
+        $areas = DB::table('areas_de_preguntas')->get();
+
+        return view('principalAdmin', [
+            'areas'=> $areas
+        ]);
+    }
     
     
 
-    //Define que ruta se tomará de acuerdo a la respuesta de la pregunta filtro 
+
+    // Define que ruta se tomará de acuerdo a la respuesta de la pregunta filtro 
     public function seleccionarEstado()
     {
         if(request()->noEmpleado)
@@ -252,11 +230,42 @@ class MainController extends Controller
                     $controlador->nombres." ".$controlador->apellidos,
                     $noEmp,
                 ));
-                
-        //return "Mensaje enviado";
+
+        return "Mensaje enviado";
     }
 
 
 
 
+    // Si el controlador termino la encuesta entonces muestra una pagina de confirmacion
+    public function finalizar(Request $request)
+    {
+        if($request->session()->get('auth')!='1' && $request->session()->get('auth')!='2')
+        {
+            return redirect()->route('sistema.inicio');
+        }
+        
+        $request->session()->forget('auth');
+        $request->session()->forget('noEmpleado');
+        $request->session()->forget('nombreCompleto');
+        $request->session()->forget('nombres');
+        return view('finEncuesta');
+    }
+
+
+
+
+    // 
+    public function guardarRespuestas(){
+        /*DB::select('call log_usuarios_guardar(?,?,?,?,?,?)',
+            array(
+                request()->session()->get('noEmpleado'),
+                '1',
+                NULL,
+                NULL,
+                NULL,
+                '0',
+            ));*/
+        return request();
+    }
 }

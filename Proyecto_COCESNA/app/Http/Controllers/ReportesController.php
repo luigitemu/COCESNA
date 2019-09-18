@@ -14,12 +14,17 @@ use App\Mail\SendMailable;
 
 class ReportesController extends Controller
 {
+
+
+
+
+    // Muestra determinados reportes
     public function mostrar()
     {
-        // if(request()->session()->get('auth')!='1')
-        // {
-        //     return redirect()->route('sistema.inicio');
-        // }
+        if(request()->session()->get('auth')!='1')
+        {
+            return redirect()->route('sistema.inicio');
+        }
 
         // obtenemos la informacion de la base de datos
         $generos = DB::table('personal')
@@ -113,12 +118,39 @@ class ReportesController extends Controller
             ]),
         ]);
 
-        return view('reportesCreados',compact('chart1','chart2','chart3'));
+        // Para el cuarto grafico se cuenta las veces que han respondido "si" y "no" en la 
+        // pregunta filtro
+        $etiquetas = ['Contestaron "SI"','Contestaron "NO"'];
+        $cantidad = DB::table('log_usuarios')
+                            ->select('id_respuesta',DB::raw('count(*) as total'))
+                            ->groupBy('id_respuesta')
+                            ->get();
+        $cantidad = array_values($cantidad->pluck('total')->toArray());
+        // obtenemos los colores para el grafico
+        $colores = $this->colores_aleatorios(count($etiquetas));
+
+        // creamos el objeto chart
+        $chart4 = new UsersChart();
+        $chart4->labels($etiquetas);
+        $dataset = $chart4->dataset('dd','doughnut',$cantidad);
+        $dataset->backgroundColor($colores);
+        $chart4->options([
+            'legend' => collect([
+                'display' => false,
+            ]),
+            'title' => collect([
+                'display' => true,
+                'text' => 'Cantidad de veces que han respondido "si" y "no" a la pregunta filtro'
+            ]),
+        ]);
+
+        return view('reportesCreados',compact('chart1','chart2','chart3','chart4'));
     }
 
 
 
 
+    // Permite obtener determinada cantidad de colores aleatorios
     protected function colores_aleatorios($cantidad)
     {
         $colores = collect();

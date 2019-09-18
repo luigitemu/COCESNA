@@ -31,9 +31,6 @@
         <a href="{{ route('administrador.principal') }}" class="list-group-item list-group-item-action bg-light">Area de Preguntas</a>
         <a href="{{ route('usuarios.mostrar') }}" class="list-group-item list-group-item-action bg-light">Usuarios</a>
         <a href="{{ route('reportes.mostrar') }}" class="list-group-item list-group-item-action bg-light">Reportes</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->

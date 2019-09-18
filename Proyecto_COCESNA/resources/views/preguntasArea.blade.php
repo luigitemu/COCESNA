@@ -62,7 +62,7 @@
             </div>
             <div class="row">
               <h5 class="ml-4 mb-4 mr-4 col-form-label">Tipo de respuesta:</h5>
-              <select id="inputState2" class="form-tipo col-5">
+              <select id="inputState2" class="form-tipo col-6">
               </select>
             </div>
             <input type="hidden" id="id-pregunta-editar" value="">

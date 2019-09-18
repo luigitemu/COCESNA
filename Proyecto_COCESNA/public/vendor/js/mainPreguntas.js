@@ -26,6 +26,12 @@ $(document).ready(function(){
             mostrarTipos(respuesta);
         }
     });
+    $(window).keydown(function(event){
+        if(event.keyCode == 13) {
+        event.preventDefault();
+        return false;
+        }
+    });
 });
 
 
@@ -258,6 +264,7 @@ function actualizarPregunta() {
 
 
 
+
 var idEliminar;
 function eliminarPregunta(id) {
     $('#modalEliminarPregunta').modal('show');
@@ -265,6 +272,9 @@ function eliminarPregunta(id) {
     idEliminar = id;
     $('#modal-eliminar-contenido').html(`¿Está seguro de eliminar la pregunta?`);
 }
+
+
+
 
 function validarElminar(){
     let parametros = `id=${idEliminar}`;
@@ -279,5 +289,9 @@ function validarElminar(){
         }
     });
 }
+
+
+
+
 
 
