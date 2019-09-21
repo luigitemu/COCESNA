@@ -28,6 +28,7 @@ class ReportesController extends Controller
 
         // obtenemos la informacion de la base de datos
         $generos = DB::table('personal')
+            
                         ->select('sexo')
                         ->get();
         $cantidadM = DB::table('personal')->where('sexo','M')->count();
@@ -123,6 +124,7 @@ class ReportesController extends Controller
         $etiquetas = ['Contestaron "SI"','Contestaron "NO"'];
         $cantidad = DB::table('log_usuarios')
                             ->select('id_respuesta',DB::raw('count(*) as total'))
+                            ->where('es_pregunta_filtro','=','1')
                             ->groupBy('id_respuesta')
                             ->get();
         $cantidad = array_values($cantidad->pluck('total')->toArray());
@@ -132,7 +134,7 @@ class ReportesController extends Controller
         // creamos el objeto chart
         $chart4 = new UsersChart();
         $chart4->labels($etiquetas);
-        $dataset = $chart4->dataset('dd','doughnut',$cantidad);
+        $dataset = $chart4->dataset('dd','polarArea',$cantidad);
         $dataset->backgroundColor($colores);
         $chart4->options([
             'legend' => collect([

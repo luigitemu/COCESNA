@@ -1,10 +1,29 @@
 <div>
-  El controlador {{$nombre}} con número de empleado {{$noEmp}} reportó no estar
+  El controlador "{{$nombre}}" con número de empleado "{{$noEmp}}" reportó no estar
   en forma para realizar el turno, llenando la encuesta de la siguiente manera:
+  <br><br>
+  <table>
+    <thead>
+      <tr>
+        <th>Área</th>
+        <th></th>
+        <th>Pregunta</th>
+        <th></th>
+        <th>Respuesta</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach ($parametros as $parametro)
+        <tr>
+          <td>{{$parametro->area}}</td>
+          <td></td>
+          <td>{{$parametro->pregunta}}</td>
+          <td></td>
+          <td>{{$parametro->respuesta}}</td>
+        </tr>
+      @endforeach
+    </tbody>
+  </table>
   <br>
-  El usuario seleccionó el area de fatiga
-  <br>
-  ¿Tengo dolor de cabeza? -> SI
-  <br>
-  Encuesta realizada el 00/00/00 a las 00:00 
+  Fecha y hora de la encuesta: {{$parametros[count($parametros)-1]->fecha_creacion}} 
 </div>

@@ -37,3 +37,31 @@ function confirmarEliminar () {
     });
     $('#modal-eliminar').modal('hide');
 }
+
+// validaciones;
+var campos = [
+    {id: 'input-correo', valido: false},
+];
+var idEliminar;
+
+function validarCampoVacio(){
+        campos.forEach(valor=>{
+            ($('#'+valor.id).val() === '')?valor.valido = false:valor.valido = true;
+        });
+}
+
+function validar(){
+    validarCampoVacio();
+    console.log(campos);
+    
+    for(let i = 0;i<campos.length;i++)
+        marcar(campos[i]);
+
+    for(let i =0 ;i<campos.length;i++){
+        if(campos[i].valido == false)
+        return;
+    }
+
+
+}
+

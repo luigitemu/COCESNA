@@ -27,12 +27,18 @@ class UserController extends Controller
         $user = DB::table('usuarios')
                         ->join('personal' , 'usuarios.id_personal' ,'=' ,'personal.id_personal')
                         ->join('turnos' , 'turnos.id_turno','=','usuarios.id_turno')
-                        ->select('usuarios.id_personal' , 'usuarios.email', 'personal.nombres' , 'personal.apellidos','turnos.turno' )
-                        ->orderBy('usuarios.id_personal')
+                        ->select('personal.no_empleado' , 'usuarios.email', 'personal.nombres' , 'personal.apellidos','turnos.turno' )
+                        ->orderBy('personal.no_empleado')
                         ->get();
-
+        $personal = DB::table('personal')
+                        ->orderBy('no_empleado','asc')
+                        ->get();
+        $turnos = DB::table('turnos')
+                        ->get();
         return view('usuarios' , [
-            'usuarios' => $user
+            'usuarios' => $user,
+            'personal' => $personal,
+            'turnos' => $turnos,
         ]);
     }
 
@@ -55,4 +61,8 @@ class UserController extends Controller
                         ->get();
         return json_encode($usuarios);
     }
+
+
+
+
 }

@@ -160,7 +160,17 @@ Y en el controlador lo siguiente:
 $name = 'Krunal';
 Mail::to('krunal@appdividend.com')->send(new SendMailable($name)); 
 =========================================================================
+
+
+Problema "Acesso denegado, db:seed"
 =========================================================================
+Ocurre cuando la configuración que tenemos en cache es incorrecta
+para resolverlo ejecutamos el siguiente comando:
+
+$  php artisan config:clear 
 =========================================================================
+
+
+
 =========================================================================
 =========================================================================

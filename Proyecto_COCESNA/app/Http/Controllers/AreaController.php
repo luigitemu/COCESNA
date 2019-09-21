@@ -69,6 +69,40 @@ class AreaController extends Controller
 
 
 
+    // Actualiza un area de preguntas
+    public function actualizarArea()
+    {
+        if(!(request()->session()->get('auth')=='1'))
+        {
+            return abort(404);
+        }
+
+        DB::table('areas_de_preguntas')
+            ->where('id_area','=',request()->id)
+            ->update([
+                'nombre' => request()->nombre,
+                'descripcion' => request()->descripcion,
+            ]);
+
+        DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
+        array(
+            request()->session()->get('noEmpleado'),
+            request()->session()->get('nombres'),
+            'Actualizar area',
+            'areas_de_preguntas',
+            'Actualizar area '.request()->id. ' usando el nombre "'.request()->nombre.'" y la descripcion "'.request()->descripcion.'"',
+            'UPDATE',
+            request()->session()->get('auth'),
+        ));
+
+        $areas = DB::table('areas_de_preguntas')->get();
+
+        return json_encode($areas);
+    }
+
+
+
+
     // Borra un area especifica
     public function borrarArea($id)
     {
@@ -77,6 +111,9 @@ class AreaController extends Controller
             return abort(404);
         }
 
+        DB::table('log_usuarios')
+            ->where('id_area', '=', $id)
+            ->delete();
         DB::table('preguntas')
             ->where('id_area', '=', $id)
             ->delete();

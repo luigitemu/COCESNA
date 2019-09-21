@@ -4,17 +4,13 @@ var idArea;
 
 $(document).ready(function(){
     let parametros = `id=${variables.id}`;
-    //console.log(parametros);
     $.ajax({
         url: variables.rutaMostrarPreguntas,
         method: 'GET',
         data: parametros,
         success: ( respuesta )=>{
-            //console.log(respuesta);
             preguntas = respuesta.preguntas;
             idArea = respuesta.id;
-            //console.log(idArea);
-            //console.log(preguntas);
             mostrarSig();  // Mostrar pregunta inicial
         }
     });
@@ -33,12 +29,10 @@ $(document).ready(function(){
     //   respuestas: ["mucho","medio","poco","muy poco"]
     // }];
     
-    var indicePreg = 0; //cuenta el indice en el que va la pregunta
-    var soluc = {}; //Arreglo que contiene las elecciones del controlador
-    var quiz = $('#quiz'); //div del Quiz
-    
-    // mostrarSig();  // Mostrar pregunta inicial
-    
+    var indicePreg = 0;     //cuenta el indice en el que va la pregunta
+    var soluc = {};         //Arreglo que contiene las elecciones del controlador
+    var quiz = $('#quiz');  //div del Quiz
+
     // Manejo del boton "Next"
     $('#next').on('click', function (e) {
       e.preventDefault();
@@ -47,7 +41,7 @@ $(document).ready(function(){
       if(quiz.is(':animated')) {        
         return false;
       }
-      eleccion();//agrega las respuestas a un arreglo
+     
 
       var quizvacio=true;
       var cantresp=document.querySelectorAll("input[name=answer]");
@@ -57,42 +51,45 @@ $(document).ready(function(){
           break;
         }
       }
-
-      if (quizvacio) { // Si no selecciona una respuesta, el progreso se detiene
+      
+      if (quizvacio) {      // Si no selecciona una respuesta, el progreso se detiene
         alert('Favor seleccione una respuesta!');
       } else {
+        eleccion();         //agrega las respuestas a un arreglo
         indicePreg++;
         mostrarSig();
       }
     });
-    
-//----------------------------------------------Manejador de boton "siguiente"
-    // $('#prev').on('click', function (e) {
-    //   e.preventDefault();
-      
-    //   if(quiz.is(':animated')) {
-    //     return false;
-    //   }
-    //   eleccion();
-    //   indicePreg--;
-    //   mostrarSig();
-    // });
-    
-    //---------------------------------------"Empezar de nuevo"
-    $('#start').on('click', function (e) {
-      e.preventDefault();
-      $("#cuestmsj").remove();
-      if(quiz.is(':animated')) {
-        return false;
-      }
-      indicePreg = 0;
-      soluc = {};
-      mostrarSig();
-      $('#start').hide();
-      $('#enc-sig').hide();
-      //$('#enc-ter').hide();
+
+    // Boton de finalizar
+    $('#start').click(function () {
+      $('#start').html(
+      `<div class="spinner-border my-2" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      `);
+      $.ajax({
+        url: variables.rutaFinalizarEncuesta,
+        method: 'GET',
+        success: ( respuesta )=>{
+          console.log(respuesta);
+          idAreapreguntas = '';
+          idArea = '';
+          indicePreg = 0;   //cuenta el indice en el que va la pregunta
+          soluc = {};
+          $('#titulo-enc').html('Fin de encuesta');
+          $('#cuestmsj').html('Ha finalizado la encuesta <br> <p>Gracias por su participación.</p>');
+          $('#enc-sig').css('display','none');
+          $('#start').html('Finalizar encuesta');
+          $('#start').css('display','none');
+          setTimeout(function(){
+            window.location = variables.redireccionLogin
+          }, 4000);         //dentro de 4 segundos redirecciona 
+        }
+      });
     });
-    
+
+
     // Animates buttons on hover
     $('.button').on('mouseenter', function () {
       $(this).addClass('active');
@@ -126,12 +123,6 @@ $(document).ready(function(){
         item.append(ent);
         lista.append(item);
       }
-      // preguntas[index].respuestas.forEach(element => {
-      //   item = $(`<li class="list-group-item" value="${element}" onclick="selecradio(this)">`);
-      //   ent = `<label><input type="radio" name="answer" value="${element}" /><span class="ml-1">${element}</span></label>`;
-      //   item.append(ent);
-      //   lista.append(item);
-      // });
       return lista;
     }
     
@@ -140,16 +131,13 @@ $(document).ready(function(){
       //soluc[indicePreg] = +$('input[name="answer"]:checked').val();
       soluc[preguntas[indicePreg].cuest] = preguntas[indicePreg].respuestas[$('input[name="answer"]:checked').val()];
       
-      let parametros = `idArea=${idArea}&pregunta=${preguntas[indicePreg].cuest}&respuesta=${preguntas[indicePreg].respuestas[$('input[name="answer"]:checked').val()]}`;
-      //var parametros = {};
-      //parametros['idArea'] = idArea;
-      //parametros['respuestas'] = soluc;
-      //parametros = {'data': parametros};
+      let parametros = `idArea=${idArea}&pregunta=${encodeURIComponent(preguntas[indicePreg].cuest)}&respuesta=${preguntas[indicePreg].respuestas[$('input[name="answer"]:checked').val()]}`;
       console.log(parametros);
       $.ajax({
         url: variables.rutaGuardarRespuestas,
         method: 'GET',
         data: parametros,
+        dataType: 'json',
         success: ( respuesta )=>{
           console.log(respuesta);
         }
@@ -196,17 +184,33 @@ $('#contras').on('click', function(){
   $('#mail-modal').modal('show');
 });
 
-var reemplazar =
-$('#mail-send').on('click',function(){
-  console.log('se ha enviado su correo');
-  $('#mail-cont').replaceWith(`<div class="modal-body" id="load-cont">
-                              Su correo fue enviado con exito <span class="check-ico"><i class="fas fa-check"></i></span>
-                              </div>
-                              <div class="modal-body" id="load-cont">
-                              Error. Intentelo de nuevo <span class="fail-ico"><i class="fas fa-times"></i></span>
-                              </div>`);
-  $('#mail-cancel').html("cerrar");
-});
+var reemplazar = 3;
+// $('#mail-send').on('click',function(){
+//   console.log('se ha enviado su correo');
+//   $('#mail-cont').replaceWith(`<div class="modal-body" id="load-cont">
+//                               Su correo fue enviado con exito <span class="check-ico"><i class="fas fa-check"></i></span>
+//                               </div>
+//                               <div class="modal-body" id="load-cont">
+//                               Error. Intentelo de nuevo <span class="fail-ico"><i class="fas fa-times"></i></span>
+//                               </div>`);
+//   $('#mail-cancel').html("cerrar");
+// });
+
+function confirmarEnviar(noEmp) {
+  let parametros = `noEmpleado=${noEmp}`;
+  console.log(parametros);
+  $.ajax({
+    url: variables.contrasenaCorreo,
+    method: 'GET',
+    data: parametros,
+    dataType: 'json',
+    success: ( respuesta )=>{
+      console.log(respuesta);
+      $('mail-cont').html('Su correo fue enviado con exito');
+      //$('mail-cont').append("Su correo fue enviado con exito");
+    }
+  });
+}
 
 
 

@@ -2,7 +2,7 @@
 
 @section('tituloDashboard')
   <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-3">
-    <h1 class="h3 mb-0 text-gray-800">Areas De Preguntas</h1>
+    <h1 class="h3 mb-0 text-gray-800">Áreas De Preguntas</h1>
     <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg shadow-sm" data-toggle="modal" data-target="#modalAgregarPregunta"><i class="far fa-file-alt mr-1"></i>Crear Area de Preguntas</a>
   </div>
   <hr>
@@ -19,18 +19,23 @@
             Encuesta:</span>{{ $area->nombre }}
           </div>
           <div class="card-body" >
-            <h5 class="card-title descripcion-enc">Descripcion</h5>
+            <h5 class="card-title descripcion-enc">Descripción</h5>
             <p class="card-text">{{ $area->descripcion }}</p>
           </div>
         </div>
         <div class="card-footer d-flex justify-content-center">
-          <button type="button" class="btn btn-success mb-2 mr-3"  onclick="" data-toggle="modal" > Editar </button>
-          <button type="button" class="btn btn-danger mb-2 mr-3"  onclick="eliminar({{ $area->id_area }})" data-toggle="modal" > Eliminar </button>
+          <button type="button" class="btn btn-success mb-2 mr-3"  onclick="editar({{ $area->id_area }},'{{ $area->nombre }}','{{ $area->descripcion }}');" data-toggle="modal" > Editar </button>
+          <button type="button" class="btn btn-danger mb-2 mr-3"  onclick="eliminar({{ $area->id_area }});" data-toggle="modal" > Eliminar </button>
         </div>
       </div>
     </div>
 
   @endforeach
+
+
+  @if (count($areas)==0)
+    <h4 class="ml-5">Sin áreas aún</h4>
+  @endif
 
 @endsection
 
@@ -62,7 +67,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Crear Area de Preguntas</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Crear Área de Preguntas</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -75,7 +80,7 @@
               <div id="valida-nombre"></div>
             </div>
             <div class="form-group">
-              <label for="message-text" class="col-form-label">Descripcion :</label>
+              <label for="message-text" class="col-form-label">Descripcion:</label>
               <textarea class="form-control" id="descripcion"></textarea>
               <div id="valida-descripcion"></div>
             </div>
@@ -88,6 +93,36 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="modalEditarPregunta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Editar Área de Preguntas</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Nombre:</label>
+                <input type="text" class="form-control" id="nombre-editar">
+                <div id="valida-nombre"></div>
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="col-form-label">Descripcion:</label>
+                <textarea class="form-control" id="descripcion-editar"></textarea>
+                <div id="valida-descripcion"></div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary" onclick="confirmarEditar();">Actualizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
 @endsection
 
 @section('scripts')
@@ -96,6 +131,7 @@
       AgregarArea:"{{ route('administrador.agregarArea') }}",
       MostrarPreguntas: "{{ route('pagina.preguntas') }}",
       principalAdmin: "{{ route('administrador.principal') }}", 
+      editarArea: "{{ route('administrador.actualizarArea') }}",
     }
   </script>
 @endsection

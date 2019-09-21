@@ -26,7 +26,7 @@
           <form>
             <div class="form-group">
               <label for="pregunta" class="col-form-label">Pregunta:</label>
-              <input type="text" class="form-control" id="pregunta">
+              <input type="text" class="form-control" id="pregunta" pattern="[-+/*]">
               <div id="valida-pregunta"></div>
             </div>
             <div class="row">

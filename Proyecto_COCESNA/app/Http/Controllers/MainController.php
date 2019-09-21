@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;      // Importar DB
 use Illuminate\Support\Facades\Crypt;   // Encriptar/Desencriptar contraseñas
 use Illuminate\Support\Facades\Hash;    // Manejo de hashes
 use Mail;                               // Clase Mail
-use App\Mail\SendMailable;              
+use App\Mail\SendMailable;
 
 class MainController extends Controller
 {
@@ -174,24 +174,36 @@ class MainController extends Controller
 
             if ($respuesta)
             {
+                $idRespuesta = DB::table('respuestas')
+                                ->select('id_respuesta')
+                                ->where('contenido','=','si')
+                                ->first();
+                // dd($idRespuesta->id_respuesta);                
                 DB::select('call log_usuarios_guardar(?,?,?,?,?,?)',
                 array(
                     $query->id_personal,
-                    '1',
+                    $idRespuesta->id_respuesta,
                     NULL,
                     NULL,
                     NULL,
                     '1',
                 ));
-                $this->enviarCorreo(request()->noEmpleado);
-                return redirect()->route('encuesta.fin');
+                request()->session()->forget('auth');
+                request()->session()->forget('noEmpleado');
+                request()->session()->forget('nombreCompleto');
+                request()->session()->forget('nombres');
+                return view('finEncuesta');
             }
             else
             {
+                $idRespuesta = DB::table('respuestas')
+                                ->select('id_respuesta')
+                                ->where('contenido','=','no')
+                                ->first();
                 DB::select('call log_usuarios_guardar(?,?,?,?,?,?)',
                 array(
                     $query->id_personal,
-                    '2',
+                    $idRespuesta->id_respuesta,
                     NULL,
                     NULL,
                     NULL,
@@ -210,7 +222,7 @@ class MainController extends Controller
 
 
     // Esta funcion envía los correos a los usuarios permitidos
-    protected function enviarCorreo($noEmp)
+    protected function enviarCorreo($noEmp,$parametros)
     {
         $controlador = DB::table('personal')
                         ->join('usuarios','usuarios.id_personal','=','personal.id_personal')
@@ -229,6 +241,7 @@ class MainController extends Controller
                 ->send(new SendMailable(
                     $controlador->nombres." ".$controlador->apellidos,
                     $noEmp,
+                    $parametros,
                 ));
 
         return "Mensaje enviado";
@@ -244,28 +257,77 @@ class MainController extends Controller
         {
             return redirect()->route('sistema.inicio');
         }
-        
+        $query = DB::table('personal')
+                        ->select('id_personal')
+                        ->where('no_empleado',$request->session()->get('noEmpleado'))
+                        ->first();
+
+        $resultados = DB::table('log_usuarios')
+                        ->select(DB::raw('areas_de_preguntas.nombre as area'),'log_usuarios.fecha_creacion',DB::raw('preguntas.contenido as pregunta'),DB::raw('respuestas.contenido as respuesta'))
+                        ->join('respuestas','log_usuarios.id_respuesta','=','respuestas.id_respuesta')
+                        ->join('preguntas','log_usuarios.id_pregunta','=','preguntas.id_pregunta')
+                        ->join('areas_de_preguntas','log_usuarios.id_area','=','areas_de_preguntas.id_area')
+                        ->where('log_usuarios.id_personal','=',$query->id_personal)
+                        ->whereDate('log_usuarios.fecha_creacion','=',date('Y-m-d'))
+                        ->get();
+
+        $this->enviarCorreo($request->session()->get('noEmpleado'),$resultados);
         $request->session()->forget('auth');
         $request->session()->forget('noEmpleado');
         $request->session()->forget('nombreCompleto');
         $request->session()->forget('nombres');
-        return view('finEncuesta');
+        return 'correo enviado con exito';//.$respuestas;
+        // return $respuestas;
     }
 
 
 
 
-    // 
-    public function guardarRespuestas(){
-        /*DB::select('call log_usuarios_guardar(?,?,?,?,?,?)',
+    // Almacena las respuestas de los controladores en la base de datos
+    public function guardarRespuestas(Request $request)
+    {
+        if($request->session()->get('auth')!='1' && $request->session()->get('auth')!='2')
+        {
+            return redirect()->route('sistema.inicio');
+        }
+        
+        $idRespuesta = DB::table('respuestas')
+        ->select('id_respuesta')
+        ->where('contenido','=', $request->respuesta)
+        ->first();
+
+        $idPregunta = DB::table('preguntas')
+        ->select('id_pregunta')
+        ->where('contenido','=', $request->pregunta)
+        ->first();
+
+        $idPersonal = DB::table('personal')
+                        ->select('id_personal')
+                        ->where('no_empleado',$request->session()->get('noEmpleado'))
+                        ->first();
+
+
+        DB::select('call log_usuarios_guardar(?,?,?,?,?,?)',
             array(
-                request()->session()->get('noEmpleado'),
-                '1',
-                NULL,
-                NULL,
+                // ,
+                $idPersonal->id_personal,
+                $idRespuesta->id_respuesta,
+                $request->idArea,
+                $idPregunta->id_pregunta,
                 NULL,
                 '0',
-            ));*/
+            ));
+
+        return json_encode($idPregunta);
+    }
+
+
+
+
+    //
+    public function recuperarContrasena()
+    {
+        //$this->enviarCorreo($request->session()->get('noEmpleado'));
         return request();
     }
 }

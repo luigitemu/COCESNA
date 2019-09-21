@@ -16,10 +16,11 @@ class SendMailable extends Mailable
      *
      * @return void
      */
-    public function __construct($name, $noEmp)
+    public function __construct($name, $noEmp, $parametros)
     {
         $this->name = $name;
         $this->noEmp = $noEmp;
+        $this->parametros = $parametros;
     }
 
     /**
@@ -29,8 +30,12 @@ class SendMailable extends Mailable
      */
     public function build()
     {
-        return $this->subject('Resultados de encuesta')->view('email.reporte',[
-            "nombre" => $this->name,
-            "noEmp" => $this->noEmp]);
+        return $this->subject('Resultados de encuesta')
+                    ->from($address = env('MAIL_USERNAME'), $name = 'Recursos Humanos')
+                    ->view('email.reporte',[
+                        "nombre" => $this->name,
+                        "noEmp" => $this->noEmp,
+                        'parametros' => $this->parametros,
+                    ]);
     }
 }

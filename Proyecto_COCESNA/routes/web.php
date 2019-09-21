@@ -13,6 +13,8 @@
 
 Route::get('/','MainController@index')->name('sistema.inicio');     //pagina inicial
 
+Route::get('/actualizarArea','AreaController@actualizarArea')->name('administrador.actualizarArea');
+
 Route::get('/actualizarPregunta','AreaController@actualizarPregunta')->name('administrador.actualizarPregunta');
 
 Route::get('/agregarArea','AreaController@agregarArea')->name('administrador.agregarArea');  //agrega un area
@@ -38,6 +40,8 @@ Route::get('/preguntas', 'AreaController@paginaPreguntas')->name('pagina.pregunt
 Route::get('/preguntas/{id}', 'AreaController@borrarPregunta')->name('administrador.borrarPreguntas');
 
 //Route::get('/preguntasControlador', 'AreaController@borrarPregunta')->name('administrador.borrarPreguntas');
+
+Route::get('/recCon','MainController@recuperarContrasena')->name('usuario.recuperar');
 
 Route::put('/si-no','MainController@seleccionarEstado')->name('encuesta.seleccionar');   //dirige de acuerdo a la respuesta
 

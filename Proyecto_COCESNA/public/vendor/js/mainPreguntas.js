@@ -199,11 +199,12 @@ function editar () {
  * cuando la informacion ingresada en el modal es correcta, se almacena en la base de datos
  */
 function guardarPregunta(){
-    let parametros = `area=${AJAX.idArea}&tipo=${$('#inputState').val()}&contenido=${$('#'+campo.id).val()}`;
+    let parametros = `area=${AJAX.idArea}&tipo=${$('#inputState').val()}&contenido=${encodeURIComponent($('#'+campo.id).val())}`;
     //console.log(parametros);
     $.ajax({
         url: AJAX.rutaAgregarPreguntas,
         method: 'GET',
+        //dataType: 'json',
         data: parametros,
         success: ( respuesta )=>{
             console.log(respuesta);
@@ -249,7 +250,7 @@ function validarEditar() {
 
 
 function actualizarPregunta() {
-    let parametros = `tipo=${$('#inputState2').val()}&contenido=${$('#pregunta-editar').val()}&id=${$('#id-pregunta-editar').val()}`;
+    let parametros = `tipo=${$('#inputState2').val()}&contenido=${encodeURIComponent($('#pregunta-editar').val())}&id=${$('#id-pregunta-editar').val()}`;
     //console.log(parametros);
     $.ajax({
         url: AJAX.rutaActualizarPreguntas,
