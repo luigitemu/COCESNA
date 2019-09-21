@@ -17,6 +17,8 @@ Route::get('/actualizarArea','AreaController@actualizarArea')->name('administrad
 
 Route::get('/actualizarPregunta','AreaController@actualizarPregunta')->name('administrador.actualizarPregunta');
 
+Route::get('/actualizarUsuario','UserController@actualizarUsuario')->name('usuarios.actualizar');
+
 Route::get('/agregarArea','AreaController@agregarArea')->name('administrador.agregarArea');  //agrega un area
 
 Route::get('/agregarPregunta','AreaController@agregarPreguntaAJAX')->name('administrador.agregarPregunta'); //agrega una pregunta a un area

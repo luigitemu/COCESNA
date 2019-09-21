@@ -63,7 +63,6 @@ function marcar(valor) {
 function guardarMostrar() {
     let nombre = $('#'+campos[0].id).val();
     let descripcion = $('#'+campos[1].id).val();
-
     let parametros = `nombre=${nombre}&descripcion=${descripcion}`;
     $('#'+campos[0].id).val('');
     $('#'+campos[1].id).val('');
@@ -88,6 +87,7 @@ function guardarMostrar() {
             }
         }
     });
+    $('#modalAgregarPregunta').modal('hide');
 }
 
 function mostrarAreas (elemento) {
@@ -183,6 +183,6 @@ function confirmarEditar(){
             }
         }
     });
-    $('#modal-eliminar').modal('hide');
+    $('#modalEditarPregunta').modal('hide');
     return;
 };

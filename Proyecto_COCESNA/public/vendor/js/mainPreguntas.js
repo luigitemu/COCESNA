@@ -118,13 +118,13 @@ function mostrar (contenido,id,idTipo) {
 function mostrarPreguntasDelArea() {
     $('#areaPreguntas').html('');
     let parametros = `area=${AJAX.idArea}`;
-    console.log(parametros);
+    // console.log(parametros);
     $.ajax({
         url: AJAX.rutaMostrarPreguntas,
         method: 'GET',
         data: parametros,
         success: ( respuesta )=>{
-            console.log(respuesta);
+            // console.log(respuesta);
             if(respuesta.length == 0){
                 $('#areaPreguntas').html(`
                 <h4 class="ml-5">Sin preguntas aún</h4>
@@ -207,9 +207,10 @@ function guardarPregunta(){
         //dataType: 'json',
         data: parametros,
         success: ( respuesta )=>{
-            console.log(respuesta);
+            // console.log(respuesta);
         }
     });
+    $('#modalAgregarPregunta').modal('hide');
 }
 
 
@@ -257,8 +258,9 @@ function actualizarPregunta() {
         method: 'GET',
         data: parametros,
         success: ( respuesta )=>{
-            console.log(respuesta);
+            // console.log(respuesta);
             mostrarPreguntasDelArea();
+            $('#modalEditarPregunta').modal('hide');
         }
     });
 }
@@ -285,10 +287,11 @@ function validarElminar(){
         method: 'GET',
         data: parametros,
         success: ( respuesta )=>{
-            console.log(respuesta);
+            // console.log(respuesta);
             mostrarPreguntasDelArea();
         }
     });
+    $('#modalEliminarPregunta').modal('hide');
 }
 
 

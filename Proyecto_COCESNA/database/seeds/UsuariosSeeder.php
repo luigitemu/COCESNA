@@ -51,7 +51,7 @@ class UsuariosSeeder extends Seeder
         $id3 = DB::table('turnos')->get('id_turno');
         //dd($id1[0]->id_personal);
         //dd($id2);
-        for( $i=4 ; $i<10 ; $i++)
+        for( $i=4 ; $i<count($id1) ; $i++)
         {
             $x = $id2->random()->id_posicion;
             $y = $id3->random()->id_turno;
