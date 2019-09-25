@@ -133,3 +133,9 @@
     flex: 1 0 33.333333% !important;
     /* max-width: 40.333% !important; */
 }
+
+.btn-regresar{
+    color: #fff !important;
+    background-color: #06c000;
+    border-color: #06c000;
+}

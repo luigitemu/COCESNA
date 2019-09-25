@@ -23,7 +23,11 @@ Route::get('/agregarArea','AreaController@agregarArea')->name('administrador.agr
 
 Route::get('/agregarPregunta','AreaController@agregarPreguntaAJAX')->name('administrador.agregarPregunta'); //agrega una pregunta a un area
 
+Route::get('/agregarUsuario','UserController@agregarUsuario')->name('usuario.agregar');    //agregar un usario al sistema
+
 Route::get('/areas','AreaController@mostrarAreas')->name('encuesta.mostrarAreas');    //dirige a la pagina de areas de preguntas
+
+Route::get('/cambiarContrasena','UserController@cambiarContrasena')->name('usuario.cambiarContrasena');
 
 Route::get('/elementosDelTipo','AreaController@mostrarRespuestasDelTipo')->name('tipoRespuesta.elementos');
 

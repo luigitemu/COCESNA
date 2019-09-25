@@ -48,11 +48,16 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-              <a class="nav-link" href="{{ route('administrador.principal') }}">Inicio<span class="sr-only">(current)</span></a>
+            <li class="nav-item active mr-3">
+              <span class="nav-link">
+                  <i class="fas fa-user-circle"></i> {{Session::get('nombreCompleto')}}
+              </span>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ route('sistema.inicio') }}">Salir</a>
+            <li class="nav-item active">
+              <a class="nav-link" href="{{ route('administrador.principal') }}"><i class="fas fa-home"></i> Inicio<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="{{ route('sistema.inicio') }}"><i class="fas fa-door-open"></i> Salir</a>
             </li>
           </ul>
         </div>

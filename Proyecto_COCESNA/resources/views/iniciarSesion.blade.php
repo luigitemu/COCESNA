@@ -18,25 +18,30 @@
                 <form method="POST" action="{{ route('sistema.verificarEmpleadoContrasena') }}">
                     {{method_field('PUT')}}     {{-- cambia de method="POST" a method="PUT" --}}
                     {!! csrf_field() !!}   
-                    <div class="form-group form-st mb-3">
+                    <div class="form-group form-st mb-1">
                         <label for="exampleInputEmail1">Número de empleado</label>
                         <input type="number" name="numeroEmpleado" class="form-control form-inp" id="numeroEmpleado" aria-describedby="emailHelp" placeholder="Ingrese su número de empleado" value="{{ old('numeroEmpleado') }}">
-                        <label class="mt-3 ml-3" for="numeroEmpleado" style="color:#ff3300;">
-                            @if ($errors->has('numeroEmpleado'))
-                                {{$errors->first('numeroEmpleado')}}
-                            @endif
+                        <label class="mt-2 ml-3" for="numeroEmpleado" style="color:#ff3300;">
+                            <small>
+                                    @if ($errors->has('numeroEmpleado'))
+                                        {{$errors->first('numeroEmpleado')}}
+                                    @endif
+                            </small>
                         </label>
                     </div>
-                    <div class="form-group form-st mb-4">
+                    <div class="form-group form-st mb-1">
                         <label for="exampleInputPassword1">Contraseña</label>
                         <input type="password" name="contrasena" id="contrasena" class="form-control form-inp" placeholder="Ingrese su contraseña" >
-                        <label class="mt-3 ml-3" for="contrasena" style="color:#ff3300;">
-                            @if ($errors->has('contrasena'))
-                                {{$errors->first('contrasena')}}
-                            @endif
+                        <label class="mt-2 ml-3" for="contrasena" style="color:#ff3300;">
+                            <small>
+                                    @if ($errors->has('contrasena'))
+                                        {{$errors->first('contrasena')}}
+                                    @endif
+                            </small>
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-primary">Ingresar</button>
+                    <button type="submit" class="btn btn-primary mb-3">Ingresar</button>
+                    <a role="button" class="text-primary" data-toggle="modal" data-target="#modalContrasena">Olvidé mi contraseña</a>
                   </form>
             </div>
         </div>
@@ -89,4 +94,30 @@
         </div>
     </div>
     <div style="height:100px;"></div>-->
+
+    <div class="modal fade" id="modalContrasena" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Recuperación de Contraseña</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <div class="modal-body">
+                Para reinicio de contraseña contacte con el administrador del sistema
+                {{-- <br><br>
+                <div class="form-group">
+                    <label for="noEmpleadoContrasena" class="col-form-label">Ingrese su número de empleado:</label>
+                    <input type="number" class="form-control" id="noEmpleadoContrasena">
+                    <div id="valida-noEmpleadoContrasena"></div>
+                </div> --}}
+            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    {{-- <button type="button" class="btn btn-danger" onclick="cambiarContrasena('{{ route('usuario.cambiarContrasena') }}','{{ Session::get('noEmpleado') }}');">Obtener contraseña</button> --}}
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

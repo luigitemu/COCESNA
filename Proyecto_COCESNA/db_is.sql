@@ -109,7 +109,7 @@ CREATE TABLE `personal` (
 
 LOCK TABLES `personal` WRITE;
 /*!40000 ALTER TABLE `personal` DISABLE KEYS */;
-INSERT INTO `personal` VALUES (1,'sapiente ut','aut reprehenderit','2003-07-20','1993-08-19','F','111',1),(2,'consequuntur sit','fugit est','1982-08-29','1996-09-09','M','222',1),(3,'recusandae aspernatur','earum ut','1976-09-28','1974-01-27','F','333',1),(4,'consequuntur dolore','consequatur rerum','2011-09-19','1988-12-25','F','444',1),(5,'eaque iure','eius ipsam','1992-07-27','1998-03-08','F','759',1),(6,'magnam dolorem','error laudantium','2006-06-02','1973-04-06','F','282',1),(7,'in iusto','perspiciatis sed','1976-02-11','1987-03-27','F','598',1),(8,'eveniet libero','aut atque','1975-11-19','2000-02-29','M','656',1),(9,'eum illum','aliquid occaecati','1992-05-24','1991-10-16','F','177',1),(10,'sit sunt','vitae quis','1976-01-14','2015-02-17','F','905',1),(11,'blanditiis voluptates','iure sequi','1988-02-19','2007-04-23','F','380',1),(12,'non molestiae','omnis quia','1995-10-20','1982-11-07','M','750',1),(13,'animi nam','perferendis fugiat','1977-08-02','1993-07-28','M','362',1),(14,'impedit corrupti','dolores eveniet','1970-09-24','2011-10-10','M','706',1),(15,'alias libero','vitae ut','2002-06-23','2012-10-25','M','269',1),(16,'dolor ipsa','sed placeat','1974-12-30','1970-01-21','M','327',1),(17,'ea et','eaque saepe','1972-09-09','1982-08-27','F','826',1),(18,'molestias et','hic nobis','2000-08-02','2011-09-30','F','20',1),(19,'sint inventore','rerum provident','1973-02-04','1984-01-27','M','196',1),(20,'distinctio et','itaque velit','1990-06-13','1981-07-26','F','668',1),(21,'quia in','id quia','2015-01-14','1978-03-25','M','765',1),(22,'voluptatem excepturi','excepturi et','1977-04-07','1988-02-08','F','8',1),(23,'quae enim','molestias quisquam','2016-06-16','1974-07-29','M','336',1),(24,'reiciendis porro','recusandae quia','2005-05-27','2011-06-23','F','58',1),(25,'dolore delectus','voluptatem in','2012-02-27','2011-04-29','M','557',1),(26,'consequatur ut','recusandae voluptatem','1987-07-24','2016-08-10','F','56',1),(27,'in odit','sit architecto','2015-06-16','1983-08-25','F','28',1),(28,'non dolorum','sequi perspiciatis','1992-05-01','2011-12-26','M','41',1),(29,'ipsum qui','quo eaque','1996-08-17','1973-12-13','M','213',1),(30,'id sunt','quibusdam voluptas','1985-10-28','2016-07-20','M','107',1),(31,'doloremque iusto','itaque esse','1982-04-05','2008-07-05','M','789',1),(32,'aliquam suscipit','explicabo sit','2010-03-08','2017-06-17','F','57',1),(33,'distinctio et','laboriosam tempore','2002-05-18','1984-07-04','M','746',1),(34,'deserunt commodi','quas voluptas','1983-07-27','2009-03-27','F','762',1);
+INSERT INTO `personal` VALUES (1,'voluptas pariatur','eligendi aut','2000-06-15','1992-09-14','M','111',1),(2,'sint ipsa','quia voluptatem','1995-11-18','1992-09-14','M','222',1),(3,'quas non','illum ut','1986-12-18','1989-12-04','F','333',1),(4,'harum ducimus','quidem quo','1982-07-24','2015-08-20','M','444',1),(5,'velit rerum','omnis ratione','2003-03-19','1980-06-13','M','86',1),(6,'quas quam','quasi ipsam','2008-12-29','1991-09-08','F','820',1),(7,'nesciunt dolorem','optio qui','2003-12-02','2016-10-10','M','50',1),(8,'delectus temporibus','iste cupiditate','2006-07-24','1986-06-25','M','180',1),(9,'voluptatum cumque','molestiae omnis','1985-11-01','1975-06-01','M','794',1),(10,'provident dolores','veniam quia','1995-12-20','1980-05-14','M','812',1),(11,'aperiam qui','quo et','2001-06-23','2003-09-15','F','572',1),(12,'quod eos','corrupti unde','2004-12-18','1996-02-22','M','861',1),(13,'sit odio','facilis mollitia','1977-08-24','2014-11-26','M','209',1),(14,'laboriosam maxime','id vel','1976-01-22','1999-02-16','M','90',1),(15,'et adipisci','enim vel','1990-10-06','1995-09-08','M','686',1),(16,'aut molestiae','occaecati non','2003-05-08','2001-07-12','F','58',1),(17,'aliquam fugiat','odio neque','1982-11-29','1971-06-18','M','168',1),(18,'nostrum accusamus','sed nihil','2012-10-30','2014-09-24','F','993',1),(19,'dolore voluptatem','ipsum nihil','1988-08-17','2012-02-07','M','550',1),(20,'rerum consequatur','et eligendi','1997-05-01','2012-08-18','M','684',1),(21,'sit sed','cum vero','2014-07-29','1994-12-07','F','52',1),(22,'quo ut','ratione excepturi','2019-06-22','2014-05-01','M','221',1),(23,'ullam ex','ipsa velit','1979-04-26','2012-02-23','M','966',1),(24,'voluptatum exercitationem','est laborum','1992-03-17','2017-03-02','M','373',1),(25,'perferendis perferendis','perspiciatis repudiandae','2008-08-26','1974-02-03','F','447',1),(26,'sunt voluptatem','iure hic','1973-03-10','2018-05-14','F','449',1),(27,'qui repellendus','cumque aspernatur','1971-08-24','1998-07-24','F','234',1),(28,'at maiores','sint nihil','2005-09-29','1984-03-16','M','185',1),(29,'repellendus ut','aut eveniet','1999-09-13','1988-11-28','F','132',1),(30,'maiores neque','maxime fuga','1997-06-08','2002-10-17','F','137',1),(31,'suscipit omnis','pariatur a','2005-01-07','1987-08-28','M','435',1),(32,'esse autem','a neque','2013-06-15','1999-02-20','F','229',1),(33,'aut fuga','officia voluptas','1987-06-11','2006-01-13','M','609',1),(34,'veritatis voluptatum','harum voluptate','1997-01-22','2011-04-23','F','108',1);
 /*!40000 ALTER TABLE `personal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,7 +159,7 @@ CREATE TABLE `pregunta_filtro` (
 
 LOCK TABLES `pregunta_filtro` WRITE;
 /*!40000 ALTER TABLE `pregunta_filtro` DISABLE KEYS */;
-INSERT INTO `pregunta_filtro` VALUES ('¿Estoy en forma para realizar el turno?','2019-09-21','2019-09-21');
+INSERT INTO `pregunta_filtro` VALUES ('¿Estoy en forma para realizar el turno?','2019-09-24','2019-09-24');
 /*!40000 ALTER TABLE `pregunta_filtro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,6 +196,31 @@ INSERT INTO `preguntas` VALUES (1,1,1,'¿Existes?',NULL),(2,1,3,'¿Cómo está e
 UNLOCK TABLES;
 
 --
+-- Table structure for table `razones`
+--
+
+DROP TABLE IF EXISTS `razones`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `razones` (
+  `id_razon` int(11) NOT NULL AUTO_INCREMENT,
+  `razon` varchar(500) DEFAULT NULL,
+  `fecha_creacion` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_razon`),
+  UNIQUE KEY `id_razon_UNIQUE` (`id_razon`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `razones`
+--
+
+LOCK TABLES `razones` WRITE;
+/*!40000 ALTER TABLE `razones` DISABLE KEYS */;
+/*!40000 ALTER TABLE `razones` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `respuestas`
 --
 
@@ -204,9 +229,9 @@ DROP TABLE IF EXISTS `respuestas`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `respuestas` (
   `id_respuesta` int(6) NOT NULL AUTO_INCREMENT,
+  `id_tipo` int(11) NOT NULL,
   `contenido` varchar(100) NOT NULL,
   `fecha_creacion` date DEFAULT NULL,
-  `id_tipo` int(11) NOT NULL,
   PRIMARY KEY (`id_respuesta`,`id_tipo`),
   UNIQUE KEY `id_pregunta_UNIQUE` (`id_respuesta`),
   KEY `fk_respuestas_tipos_de_respuesta1_idx` (`id_tipo`),
@@ -220,7 +245,7 @@ CREATE TABLE `respuestas` (
 
 LOCK TABLES `respuestas` WRITE;
 /*!40000 ALTER TABLE `respuestas` DISABLE KEYS */;
-INSERT INTO `respuestas` VALUES (1,'si',NULL,1),(2,'no',NULL,1),(3,'1',NULL,2),(4,'2',NULL,2),(5,'3',NULL,2),(6,'4',NULL,2),(7,'5',NULL,2),(8,'bajo',NULL,3),(9,'medio',NULL,3),(10,'alto',NULL,3),(11,'muy bien',NULL,4),(12,'bien',NULL,4),(13,'regular',NULL,4),(14,'mal',NULL,4),(15,'muy mal',NULL,4),(16,'mucho',NULL,5),(17,'medio',NULL,5),(18,'poco',NULL,5),(19,'muy poco',NULL,5);
+INSERT INTO `respuestas` VALUES (1,1,'si',NULL),(2,1,'no',NULL),(3,2,'1',NULL),(4,2,'2',NULL),(5,2,'3',NULL),(6,2,'4',NULL),(7,2,'5',NULL),(8,3,'bajo',NULL),(9,3,'medio',NULL),(10,3,'alto',NULL),(11,4,'muy bien',NULL),(12,4,'bien',NULL),(13,4,'regular',NULL),(14,4,'mal',NULL),(15,4,'muy mal',NULL),(16,5,'mucho',NULL),(17,5,'medio',NULL),(18,5,'poco',NULL),(19,5,'muy poco',NULL);
 /*!40000 ALTER TABLE `respuestas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,7 +329,7 @@ CREATE TABLE `turnos` (
 
 LOCK TABLES `turnos` WRITE;
 /*!40000 ALTER TABLE `turnos` DISABLE KEYS */;
-INSERT INTO `turnos` VALUES (1,'eum','17:03:21','09:43:32',1),(2,'tempore','06:10:04','21:52:52',1),(3,'tempore','01:56:02','14:03:57',1);
+INSERT INTO `turnos` VALUES (1,'sit','01:52:34','12:47:09',1),(2,'aspernatur','09:13:19','22:12:02',1),(3,'ipsa','13:20:49','11:47:19',1);
 /*!40000 ALTER TABLE `turnos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -353,7 +378,7 @@ CREATE TABLE `usuarios` (
   `id_posicion` int(3) NOT NULL,
   `email` varchar(45) NOT NULL,
   `contrasena` varchar(200) NOT NULL DEFAULT '0000',
-  `fecha_creacion` date DEFAULT NULL,
+  `fecha_creacion` datetime DEFAULT NULL,
   PRIMARY KEY (`id_personal`,`id_turno`,`id_posicion`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `id_personal_UNIQUE` (`id_personal`),
@@ -371,7 +396,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,1,1,'el@administrador.p','eyJpdiI6IlEzUGg1c0wzMUtnSDllbllaNDdnMlE9PSIsInZhbHVlIjoiSk93bzlaazhSRWxVaTdCV1c4NGNyQT09IiwibWFjIjoiYTg2NjVkMTUxNDFiNDU4NGNhZWY3YTAyYTI4Njc2MjA0MjczYjVlYTJjYmVkNTQxNWM1ODgwMDNlZTNkNmUyNyJ9',NULL),(2,1,2,'primer@controlador.p','eyJpdiI6ImdVQmJjbEdLZU1ZV0wwc2hXVVB4eXc9PSIsInZhbHVlIjoiSmRWVEVKWjdnOEt5Z2doaWQ5YTF6QT09IiwibWFjIjoiY2I0YWQwODJiMzM3YmZkYWIyODEyYjg1NDQ1ZTM3MzI1OTVjNjZhOTJmNDA0NzU2MzAzNjY3ZjYwZDMxODU0MSJ9',NULL),(3,1,3,'el@supervisor.p','eyJpdiI6IkxRY0F3ZXQ2UGp5bFNnTktYZXAyOHc9PSIsInZhbHVlIjoiRWM1eG1paHcxN0hNYTFvRXRIaExrdz09IiwibWFjIjoiYWFkYmYwNmU0OWZkNmI0OTFhOTAzYTBiZWEzNTVjZmYzODk1N2UyM2VjNTMyYmEzNTBlNTIyZDI1ZTFmOTQ0NyJ9',NULL),(4,1,4,'RR@HH.p','eyJpdiI6IkV4WjBDSHBsdit2MGdVNDBqZEoyTEE9PSIsInZhbHVlIjoiV1wvQnIrN3gzV1ZmVmV0dHJlU3ZISVE9PSIsIm1hYyI6ImNjYzcxYjJkYzIwNjJmYzEwZmE3YjI4YjFjYjg1NTRlZDgxOTVlZTJhYjhkNzUyN2JlODZhMTNhZGI5MzgzZDQifQ==',NULL),(5,2,3,'nitzsche.jerrell@marvin.org','eyJpdiI6IkhZSklCa09JY0dQVkZXQWx1NnB3Y0E9PSIsInZhbHVlIjoiTnd4a2xGdnh6SGdyNVg1MDhXbVlGQT09IiwibWFjIjoiZjU4ZDM1Mzg2ZWRlM2Y5OTE0MGQ1YjdiOWFhYWViM2ZiNDJmMDI1NjlkYTE3ZjY2NmYwOWZjOWZlODdiMWI0MyJ9',NULL),(6,1,2,'wehner.stephon@yahoo.com','eyJpdiI6Imc4ZXpqSERqU3BwclwvaGZBYWdtSk93PT0iLCJ2YWx1ZSI6IjlcLzNjRXk4UnR6bXZLQU8xV0hZaUZ3PT0iLCJtYWMiOiI5ZjQ1ZDI4Mzc3NTNhNzVkODdjMWY0ZmFjZTBlNTk5YTg2Nzk1ZDNmNmVkYmExZDYxNjhkYTVjYjA0NDkwZDM4In0=',NULL),(7,2,3,'hrempel@schuster.biz','eyJpdiI6IlZxYWNJc0ZPeVVJb0l4RmNETDF3NXc9PSIsInZhbHVlIjoiYjlZQm96TU1KSG1Ua05NeXNSc3pxdz09IiwibWFjIjoiN2ExM2ViYjlkNGNlNjU4NmVkNjZiNTkzNzQyYjk2ZDcyYzVlMmVjODE1NzVkNDNjZGFmNDRhMmQyOWZiMzkyZiJ9',NULL),(8,2,2,'donato.friesen@heathcote.info','eyJpdiI6InlwY2FTZHcyMmcrV2FDejVKc1wvZDFBPT0iLCJ2YWx1ZSI6IlhTQnZ0UlZ4czBpUVJtdVwvNHlGK1pnPT0iLCJtYWMiOiJlNTgyODUyMWUxOGI4Y2EyNGUxNWVhYTY3YTNiMjVmYzRlOWY1MTQ4MWQ2NWRmOTgyOWUwYWE1NzA1MTNlOWMyIn0=',NULL),(9,2,4,'strosin.nedra@weber.com','eyJpdiI6IlAyWTYydkNPcTliWDViRXJLS2E4dlE9PSIsInZhbHVlIjoiVGxiV0FoQUFOTWlhT3UraFJTaWRQZz09IiwibWFjIjoiODQwNDY2YTkxYjhkZDBmNjdjZGYwZjRmYzA2NWRhODE2ZTdhMWU3NTY5ODY4YTVlMTAwMWY5ZDU2MzU1YWFiMCJ9',NULL),(10,1,1,'hintz.ricardo@will.com','eyJpdiI6IlFXSWl5MHFtbWc5cTNXcEZtZkdPV2c9PSIsInZhbHVlIjoid2xCbUorRHZNN1E5KzlYTWdITzNGdz09IiwibWFjIjoiMTk1OTg5NzEyY2RiY2RlOTQwMThmNGNkNTI5MmM3MTM1MWZmNWY2NTE4NDBkYTdiOTZkZDVhMzU5YjhlMTNjMyJ9',NULL),(11,3,2,'goyette.sarah@hotmail.com','eyJpdiI6InlmeG9wSUJoKzlPTjNvUUFcL2tBRnhnPT0iLCJ2YWx1ZSI6InlGSlAxcEFYc2x6TnFHK1N1RWNHVmc9PSIsIm1hYyI6IjI3MDQxMWFhNDA5YTQ5NjJiNjI2ZDBlZGE3MDcwNmIxOGVmZDgzZWRjNjJkNzUzNjhjNDBkZTZhMDNkNmMwYTAifQ==',NULL),(12,2,2,'raynor.larry@yahoo.com','eyJpdiI6IjNRN2srY1I5M291aExzOElUVmlcL2lnPT0iLCJ2YWx1ZSI6IloxazErUnpUWU80Ulh2NkZTK1ltTXc9PSIsIm1hYyI6ImJmNDFmMjk5ZjA4MGQ1ODA1ZjZhNmNhODg2Yjc3MDM0NGY5MzA5NGY1YzZiMDZlNmM2N2IxZmU4MjNhOWNkY2EifQ==',NULL),(13,2,1,'jayce.hoeger@gmail.com','eyJpdiI6IjZnNHJzekZkRFAyTzJSXC96YWdSNGNBPT0iLCJ2YWx1ZSI6IlBKVHF6Y2ZjVUZrWWpDR2t2S045ZUE9PSIsIm1hYyI6IjVlMTRiN2RkOTkxZTI5NjFmYzYzM2IwOWVkYmRkZWM3MGIzZjExMGNhMzg1MmFiMzM1M2FiNmQ0NmUyYjMwZTQifQ==',NULL),(14,1,4,'guiseppe.watsica@yahoo.com','eyJpdiI6IlplV3VNaDVJd3p0bDNsK3M3Vzl6dUE9PSIsInZhbHVlIjoiZ2pBOFg2bDdEVDdZQ2JPSjlYdHBLZz09IiwibWFjIjoiZGE2MDEyZWM1ZjY4NmM5MThkMzU2MGIwN2IzOGU1NjFjYzBjYTE1ZjhiODI2YTRkNGM2Yjk5ODBlM2Y5ZTI5ZSJ9',NULL),(15,3,4,'wauer@mcglynn.org','eyJpdiI6IlBNaUJBVVE1XC8ybHc0R2czNFpNYjRBPT0iLCJ2YWx1ZSI6IjFuMkRzVGhzQmpOMkZ6cmd0a0RNWHc9PSIsIm1hYyI6Ijk1YTVmZjBhMTljMWUxZjdlMmY4NDdmNTI5Mjc5Y2Y3OTY4MTVlY2M0OWM4M2U0OTU3MDM4ZGM3MDc4ZDFkYmEifQ==',NULL),(16,3,1,'cronin.annetta@leannon.com','eyJpdiI6IjdKQ0R1MW1BM2R6UDdnNmUxV2tUeWc9PSIsInZhbHVlIjoieFBoTDVsZFY2enF2MTZIRlJaOWFqZz09IiwibWFjIjoiZWY0Y2ZhMjA4YmY5NTgzODRjOGIzNjA3YmU2YTNmOGIxMzMxZGVhMmJhYjNjZTM4MTk5NDkyZjk5ZTMxZGRkZiJ9',NULL),(17,3,1,'ortiz.lenore@hotmail.com','eyJpdiI6IlJ2bzJNdUt5UW1cL2NlQnI1SEFpYXNnPT0iLCJ2YWx1ZSI6Iko5Rkh3a3Y5cDBEdGp2U2l3aE1NTFE9PSIsIm1hYyI6ImM3ZDQ5ODIzYWFmMGQwZjQ0OTM3ZGU0ZTlkMmEwYjljZWQ4YTNhYmRmOTRmMzU0ZDhjYTU1NzVhYTAwOGE5NzQifQ==',NULL),(18,2,3,'jfeest@koch.com','eyJpdiI6Ik1TdFdFbXJ3WHBnTk9UejltVTNnTXc9PSIsInZhbHVlIjoiZVZ4cVRxQjZOQnc1RmdpbVdseW1oUT09IiwibWFjIjoiNDM4Zjk5MDhjMjEwZDQxY2IxZmVjODc3MmMwMWM0OWQ1YjA2MjEyYjAyNGE2MDYyYTYwMDFjYTBmZWNmMTk3YiJ9',NULL),(19,2,2,'nelda.schiller@sanford.com','eyJpdiI6Ikc5WTNzZ2hPTFZjTzlWS3lSNnVmSGc9PSIsInZhbHVlIjoiQklYUWdScWJuQUQrbHJxQTRMMVFmZz09IiwibWFjIjoiYzhlZGIxNmRiN2MyMDA4ODY4ZDUwMmZhYjY2MDgyN2RlN2ZjOGFlZmIxODg5M2JhZGFiZmNmYmNlMWViOGRiMCJ9',NULL),(20,2,2,'mafalda82@mayer.info','eyJpdiI6IkttOXlhWHNBVmVBNEZyeDFqbmlLd2c9PSIsInZhbHVlIjoidnIxbVkzc3JPSXJHRVdKaXVUY29zdz09IiwibWFjIjoiMmQ0OGFmNjRiNmEwNmNmNWZlMWVmZWNmNmJhNmFkZDFlODZmODI5Y2QwM2Q5MGFjYzY1OGMyNWIwZmMwYWY4NyJ9',NULL),(21,1,2,'koepp.maximus@gmail.com','eyJpdiI6IlZyQVRXN2FSMzRicWQrVHl1VUlcL3lBPT0iLCJ2YWx1ZSI6ImY1bmJibXNaT1wvN21aOWJtVjk1b0RnPT0iLCJtYWMiOiI2NGQ4YWY1MDgxMWQwZTdiYWFkOTk0MDQwMmQ0M2Y5M2NkNzgzMWY1MzRhNmE1MTU0MzRmNWViZmFmZWE0OTZkIn0=',NULL),(22,3,1,'bell.heaney@yahoo.com','eyJpdiI6IitvT1NETkZMREJWMHFUS3BBNHAxQUE9PSIsInZhbHVlIjoiM01GZDJYeE9XUFVjczNnWENIYzd3QT09IiwibWFjIjoiY2VmYzhiMjAzZTkwMjFiZTIyODY4NDgwOTM3YzVlMjAwZTNlN2U2MWFkMGU5ZWNmNWJiY2UzYmIwMGE4ZGEyOCJ9',NULL),(23,2,1,'xgorczany@spencer.biz','eyJpdiI6IjdpS0VMaHpRaUk5N2t6M25Ua2ZpaWc9PSIsInZhbHVlIjoicHJUUjhFbnA1UTdzR1wvRzJ4eDY0Z1E9PSIsIm1hYyI6Ijg2ZDk2OThmOTEwM2Q0NzA1OTdlZTI4YjRkYTJhNjk3MTMwNmU2ODY4MzllZmM5M2ZiZDU0ZTQ3YzhmNDM1MTQifQ==',NULL),(24,3,2,'ana.brekke@hotmail.com','eyJpdiI6InVUeEhSWG1rbEVxeVwvT3dFeE8rcTJnPT0iLCJ2YWx1ZSI6InFYM3QzT1wvclwvQndGMWdRWE54eklCZz09IiwibWFjIjoiZjIzMTlhYjBmYzJjNzViN2NjMGJhYzVhZmE0N2NmZjU1OWUwOTQ2ZWZhMThhNTczZjgzZTA2YzdmY2Y3NzVlMCJ9',NULL),(25,2,1,'abbott.luciano@bartell.info','eyJpdiI6IkZUU1U2Mkx5bFZNMFU1S2NxV3czN0E9PSIsInZhbHVlIjoiY1JPSDIxVVh3VWFyNnRmTEMrUllyZz09IiwibWFjIjoiMTM4MTQ5M2EzMzU4NTRiOWQyOGJiZTdjNjhjNmY5NTkwZDM0NWU0N2VhOWFmYTE2NzA2YTFiNjVjMjhkNjcyOSJ9',NULL),(26,3,1,'ullrich.braeden@kunze.org','eyJpdiI6IjdvcUVvU0pIWktqQWV1ZDU4XC9WeWZnPT0iLCJ2YWx1ZSI6IjJGVVhHemMwbFgrYTcxT1JTeUg5N3c9PSIsIm1hYyI6IjUyNzFjZWIwN2M3MGZlNmZhNjE4MDlmMGIwYjc4ZjM1MGVmMTMwMTliMGM3NDkxODI3NTBmYTRlNmQxYTU0YzUifQ==',NULL),(27,1,1,'jswaniawski@gmail.com','eyJpdiI6IkFBajNsa1IwTDFvM1M3d0tVNmtHY3c9PSIsInZhbHVlIjoidm84bElXRnRER1FoV05KVDh1dWJydz09IiwibWFjIjoiYjljOTc1ZWYyMGU2MGZiMmZmMmFlODJlMDBlMGMzYTIxZmQwNGIxNzZjNzJjNTVkMjA1YjFlMmU3MmI3OTM4MCJ9',NULL),(28,3,2,'gchamplin@hotmail.com','eyJpdiI6ImlRcGRNUFhtWVY1dUxhcTNqY0tVOVE9PSIsInZhbHVlIjoiTG1zZkZpdXllWnF1SkNyQ0x6S1pyUT09IiwibWFjIjoiMDczOTA2ZDYxYjExM2RhNzdmYjI1Y2MxZjhiNzZiMGVmYzcyOTg1ODJlMjY0NDQ5MTM2YTgxN2YyODVkMDVjNSJ9',NULL),(29,2,1,'marlin.turner@gmail.com','eyJpdiI6IjhDRnNmdWJFWnowV0hBVTg0Q1wvU0xRPT0iLCJ2YWx1ZSI6InhKOFwvaHdJcHorNWVlQXM5bmxxYnl3PT0iLCJtYWMiOiJjYzBiYmEzMmFhNTgwMzk2ZGVhN2YxODAzZmIxY2FhZGJiZTYzODU0YWE2OTAyOTI0YjYwNDdhYTk5Mjc3ZGEzIn0=',NULL),(30,2,1,'layne86@predovic.net','eyJpdiI6IjN4ZUVkSUo3eVA0TWJSck5cL1NLWlpnPT0iLCJ2YWx1ZSI6ImpmWUtcLzFZYlRQYTNqNDNjSXdVcW1RPT0iLCJtYWMiOiI4Yjc1NGYxNGRlYmZjNGU3OGFkMDkxNWVlMjQ5MjljODhmZDJhZjgwY2M2YjU0ZDY2OWNhYzVjNWJkYmIzYTgyIn0=',NULL),(31,2,2,'usatterfield@gmail.com','eyJpdiI6IjNCbkVcL2hSS0l6ck5aMTVcL1ZjcTVndz09IiwidmFsdWUiOiJcL3FaVzd5M1l4a2NURjlyRUFEVWVXdz09IiwibWFjIjoiZTg3NGRhNWI4ZWQyMGFjNjkxNmU1MDEyMGM4MmUwY2FjN2ZjZTY2ZDRkYTAxMTk1MTU2MDk4MTMxMzlmYzdmZiJ9',NULL),(32,2,3,'dooley.franco@dach.net','eyJpdiI6IlZxbjYyS1A3MFBoRkVBXC8wdUhaUUxRPT0iLCJ2YWx1ZSI6IjdhRnFmYU4rTFZWUlZhVEZPMWRxMmc9PSIsIm1hYyI6IjI1NGVjMGM5NWRkOTNkYjlkNGQ3ZDNhN2FjMDkzY2VlYWE5NWFlNWVjNmYxMjYxM2EzNGMwMTQ3OWIxZWQ2YWMifQ==',NULL),(33,2,1,'daphney96@gmail.com','eyJpdiI6IjVHTitLTExNb0RBRlRLb0tuNGF1N3c9PSIsInZhbHVlIjoiclZmMHdhZ1RwMnVHaU14RE40ZkozZz09IiwibWFjIjoiZmQ1ODBhNDNmYjc2NjEwMjhkY2RiNzcxNjY4ODUyZDc0YzIyMTQzZGYzNDVlYmYxYmQ1ODQzYzYyMDdhNTJlOCJ9',NULL),(34,1,4,'carolyn96@larkin.com','eyJpdiI6ImZWXC9LZmFtNzA4ZFJNRm1HTk52RWNRPT0iLCJ2YWx1ZSI6InNXcm8wTmNJSSt3enFUZEd0SHpOelE9PSIsIm1hYyI6ImViNGQ2N2RmZDkwODYzNTczNzM4ODFhOTkxNmM3MDAzODFkMzI0MDBiNTc4MmQ5OGVkZDkyNzBhZTk0ZTIxMWMifQ==',NULL);
+INSERT INTO `usuarios` VALUES (1,1,1,'el@administrador.p','eyJpdiI6Ik1TK0hGZEVjUkxmcXlzWVJncWNYXC9nPT0iLCJ2YWx1ZSI6InViNVBkMkNkZTNETnhIQlZLTGdjM3c9PSIsIm1hYyI6Ijc2ZmQ1NmEwNTRiYzdlYTkyZGY4MjA1NTk4ZDI5YzNjZTk4NGI3YmFhODYwMmJjMjM4YTdmMjlhYmYwNWJkNGQifQ==',NULL),(2,1,2,'primer@controlador.p','eyJpdiI6IlRhZ01rNUhwanFtRUJIZ255MU01bUE9PSIsInZhbHVlIjoiQ0RtXC9DdWFFNUM0ckRla2t6b2pXVnc9PSIsIm1hYyI6ImI5ZmRiMzMyOWE5MDJlNzc0Y2JhNTlkMDNjYTA2NzQzYjM0MzAxM2ExMjVjNzkxMjcwNDY0NzI0NTY1MDc1MmMifQ==',NULL),(3,1,3,'el@supervisor.p','eyJpdiI6IjlMeUlBOFg2a2o5MDN3dVdvU1BEdHc9PSIsInZhbHVlIjoidGl4dVRcL3hOUWN6QlR0bm9Ea3Q4TUE9PSIsIm1hYyI6ImM3NDVjNDAxNzQxMmVlOTNkNWJlMmRlNGIyMDcxNDM3MmFlNWExYTIxN2M3ODJhZWNjZmQ1MGU2NWEzYWYwNjIifQ==',NULL),(4,1,4,'RR@HH.p','eyJpdiI6IjFWejNwaVhXTVFmZStFTmx0cFZqc3c9PSIsInZhbHVlIjoid3hHRjFxMDl4QTVYVHpHTEtzZWV5dz09IiwibWFjIjoiMTJmMzU0MzVmNDM3Y2RhNWRmYTkzYzE4NjVkMTRmMzA2ODc3MWU5ZGZkZjY0NzdiMGFlZWI4OTlhNGQ5ZDVkZiJ9',NULL),(5,2,1,'bridie.paucek@hotmail.com','eyJpdiI6ImpYdTZhQ0w5UkdlcnRzRzNZeTlrZ1E9PSIsInZhbHVlIjoiU1psXC9GMHI0cDJFZitzb1BsdElzYUE9PSIsIm1hYyI6IjI1NDBmYjBhMWZkYjczZGVhMWY5NGZmNWRlNzRlOGUxZDFmM2M0YTUxNGZmYWM0OGRmYjJkZTIxOThkZDM1YTcifQ==',NULL),(6,3,2,'winifred65@sporer.org','eyJpdiI6ImE5VFZrZDZXY2orb29RbU85alB1Q3c9PSIsInZhbHVlIjoid3ZcL1p2OTZRalJKSnpIclF0cmxPMFE9PSIsIm1hYyI6ImRiNjkzMjRhYjA0OGE0OTNhNjJhNWZkYTlkOGE3ZDU4NDlmZmI1ODJkMDYwN2M5ZGU1NjhlNzhhMDYyYjhkZDAifQ==',NULL),(7,3,2,'farrell.selina@gmail.com','eyJpdiI6IlVyUmN2aFwvZ2JYNWZyQkV3TnlEV0VRPT0iLCJ2YWx1ZSI6IjBGSXQ5TDlIQVgzKzE5bkpjdXZSSHc9PSIsIm1hYyI6ImZkNWEwY2U5ZWVkODJjZDQ1ZmU2NmYwYzBjNDFkM2I2MjdjMjU0ODFlZjA3ZDgyOGJjZjk1MmRjZDJkNDlmNGYifQ==',NULL),(8,1,3,'soconner@ondricka.org','eyJpdiI6IlpPa1JRVjZONUdKd0VoVDQ5bkMrc2c9PSIsInZhbHVlIjoiWUw5bHBydkg2YUZtRmVZMHdoMkhrQT09IiwibWFjIjoiYTdiMDNmNzczNTk5ZTE1MTdhNzE1ZjA4N2M5OWNiNWZiZGFjNWYwMWNjNDNmOThlNDE1YjVjNTVhM2IyYmM1OCJ9',NULL),(9,2,2,'lyric.gutkowski@gmail.com','eyJpdiI6IlR1dlRiMytOVmhqZGdQZzBzOUpsZGc9PSIsInZhbHVlIjoiSGI1SEZMNERBSm9pcVlUMkNEOGh2QT09IiwibWFjIjoiMTYwOWY4N2M5NjAwYTQwYWYyMjUzODAxM2JhZjJkNTY4ZTBiNjI2NWJiMzM1NmJjMDQ2M2RlZjg3Yzc2YmIyNCJ9',NULL),(10,2,4,'epfeffer@kunde.net','eyJpdiI6IjNTVlBLbWpHbzNIZlNRSUZBZ1Z3aGc9PSIsInZhbHVlIjoibStWc3hRT0lWN0RWMjdcL0pRc1lRRWc9PSIsIm1hYyI6ImQzYjQ2NjBkYjAyNDJiMzI4ZWM0YWQ1Y2ZjZDVkNjYzNTAyOTIwMDJjYzMxZWRkYzYyMmU0ODZlYjYxZWE3ODUifQ==',NULL),(11,1,2,'lgutmann@mills.com','eyJpdiI6Ikg4Zmt0SGtpN1lES3haWDJ3TjBaV1E9PSIsInZhbHVlIjoiN0s3QmkzSnhneWZWam5ycjB0OGlvZz09IiwibWFjIjoiYWJlOWY4Mzg4NzIxMDc4ZGVmYzNlZGU2YzQzMmNiMzRlZDI3ZjQ3ODBlMjA3ZWVlNTQwNzgyMmZhYjcxOWEzZSJ9',NULL);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -384,4 +409,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-21 12:39:27
+-- Dump completed on 2019-09-24 19:51:51

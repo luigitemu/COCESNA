@@ -3,7 +3,10 @@
 @section('tituloDashboard')
   <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-3">
     <h1 class="h3 mb-0 text-gray-800">Preguntas del área "{{ $nombreArea }}"</h1>
-    <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg shadow-sm" data-toggle="modal" data-target="#modalAgregarPregunta"><i class="far fa-file-alt mr-1"></i>Agregar Preguntas</a>
+    <div>
+      <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-regresar shadow-sm" onclick=" window.location = '{{ route('administrador.principal') }}';"><i class="fas fa-arrow-alt-circle-left"></i> Regresar</a>
+      <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg shadow-sm" data-toggle="modal" data-target="#modalAgregarPregunta"><i class="far fa-file-alt mr-1"></i>Agregar Preguntas</a>
+    </div>
   </div>
   <hr>    
 @endsection

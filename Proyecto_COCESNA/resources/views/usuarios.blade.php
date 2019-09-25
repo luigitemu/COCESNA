@@ -3,7 +3,7 @@
 @section('tituloDashboard')
   <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-3">
     <h1 class="h3 mb-0 text-gray-800">Usuarios</h1>
-    {{-- <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg shadow-sm" data-toggle="modal" data-target="#modalAgregarUsuario"><i class="far fa-file-alt mr-1"></i>Agregar Usuario</a> --}}
+    <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg shadow-sm" data-toggle="modal" data-target="#modalAgregarUsuario"><i class="far fa-file-alt mr-1"></i>Agregar Usuario</a>
   </div>
   <hr>
 @endsection
@@ -58,8 +58,8 @@
         <div class="modal-body">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Seleccione el número de empleado:</label>
-            <select type="text" class="form-control" id="select-noEmpleado" default="asd">
-              @foreach ($personal as $empleado)
+            <select type="text" class="form-control" id="noEmpleado-agregar" default="asd">
+              @foreach ($id_disponibles as $empleado)
                 <option value="{{ $empleado->no_empleado }}">{{ $empleado->no_empleado }}</option>
               @endforeach
             </select>
@@ -67,22 +67,31 @@
           </div>
           <div class="form-group">
             <label for="message-text" class="col-form-label">Correo:</label>
-            <input type="text" id="input-correo" class="form-control">
-            <div id="valida-apellido"></div>
+            <input type="text" id="correo-agregar" class="form-control">
+            <div id="valida-correo-agregar"></div>
           </div>
-          {{-- <div class="row">
-            <label for="message-text" class="col-form-label">posicion:</label>
-            <select name="posicion" class="form-control" id="select-posicion">
+          <div class="form-group">
+            <label for="posicion-agregar" class="col-form-label">posicion:</label>
+            <select name="posicion" class="form-control" id="posicion-agregar">
               @foreach ($posiciones as $posicion)
                 <option value="{{ $posicion->id_posicion }}">{{ $posicion->posicion }}</option>
               @endforeach
             </select>
-            <div id="valida-posicion"></div>
-          </div> --}}
+            <div id="valida-posicion-agregar"></div>
+          </div>
+          <div class="form-group">
+            <label for="turno-agregar" class="col-form-label">Turno:</label>
+            <select name="turno" class="form-control" id="turno-agregar">
+              @foreach ($turnos as $turno)
+                <option value="{{ $turno->id_turno }}">{{ $turno->turno }}</option>
+              @endforeach
+            </select>
+            <div id="valida-turno-agregar"></div>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary" onclick="validar();">Guardar Cambios</button>
+          <button type="button" class="btn btn-primary" onclick="validar(1);">Guardar Cambios</button>
         </div>
       </div>
     </div>
@@ -148,6 +157,7 @@
   <script>
     var ruta = "{{ route('usuarios.mostrar') }}";
     var actualizar = "{{ route('usuarios.actualizar') }}";
+    var agregarUsuario = "{{ route('usuario.agregar') }}";
   </script>
   <script src="{{ asset('vendor/js/mainUsuarios.js') }}"></script>
 @endsection

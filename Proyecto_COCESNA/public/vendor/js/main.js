@@ -74,6 +74,10 @@ function guardarMostrar() {
         dataType: 'json',
         success: (res)=>{
             $('#areaPreguntas').html('');
+            $('#nombre').removeClass('is-valid','is-invalid');
+            $('#descripcion').removeClass('is-valid','is-invalid');
+            $('#valida-nombre').html('');
+            $('#valida-descripcion').html('');
             if(res.length == 0)
             {
                 $('#areaPreguntas').html(`
@@ -161,28 +165,49 @@ function editar(id,nom,des){
 }
 
 function confirmarEditar(){
-    let parametros = `id=${idEditar}&nombre=${$('#nombre-editar').val()}&descripcion=${$('#descripcion-editar').val()}`;
-    $.ajax({
-        url: rutas.editarArea,
-        method: 'get',
-        data: parametros,
-        dataType: 'json',
-        success: (res)=>{
-            console.log(res);
-            $('#areaPreguntas').html('');
-            if(res.length == 0)
-            {
-                $('#areaPreguntas').html(`
-                    <h4 class="ml-5">Sin áreas aún</h4>
-                `);
-            }else
-            {
-                res.forEach((e)=>{
-                mostrarAreas(e);
-                });
+    if ($('#nombre-editar').val() == '') {
+        $('#nombre-editar').addClass('is-invalid');
+        $('#valida-nombre-editar').removeClass('valid-feedback');
+        $('#valida-nombre-editar').addClass('invalid-feedback');
+        $('#valida-nombre-editar').html('El campo no debe de ir vacio');
+    } else if($('#descripcion-editar').val() == '') {
+
+        $('#descripcion-editar').addClass('is-invalid');
+        $('#valida-descripcion-editar').removeClass('valid-feedback');
+        $('#valida-descripcion-editar').addClass('invalid-feedback');
+        $('#valida-descripcion-editar').html('El campo no debe de ir vacio');
+    }else{
+        let parametros = `id=${idEditar}&nombre=${$('#nombre-editar').val()}&descripcion=${$('#descripcion-editar').val()}`;
+        $.ajax({
+            url: rutas.editarArea,
+            method: 'get',
+            data: parametros,
+            dataType: 'json',
+            success: (res)=>{
+                console.log(res);
+                $('#areaPreguntas').html('');
+                $('#nombre-editar').removeClass('is-invalid','is-valid');
+                $('#descripcion-editar').removeClass('is-invalid','is-valid');
+                $('#valida-nombre-editar').html('');
+                $('#valida-descripcion-editar').html('');
+                if(res.length == 0)
+                {
+                    $('#areaPreguntas').html(`
+                        <h4 class="ml-5">Sin áreas aún</h4>
+                    `);
+                }else
+                {
+                    res.forEach((e)=>{
+                        mostrarAreas(e);
+                    });
+                }
             }
-        }
-    });
-    $('#modalEditarPregunta').modal('hide');
-    return;
+        });
+        $('#modalEditarPregunta').modal('hide');
+        return;
+    }
 };
+
+
+
+

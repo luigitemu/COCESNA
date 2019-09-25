@@ -107,12 +107,12 @@
               <div class="form-group">
                 <label for="recipient-name" class="col-form-label">Nombre:</label>
                 <input type="text" class="form-control" id="nombre-editar">
-                <div id="valida-nombre"></div>
+                <div id="valida-nombre-editar"></div>
               </div>
               <div class="form-group">
                 <label for="message-text" class="col-form-label">Descripcion:</label>
                 <textarea class="form-control" id="descripcion-editar"></textarea>
-                <div id="valida-descripcion"></div>
+                <div id="valida-descripcion-editar"></div>
               </div>
             </form>
           </div>

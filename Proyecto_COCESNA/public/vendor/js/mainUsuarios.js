@@ -24,6 +24,7 @@ function confirmarEliminar () {
             mostrar(res);
             // alert('usuario eliminado');
             $('#modalEliminar').modal('hide');
+            location.reload();
         }
     });
 }
@@ -92,30 +93,53 @@ function validarCampoVacio(){
     });
 }
 
-function validar(){
-    validarCampoVacio();
-    // console.log(campos);
-    
-    for(let i = 0;i<campos.length;i++)
-        marcar(campos[i]);
+function validar(tipo){
+    if (tipo == null) {
+        validarCampoVacio();
+        // console.log(campos);
+        
+        for(let i = 0;i<campos.length;i++)
+            marcar(campos[i]);
 
-    for(let i = 0;i<campos.length;i++){
-        if(campos[i].valido == false || campos[i].corValido == false)
-            return;
-    }
-    // console.log('listo');
-    let parametros = `no_empleado=${porEditar}&email=${$('#input-correo-editar').val()}&posicion=${$('#select-posicion').val()}`;
-    $.ajax({
-        url: actualizar,
-        method: 'get',
-        dataType: 'json',
-        data: parametros,
-        success: res=>{
-            // console.log(res);
-            mostrar(res);
-            $('#modalEditarUsuario').modal('hide');
+        for(let i = 0;i<campos.length;i++){
+            if(campos[i].valido == false || campos[i].corValido == false)
+                return;
         }
-    });
+        // console.log('listo');
+        let parametros = `no_empleado=${porEditar}&email=${$('#input-correo-editar').val()}&posicion=${$('#select-posicion').val()}`;
+        $.ajax({
+            url: actualizar,
+            method: 'get',
+            dataType: 'json',
+            data: parametros,
+            success: res=>{
+                // console.log(res);
+                mostrar(res);
+                $('#modalEditarUsuario').modal('hide');
+            }
+        });
+    } else {
+        var x = $('#correo-agregar').val();
+        var atposition=x.indexOf("@");  
+        var dotposition=x.lastIndexOf(".");  
+        if ( atposition<1 || dotposition<atposition+2) {
+            return;
+        } else {
+            let parametros = `no_empleado=${$('#noEmpleado-agregar').val()}&email=${$('#correo-agregar').val()}&posicion=${$('#posicion-agregar').val()}&turno=${$('#turno-agregar').val()}`;
+            $.ajax({
+                url: agregarUsuario,
+                method: 'get',
+                dataType: 'json',
+                data: parametros,
+                success: res=>{
+                    // console.log(res);
+                    mostrar(res);
+                    $('#modalAgregarUsuario').modal('hide');
+                    location.reload();
+                }
+            });
+        }
+    }
 }
 
 

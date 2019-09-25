@@ -82,6 +82,7 @@ class MainController extends Controller
 
             $request->session()->put('noEmpleado',$usuario->no_empleado);
             $request->session()->put('nombres',$usuario->nombres);
+            $request->session()->put('nombreCompleto',$usuario->nombres." ".$usuario->apellidos);
             
             if($posicion == 1)
             {
@@ -98,7 +99,6 @@ class MainController extends Controller
                 $pregFiltro = DB::table('pregunta_filtro')->first();
                 
                 $request->session()->put('auth','2');
-                $request->session()->put('nombreCompleto',$usuario->nombres." ".$usuario->apellidos);
 
                 return view('preguntaFiltro')->with([
                         'datos' => $data['numeroEmpleado'],
