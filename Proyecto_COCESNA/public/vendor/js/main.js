@@ -24,7 +24,7 @@ var idEliminar;
 
 function validar(){
     validarCampoVacio();
-    console.log(campos);
+    // console.log(campos);
     
     for(let i = 0;i<campos.length;i++)
         marcar(campos[i]);
@@ -121,7 +121,7 @@ function mostrarPreguntas(valor){
 }
 
 function eliminar (id) {
-    console.log('se eliminara este elemento '+ id);
+    // console.log('se eliminara este elemento '+ id);
     $('#modal-eliminar').modal('show');
     $('#contenido-modal').html(`¿Esta seguro que desea eliminar el Area?`);
     idEliminar = id;
@@ -129,13 +129,13 @@ function eliminar (id) {
 
 function confirmarEliminar(){
     let id = idEliminar;
-    console.log('entra aqui ' +id);
+    // console.log('entra aqui ' +id);
     $.ajax({
         url: `${rutas.principalAdmin}/${id}`,
         method: 'get',
         dataType: 'json',
         success: (res)=>{
-            console.log(res);
+            // console.log(res);
             $('#areaPreguntas').html('');
             if(res.length == 0)
             {
@@ -157,7 +157,7 @@ function confirmarEliminar(){
 var idEditar;
 
 function editar(id,nom,des){
-    console.log('se editara este elemento '+ id);
+    // console.log('se editara este elemento '+ id);
     $('#modalEditarPregunta').modal('show');
     $('#nombre-editar').val(nom);
     $('#descripcion-editar').val(des);
@@ -184,7 +184,7 @@ function confirmarEditar(){
             data: parametros,
             dataType: 'json',
             success: (res)=>{
-                console.log(res);
+                // console.log(res);
                 $('#areaPreguntas').html('');
                 $('#nombre-editar').removeClass('is-invalid','is-valid');
                 $('#descripcion-editar').removeClass('is-invalid','is-valid');
@@ -207,6 +207,39 @@ function confirmarEditar(){
         return;
     }
 };
+
+
+function editarPF() {
+
+    $('#modalEditarPreguntaFiltro').modal('show');
+}
+
+
+
+
+function confirmarEditarPF() {
+    if ($('#preguntaF-editar').val() == '') {
+        $('#preguntaF-editar').addClass('is-invalid');
+        $('#valida-preguntaF-editar').removeClass('valid-feedback');
+        $('#valida-preguntaF-editar').addClass('invalid-feedback');
+        $('#valida-preguntaF-editar').html('El campo no debe de ir vacio');
+    }else{
+        let parametros = `pregunta=${$('#preguntaF-editar').val()}`;
+        $.ajax({
+            url: rutas.editarPreguntaFiltro,
+            method: 'get',
+            data: parametros,
+            dataType: 'json',
+            success: (res)=>{
+                // console.log(res);
+                $('#preguntaF-editar').removeClass('is-invalid','is-valid');
+                $('#valida-preguntaF-editar').html('');
+            }
+        });
+        $('#modalEditarPreguntaFiltro').modal('hide');
+        return;
+    }
+}
 
 
 

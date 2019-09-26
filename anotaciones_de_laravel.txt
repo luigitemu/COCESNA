@@ -171,6 +171,9 @@ $  php artisan config:clear
 =========================================================================
 
 
-
+Problema del COLLATE
 =========================================================================
+Se resuelve simplemente reemplazando 
+"CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;"
+por "CHARSET=utf8 COLLATE=utf8_general_ci;"
 =========================================================================

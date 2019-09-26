@@ -74,13 +74,15 @@ class UserController extends Controller
                         ->where('id_posicion','=',$request->posicion)
                         ->first();
 
+        $contrasena = Crypt::encryptString('123');
+
         DB::select('call usuarios_guardar(?,?,?,?,?)',
         array(
             $idPersonal->id_personal,
             $idTurno->id_turno,
             $idPosicion->id_posicion,
             $request->email,
-            Crypt::encryptString('123'),
+            $contrasena
         ));
 
         $user = array();
@@ -91,7 +93,16 @@ class UserController extends Controller
                         ->orderBy('personal.no_empleado')
                         ->get();
 
-        // return $this->randomPassword();
+        DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
+            array(
+                $request->session()->get('noEmpleado'),
+                $request->session()->get('nombreCompleto'),
+                'Nuevo usuario',
+                'usuarios',
+                'sp usuarios guardar',
+                'INSERT',
+                $request->ip(),
+            ));
         return $user;
     }
 
@@ -159,7 +170,7 @@ class UserController extends Controller
                         ->where('posicion','=',$request->posicion)
                         ->first();
         
-         DB::table('usuarios')
+        DB::table('usuarios')
             ->where('id_personal','=',$idPersonal->id_personal)
             ->update([
                 'id_posicion' => $posicion->id_posicion,
@@ -172,6 +183,17 @@ class UserController extends Controller
                         ->join('posicion' , 'posicion.id_posicion','=','usuarios.id_posicion')
                         ->orderBy('personal.no_empleado')
                         ->get();
+
+        DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
+            array(
+                $request->session()->get('noEmpleado'),
+                $request->session()->get('nombreCompleto'),
+                'Actualizar usuario',
+                'usuarios',
+                'Actualizar usuario '.$request->no_empleado. ' usando el id_posicion "'.$posicion->id_posicion.'" y el email "'.$request->email.'"',
+                'UPDATE',
+                $request->ip(),
+            ));
 
         return json_encode($usuarios);
     }
@@ -191,7 +213,9 @@ class UserController extends Controller
                         ->where('no_empleado','=',$id)
                         ->first();
 
-         DB::table('usuarios')->where('id_personal' , '=' , $idPersonal->id_personal)->delete();
+         DB::table('usuarios')
+            ->where('id_personal' , '=' , $idPersonal->id_personal)
+            ->delete();
 
          $usuarios = DB::table('usuarios')
                         ->select('personal.no_empleado' , 'usuarios.email', 'personal.nombres' , 'personal.apellidos','posicion.posicion' )
@@ -200,6 +224,17 @@ class UserController extends Controller
                         ->orderBy('personal.no_empleado')
                         ->get();
 
+        DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
+            array(
+                request()->session()->get('noEmpleado'),
+                request()->session()->get('nombreCompleto'),
+                'Eliminar usuario',
+                'usuarios',
+                'Eliminar el usuario con no_empleado "'.request()->session()->get('noEmpleado').'"',
+                'DELETE',
+                request()->ip(),
+            ));
+            
         return json_encode($usuarios);
     }
 
@@ -264,4 +299,51 @@ class UserController extends Controller
 
 
 
+    // Si el controlador termino la encuesta entonces muestra una pagina de confirmacion
+    public function finalizar(Request $request)
+    {
+        if($request->session()->get('auth')!='1' && $request->session()->get('auth')!='2')
+        {
+            return redirect()->route('sistema.inicio');
+        }
+        $query = DB::table('personal')
+                        ->select('id_personal')
+                        ->where('no_empleado',$request->session()->get('noEmpleado'))
+                        ->first();
+
+        $resultados = DB::table('log_usuarios')
+                        ->select(DB::raw('areas_de_preguntas.nombre as area'),'log_usuarios.fecha_creacion',DB::raw('preguntas.contenido as pregunta'),DB::raw('respuestas.contenido as respuesta'))
+                        ->join('respuestas','log_usuarios.id_respuesta','=','respuestas.id_respuesta')
+                        ->join('preguntas','log_usuarios.id_pregunta','=','preguntas.id_pregunta')
+                        ->join('areas_de_preguntas','log_usuarios.id_area','=','areas_de_preguntas.id_area')
+                        ->where('log_usuarios.id_personal','=',$query->id_personal)
+                        ->whereDate('log_usuarios.fecha_creacion','=',date('Y-m-d'))
+                        ->get();
+
+        $this->enviarCorreo($request->session()->get('noEmpleado'),$resultados);
+
+        // DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
+        //     array(
+        //         request()->session()->get('noEmpleado'),
+        //         request()->session()->get('nombreCompleto'),
+        //         'Eliminar usuario',
+        //         'usuarios',
+        //         'Eliminar el usuario con no_empleado "'.request()->session()->get('noEmpleado').'"',
+        //         'DELETE',
+        //         request()->ip(),
+        //     ));
+
+        $request->session()->forget('auth');
+        $request->session()->forget('noEmpleado');
+        $request->session()->forget('nombreCompleto');
+        $request->session()->forget('nombres');
+        return 'correo enviado con exito';//.$respuestas;
+        // return $respuestas;
+    }
 }
+
+
+
+
+
+

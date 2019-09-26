@@ -208,6 +208,8 @@ function guardarPregunta(){
         data: parametros,
         success: ( respuesta )=>{
             // console.log(respuesta);
+            $('#pregunta').removeClass('is-valid','is-invalid');
+            $('#valida-pregunta').html('');
         }
     });
     $('#modalAgregarPregunta').modal('hide');
@@ -259,6 +261,9 @@ function actualizarPregunta() {
         data: parametros,
         success: ( respuesta )=>{
             // console.log(respuesta);
+            $('#pregunta-editar').removeClass('is-valid','is-invalid');
+            $('#valida-pregunta-editar').html('');
+            
             mostrarPreguntasDelArea();
             $('#modalEditarPregunta').modal('hide');
         }

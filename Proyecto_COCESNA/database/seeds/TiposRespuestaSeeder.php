@@ -13,10 +13,10 @@ class TiposRespuestaSeeder extends Seeder
     public function run()
     {
         factory(TiposRespuesta::class)->create([
-            'tipo' => 'Cerrada'
+            'tipo' => 'Cerrada si-no'
         ]);
         factory(TiposRespuesta::class)->create([
-            'tipo' => 'Escala numerica 1-5'
+            'tipo' => 'Escala númerica 1-5'
         ]);
         factory(TiposRespuesta::class)->create([
             'tipo' => 'Escala ordinal bajo-alto'

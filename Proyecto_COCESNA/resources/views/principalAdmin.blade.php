@@ -3,7 +3,10 @@
 @section('tituloDashboard')
   <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-3">
     <h1 class="h3 mb-0 text-gray-800">Áreas De Preguntas</h1>
-    <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg shadow-sm" data-toggle="modal" data-target="#modalAgregarPregunta"><i class="far fa-file-alt mr-1"></i>Crear Area de Preguntas</a>
+    <div>
+      <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-regresar shadow-sm" data-toggle="modal" data-target="#modalEditarPreguntaFiltro"><i class="far fa-edit"></i> Editar pregunta filtro</a>
+      <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg shadow-sm" data-toggle="modal" data-target="#modalAgregarPregunta"><i class="far fa-file-alt mr-1"></i>Crear Area de Preguntas</a>  
+    </div>
   </div>
   <hr>
 @endsection
@@ -94,35 +97,60 @@
     </div>
   </div>
   <div class="modal fade" id="modalEditarPregunta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Editar Área de Preguntas</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Nombre:</label>
-                <input type="text" class="form-control" id="nombre-editar">
-                <div id="valida-nombre-editar"></div>
-              </div>
-              <div class="form-group">
-                <label for="message-text" class="col-form-label">Descripcion:</label>
-                <textarea class="form-control" id="descripcion-editar"></textarea>
-                <div id="valida-descripcion-editar"></div>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary" onclick="confirmarEditar();">Actualizar</button>
-          </div>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Editar Área de Preguntas</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Nombre:</label>
+              <input type="text" class="form-control" id="nombre-editar">
+              <div id="valida-nombre-editar"></div>
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Descripcion:</label>
+              <textarea class="form-control" id="descripcion-editar"></textarea>
+              <div id="valida-descripcion-editar"></div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" onclick="confirmarEditar();">Actualizar</button>
         </div>
       </div>
     </div>
+  </div>
+  <div class="modal fade" id="modalEditarPreguntaFiltro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Editar Pregunta Filtro</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="preguntaF-editar" class="col-form-label">Pregunta filtro:</label>
+              <input type="text" class="form-control" id="preguntaF-editar" value="{{ $PreguntaF }}">
+              <div id="valida-preguntaF-editar"></div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" onclick="confirmarEditarPF();">Actualizar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 
 @section('scripts')
@@ -132,6 +160,7 @@
       MostrarPreguntas: "{{ route('pagina.preguntas') }}",
       principalAdmin: "{{ route('administrador.principal') }}", 
       editarArea: "{{ route('administrador.actualizarArea') }}",
+      editarPreguntaFiltro: "{{ route('administrador.actualizarPF') }}",
     }
   </script>
 @endsection

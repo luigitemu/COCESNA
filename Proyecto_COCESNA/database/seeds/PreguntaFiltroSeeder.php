@@ -16,7 +16,6 @@ class PreguntaFiltroSeeder extends Seeder
         DB::select('call preg_filtro_crear(?)',
         array(
             '¿Estoy en forma para realizar el turno?',
-            request()->descripcion,
         ));
     }
 }

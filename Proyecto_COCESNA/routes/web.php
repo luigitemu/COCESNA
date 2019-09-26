@@ -11,27 +11,29 @@
 |
 */
 
-Route::get('/','MainController@index')->name('sistema.inicio');     //pagina inicial
+Route::get('/','MainController@index')->name('sistema.inicio');     // pagina inicial
 
-Route::get('/actualizarArea','AreaController@actualizarArea')->name('administrador.actualizarArea');
+Route::get('/actualizarArea','AreaController@actualizarArea')->name('administrador.actualizarArea');    // Actualiza los atributos de un area
 
-Route::get('/actualizarPregunta','AreaController@actualizarPregunta')->name('administrador.actualizarPregunta');
+Route::get('/actualizarPF','MainController@actualizarPF')->name('administrador.actualizarPF');    // Actualiza la pregunta filtro
 
-Route::get('/actualizarUsuario','UserController@actualizarUsuario')->name('usuarios.actualizar');
+Route::get('/actualizarPregunta','AreaController@actualizarPregunta')->name('administrador.actualizarPregunta');    // Actualiza una pregunta
 
-Route::get('/agregarArea','AreaController@agregarArea')->name('administrador.agregarArea');  //agrega un area
+Route::get('/actualizarUsuario','UserController@actualizarUsuario')->name('usuarios.actualizar');     // actualiza los datos de un usuario
 
-Route::get('/agregarPregunta','AreaController@agregarPreguntaAJAX')->name('administrador.agregarPregunta'); //agrega una pregunta a un area
+Route::get('/agregarArea','AreaController@agregarArea')->name('administrador.agregarArea');  // agrega un area
 
-Route::get('/agregarUsuario','UserController@agregarUsuario')->name('usuario.agregar');    //agregar un usario al sistema
+Route::get('/agregarPregunta','AreaController@agregarPreguntaAJAX')->name('administrador.agregarPregunta'); // agrega una pregunta a un area
 
-Route::get('/areas','AreaController@mostrarAreas')->name('encuesta.mostrarAreas');    //dirige a la pagina de areas de preguntas
+Route::get('/agregarUsuario','UserController@agregarUsuario')->name('usuario.agregar');    // agregar un usario al sistema
 
-Route::get('/cambiarContrasena','UserController@cambiarContrasena')->name('usuario.cambiarContrasena');
+Route::get('/areas','AreaController@mostrarAreas')->name('encuesta.mostrarAreas');    // dirige a la pagina de areas de preguntas
 
-Route::get('/elementosDelTipo','AreaController@mostrarRespuestasDelTipo')->name('tipoRespuesta.elementos');
+Route::get('/cambiarContrasena','UserController@cambiarContrasena')->name('usuario.cambiarContrasena');   // cambia la contrasena de un usuario
 
-Route::get('/fin','MainController@finalizar')->name('encuesta.fin');    //dirige hacia el final de la encuesta
+Route::get('/elementosDelTipo','AreaController@mostrarRespuestasDelTipo')->name('tipoRespuesta.elementos');   // muestra todos los tipos de respuesta
+
+Route::get('/fin','UserController@finalizar')->name('encuesta.fin');    //dirige hacia el final de la encuesta
 
 Route::get('/grdRes','MainController@guardarRespuestas')->name('encuesta.guardar');
 
@@ -44,8 +46,6 @@ Route::get('/pagPriAdm/{id}','AreaController@borrarArea')->name('administrador.d
 Route::get('/preguntas', 'AreaController@paginaPreguntas')->name('pagina.preguntas');
 
 Route::get('/preguntas/{id}', 'AreaController@borrarPregunta')->name('administrador.borrarPreguntas');
-
-//Route::get('/preguntasControlador', 'AreaController@borrarPregunta')->name('administrador.borrarPreguntas');
 
 Route::get('/recCon','MainController@recuperarContrasena')->name('usuario.recuperar');
 

@@ -114,10 +114,16 @@
                 </div> --}}
             </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="//gdc();">Cerrar</button>
                     {{-- <button type="button" class="btn btn-danger" onclick="cambiarContrasena('{{ route('usuario.cambiarContrasena') }}','{{ Session::get('noEmpleado') }}');">Obtener contraseña</button> --}}
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        
+    </script>
 @endsection

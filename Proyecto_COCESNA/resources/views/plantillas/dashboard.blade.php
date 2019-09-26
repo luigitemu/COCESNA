@@ -31,7 +31,7 @@
         <a href="{{ route('administrador.principal') }}" class="list-group-item list-group-item-action bg-light">Area de Preguntas</a>
         <a href="{{ route('usuarios.mostrar') }}" class="list-group-item list-group-item-action bg-light">Usuarios</a>
         <a href="{{ route('reportes.mostrar') }}" class="list-group-item list-group-item-action bg-light">Reportes</a>
-        <a href="" class="list-group-item list-group-item-action bg-light">Acerca de</a>
+        <a  class="list-group-item list-group-item-action bg-light">Acerca de</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -53,10 +53,10 @@
                   <i class="fas fa-user-circle"></i> {{Session::get('nombreCompleto')}}
               </span>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="{{ route('administrador.principal') }}"><i class="fas fa-home"></i> Inicio<span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="{{ route('sistema.inicio') }}"><i class="fas fa-door-open"></i> Salir</a>
             </li>
           </ul>

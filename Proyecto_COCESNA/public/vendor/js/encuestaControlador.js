@@ -84,7 +84,7 @@ $(document).ready(function(){
           $('#start').css('display','none');
           setTimeout(function(){
             window.location = variables.redireccionLogin
-          }, 4000);         //dentro de 4 segundos redirecciona 
+          }, 2000);         //dentro de 2 segundos redirecciona 
         }
       });
     });

@@ -61,7 +61,7 @@
             <div class="form-group">
               <label for="pregunta" class="col-form-label">Pregunta:</label>
               <input type="text" class="form-control" id="pregunta-editar">
-              <div id="valida-pregunta"></div>
+              <div id="valida-pregunta-editar"></div>
             </div>
             <div class="row">
               <h5 class="ml-4 mb-4 mr-4 col-form-label">Tipo de respuesta:</h5>

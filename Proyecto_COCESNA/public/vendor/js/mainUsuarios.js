@@ -95,6 +95,8 @@ function validarCampoVacio(){
 
 function validar(tipo){
     if (tipo == null) {
+
+        // console.log('paso por el otro lado');
         validarCampoVacio();
         // console.log(campos);
         
@@ -114,15 +116,23 @@ function validar(tipo){
             data: parametros,
             success: res=>{
                 // console.log(res);
+                $('#input-correo-editar').removeClass('is-valid','is-invalid');
+                $('#valida-input-correo-editar').html('');
+
                 mostrar(res);
                 $('#modalEditarUsuario').modal('hide');
             }
         });
     } else {
+        // console.log('paso por donde se espera');
         var x = $('#correo-agregar').val();
         var atposition=x.indexOf("@");  
         var dotposition=x.lastIndexOf(".");  
         if ( atposition<1 || dotposition<atposition+2) {
+            $('#correo-agregar').addClass('is-invalid');
+            $('#valida-correo-agregar').removeClass('valid-feedback');
+            $('#valida-correo-agregar').addClass('invalid-feedback');
+            $('#valida-correo-agregar').html('El campo es invalido');
             return;
         } else {
             let parametros = `no_empleado=${$('#noEmpleado-agregar').val()}&email=${$('#correo-agregar').val()}&posicion=${$('#posicion-agregar').val()}&turno=${$('#turno-agregar').val()}`;
@@ -132,8 +142,8 @@ function validar(tipo){
                 dataType: 'json',
                 data: parametros,
                 success: res=>{
-                    // console.log(res);
-                    mostrar(res);
+                    console.log(res);
+                    // mostrar(res);
                     $('#modalAgregarUsuario').modal('hide');
                     location.reload();
                 }

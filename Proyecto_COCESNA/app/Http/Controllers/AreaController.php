@@ -55,12 +55,12 @@ class AreaController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             $request->session()->get('noEmpleado'),
-            $request->session()->get('nombres'),
+            $request->session()->get('nombreCompleto'),
             'Nueva area',
             'areas_de_preguntas',
             'area_guardar(?,?)',
             'INSERT',
-            $request->session()->get('auth'),
+            $request->ip(),
         ));
 
         return json_encode($areas);
@@ -87,12 +87,12 @@ class AreaController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             request()->session()->get('noEmpleado'),
-            request()->session()->get('nombres'),
+            request()->session()->get('nombreCompleto'),
             'Actualizar area',
             'areas_de_preguntas',
             'Actualizar area '.request()->id. ' usando el nombre "'.request()->nombre.'" y la descripcion "'.request()->descripcion.'"',
             'UPDATE',
-            request()->session()->get('auth'),
+            request()->ip(),
         ));
 
         $areas = DB::table('areas_de_preguntas')->get();
@@ -126,12 +126,12 @@ class AreaController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             request()->session()->get('noEmpleado'),
-            request()->session()->get('nombres'),
+            request()->session()->get('nombreCompleto'),
             'Borrar area',
             'areas_de_preguntas',
             'Borra el area'.$id,
             'DELETE',
-            request()->session()->get('auth'),
+            request()->ip(),
         ));
 
         return json_encode($areas);
@@ -208,7 +208,7 @@ class AreaController extends Controller
             ->where('id_area',request()->area)->get();
             return $preguntas;
 
-        } elseif (request()->session()->get('auth')=='2')
+        } else if (request()->session()->get('auth')=='2')
         {
             $nombreArea = DB::table('areas_de_preguntas')
                             ->select('nombre')
@@ -272,12 +272,12 @@ class AreaController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             request()->session()->get('noEmpleado'),
-            request()->session()->get('nombres'),
+            request()->session()->get('nombreCompleto'),
             'Nueva pregunta',
             'preguntas',
             'pregunta_guardar(?,?)',
             'INSERT',
-            request()->session()->get('auth'),
+            request()->ip(),
         ));
         return "Agregado con exito";
     }
@@ -303,12 +303,12 @@ class AreaController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             request()->session()->get('noEmpleado'),
-            request()->session()->get('nombres'),
+            request()->session()->get('nombreCompleto'),
             'Actualizar pregunta',
             'preguntas',
             'Actualizar pregunta '.request()->id. ' usando el contenido "'.request()->contenido.'" y el tipo "'.request()->tipo.'"',
             'UPDATE',
-            request()->session()->get('auth'),
+            request()->ip(),
         ));
 
         return request();
@@ -332,12 +332,12 @@ class AreaController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             request()->session()->get('noEmpleado'),
-            request()->session()->get('nombres'),
+            request()->session()->get('nombreCompleto'),
             'Borrar pregunta',
             'preguntas',
             'Borra la pregunta '.request()->id,
             'DELETE',
-            request()->session()->get('auth'),
+            request()->id(),
         ));
 
         return request();

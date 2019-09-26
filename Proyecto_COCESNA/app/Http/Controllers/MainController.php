@@ -84,6 +84,10 @@ class MainController extends Controller
             $request->session()->put('nombres',$usuario->nombres);
             $request->session()->put('nombreCompleto',$usuario->nombres." ".$usuario->apellidos);
             
+            $pregFiltro = DB::table('pregunta_filtro')
+                                ->latest('id_pregunta')
+                                ->first();
+
             if($posicion == 1)
             {
                 $areas  = array();
@@ -92,12 +96,11 @@ class MainController extends Controller
                 $request->session()->put('auth','1');
 
                 return view('principalAdmin', [
-                    'areas'=> $areas
+                    'areas'=> $areas,
+                    'PreguntaF' => $pregFiltro->pregunta,
                 ]);
             } else
             {
-                $pregFiltro = DB::table('pregunta_filtro')->first();
-                
                 $request->session()->put('auth','2');
 
                 return view('preguntaFiltro')->with([
@@ -152,8 +155,13 @@ class MainController extends Controller
         $areas  = array();
         $areas = DB::table('areas_de_preguntas')->get();
 
+        $pregFiltro = DB::table('pregunta_filtro')
+                                ->latest('id_pregunta')
+                                ->first();
+
         return view('principalAdmin', [
-            'areas'=> $areas
+            'areas'=> $areas,
+            'PreguntaF' => $pregFiltro->pregunta,
         ]);
     }
     
@@ -179,13 +187,14 @@ class MainController extends Controller
                                 ->where('contenido','=','si')
                                 ->first();
                 // dd($idRespuesta->id_respuesta);                
-                DB::select('call log_usuarios_guardar(?,?,?,?,?,?)',
+                DB::select('call log_usuarios_guardar(?,?,?,?,?,?,?)',
                 array(
                     $query->id_personal,
                     $idRespuesta->id_respuesta,
                     NULL,
                     NULL,
                     NULL,
+                    request()->ip(),
                     '1',
                 ));
                 request()->session()->forget('auth');
@@ -200,13 +209,14 @@ class MainController extends Controller
                                 ->select('id_respuesta')
                                 ->where('contenido','=','no')
                                 ->first();
-                DB::select('call log_usuarios_guardar(?,?,?,?,?,?)',
+                DB::select('call log_usuarios_guardar(?,?,?,?,?,?,?)',
                 array(
                     $query->id_personal,
                     $idRespuesta->id_respuesta,
                     NULL,
                     NULL,
                     NULL,
+                    request()->ip(),
                     '1',
                 ));
                 return redirect()->route('encuesta.mostrarAreas');
@@ -215,69 +225,6 @@ class MainController extends Controller
         {
             return abort(404);
         }
-    }
-
-
-
-
-
-    // Esta funcion envía los correos a los usuarios permitidos
-    protected function enviarCorreo($noEmp,$parametros)
-    {
-        $controlador = DB::table('personal')
-                        ->join('usuarios','usuarios.id_personal','=','personal.id_personal')
-                        ->where('no_empleado',$noEmp)
-                        ->first();
-
-        $administrador = DB::table('personal')
-                            ->join('usuarios','usuarios.id_personal','=','personal.id_personal')
-                            ->where('id_posicion','1')
-                            ->first();
-
-        Mail::to([
-                    $administrador->email, 
-                    $controlador->email,
-                ])
-                ->send(new SendMailable(
-                    $controlador->nombres." ".$controlador->apellidos,
-                    $noEmp,
-                    $parametros,
-                ));
-
-        return "Mensaje enviado";
-    }
-
-
-
-
-    // Si el controlador termino la encuesta entonces muestra una pagina de confirmacion
-    public function finalizar(Request $request)
-    {
-        if($request->session()->get('auth')!='1' && $request->session()->get('auth')!='2')
-        {
-            return redirect()->route('sistema.inicio');
-        }
-        $query = DB::table('personal')
-                        ->select('id_personal')
-                        ->where('no_empleado',$request->session()->get('noEmpleado'))
-                        ->first();
-
-        $resultados = DB::table('log_usuarios')
-                        ->select(DB::raw('areas_de_preguntas.nombre as area'),'log_usuarios.fecha_creacion',DB::raw('preguntas.contenido as pregunta'),DB::raw('respuestas.contenido as respuesta'))
-                        ->join('respuestas','log_usuarios.id_respuesta','=','respuestas.id_respuesta')
-                        ->join('preguntas','log_usuarios.id_pregunta','=','preguntas.id_pregunta')
-                        ->join('areas_de_preguntas','log_usuarios.id_area','=','areas_de_preguntas.id_area')
-                        ->where('log_usuarios.id_personal','=',$query->id_personal)
-                        ->whereDate('log_usuarios.fecha_creacion','=',date('Y-m-d'))
-                        ->get();
-
-        $this->enviarCorreo($request->session()->get('noEmpleado'),$resultados);
-        $request->session()->forget('auth');
-        $request->session()->forget('noEmpleado');
-        $request->session()->forget('nombreCompleto');
-        $request->session()->forget('nombres');
-        return 'correo enviado con exito';//.$respuestas;
-        // return $respuestas;
     }
 
 
@@ -307,7 +254,7 @@ class MainController extends Controller
                         ->first();
 
 
-        DB::select('call log_usuarios_guardar(?,?,?,?,?,?)',
+        DB::select('call log_usuarios_guardar(?,?,?,?,?,?,?)',
             array(
                 // ,
                 $idPersonal->id_personal,
@@ -315,6 +262,7 @@ class MainController extends Controller
                 $request->idArea,
                 $idPregunta->id_pregunta,
                 NULL,
+                request()->ip(),
                 '0',
             ));
 
@@ -324,10 +272,13 @@ class MainController extends Controller
 
 
 
-    //
-    public function recuperarContrasena()
+    // actualiza la pregunta filtro
+    public function actualizarPF(Request $request)
     {
-        //$this->enviarCorreo($request->session()->get('noEmpleado'));
-        return request();
+        DB::select('call preg_filtro_crear(?)',
+        array(
+            $request->pregunta,
+        ));
+        return $request;
     }
 }

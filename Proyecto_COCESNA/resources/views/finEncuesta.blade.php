@@ -23,7 +23,7 @@
     var home = '{{ route("sistema.inicio") }}';
     setTimeout(function(){
       window.location = home;
-    }, 4000); //dentro de 4 segundos redirecciona 
+    }, 2000); //dentro de 2 segundos redirecciona 
     var variables = {};
   </script>
 @endsection
