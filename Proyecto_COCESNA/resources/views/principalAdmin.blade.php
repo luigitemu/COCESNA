@@ -5,7 +5,7 @@
     <h1 class="h3 mb-0 text-gray-800">Áreas De Preguntas</h1>
     <div>
       <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-regresar shadow-sm" data-toggle="modal" data-target="#modalEditarPreguntaFiltro"><i class="far fa-edit"></i> Editar pregunta filtro</a>
-      <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg shadow-sm" data-toggle="modal" data-target="#modalAgregarPregunta"><i class="far fa-file-alt mr-1"></i>Crear Area de Preguntas</a>  
+      <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg shadow-sm" data-toggle="modal" data-target="#modalAgregarPregunta"><i class="far fa-file-alt mr-1"></i>Crear Área de Preguntas</a>  
     </div>
   </div>
   <hr>
@@ -36,7 +36,7 @@
   @endforeach
 
 
-  @if (count($areas)==0)
+  @if (count($areas) == 0)
     <h4 class="ml-5">Sin áreas aún</h4>
   @endif
 

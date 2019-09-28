@@ -60,30 +60,30 @@
 
 @section('scripts')
   <script>
-      $.ajaxSetup({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-      });
-      
-      function cambiarContrasena(ruta,noEmp){
-        if ($('#nuevaContrasena1').val() == $('#nuevaContrasena2').val()) {
-          let parametros = `noEmp=${ noEmp }&contrasena=${ $('#nuevaContrasena1').val() }`;
-          console.log(ruta);
-          console.log(parametros);
-          $.ajax({
-            url: ruta,
-            method: 'GET',
-            data: parametros,
-            success: ( respuesta )=>{
-              console.log(respuesta);
-              alert('Contraseña cambiada exitosamente');
-              $('#modalCambioContrasena').modal('hide');
-            }
-          });
-        } else {
-          console.log('contrasenas incorrectas');
-        }
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       }
-    </script>
+    });
+    
+    function cambiarContrasena(ruta,noEmp){
+      if ($('#nuevaContrasena1').val() == $('#nuevaContrasena2').val()) {
+        let parametros = `noEmp=${ noEmp }&contrasena=${ $('#nuevaContrasena1').val() }`;
+        console.log(ruta);
+        console.log(parametros);
+        $.ajax({
+          url: ruta,
+          method: 'GET',
+          data: parametros,
+          success: ( respuesta )=>{
+            console.log(respuesta);
+            alert('Contraseña cambiada exitosamente');
+            $('#modalCambioContrasena').modal('hide');
+          }
+        });
+      } else {
+        console.log('contrasenas incorrectas');
+      }
+    }
+  </script>
 @endsection

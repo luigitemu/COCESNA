@@ -21,17 +21,20 @@ class DatabaseSeeder extends Seeder
     {
         //llamamos a una funcion la cual se encarga de borrar los registros en las tablas mencionadas
         $this->truncateTables([
-            'posicion',
-            'turnos',
-            'personal',
-            'user',
-            'usuarios',
-            'pregunta_filtro',
-            'respuestas',
-            'tipos_de_respuesta',
-            'preguntas',
             'areas_de_preguntas',
             'log_usuarios',
+            'perdidas_de_contrasena',
+            'personal',
+            'posicion',
+            'preguntas',
+            'pregunta_filtro',
+            'razones',
+            'respuestas',
+            'seglog',
+            'tipos_de_respuesta',
+            'turnos',
+            'user',
+            'usuarios',
         ]);
 
 

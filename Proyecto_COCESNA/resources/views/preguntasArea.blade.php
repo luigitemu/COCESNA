@@ -15,7 +15,7 @@
 @endsection
 
 @section('modalPrincipal')
-    <!-- Modal -->
+  <!-- Modal agregar pregunta -->
   <div class="modal fade" id="modalAgregarPregunta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -46,7 +46,7 @@
       </div>
     </div>
   </div>
-  <!-- modal de Editar Pregunta --> 
+  <!-- Modal de editar pregunta --> 
   <div class="modal fade" id="modalEditarPregunta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -100,17 +100,16 @@
 @endsection
 
 @section('scripts')
-<script>
-  var AJAX = {
-    idArea:"{{ $id }}",
-    rutaMostrarTiposRespuestas: "{{ route('encuesta.tiposDeRespuesta') }}",
-    rutaMostrarRespuestasDelTipo: "{{ route('tipoRespuesta.elementos') }}",
-    rutaMostrarPreguntas: "{{ route('area.preguntasAJAX') }}",
-    rutaAgregarPreguntas: "{{ route('administrador.agregarPregunta') }}",
-    rutaActualizarPreguntas: "{{ route('administrador.actualizarPregunta') }}",
-    rutaEliminar: "{{ route('pagina.preguntas') }}",
-  }
-</script>
-<script src="{{ asset('vendor/js/mainPreguntas.js') }}"></script>
-
+  <script>
+    var AJAX = {
+      idArea:"{{ $id }}",
+      rutaMostrarTiposRespuestas: "{{ route('encuesta.tiposDeRespuesta') }}",
+      rutaMostrarRespuestasDelTipo: "{{ route('tipoRespuesta.elementos') }}",
+      rutaMostrarPreguntas: "{{ route('area.preguntasAJAX') }}",
+      rutaAgregarPreguntas: "{{ route('administrador.agregarPregunta') }}",
+      rutaActualizarPreguntas: "{{ route('administrador.actualizarPregunta') }}",
+      rutaEliminar: "{{ route('pagina.preguntas') }}",
+    }
+  </script>
+  <script src="{{ asset('vendor/js/mainPreguntas.js') }}"></script>
 @endsection

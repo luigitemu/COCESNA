@@ -37,6 +37,10 @@ Route::get('/fin','UserController@finalizar')->name('encuesta.fin');    //dirige
 
 Route::get('/grdRes','MainController@guardarRespuestas')->name('encuesta.guardar');
 
+Route::get('/nuevaOportunidad','MainController@nuevaOportunidad')->name('usuarios.nuevaOportunidad');
+
+Route::get('/registroContrasena','UserController@registroContrasena')->name('olvidar.contrasena');
+
 Route::get('/PreguntasAJAX','AreaController@verPreguntasAJAX')->name('area.preguntasAJAX');
 
 Route::get('/pagPriAdm','MainController@ingresarComoAdmin')->name('administrador.principal');

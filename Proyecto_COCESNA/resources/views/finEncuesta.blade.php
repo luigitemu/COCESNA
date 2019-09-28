@@ -4,10 +4,10 @@
   <div id='container'>
     <div id="envolver">
       <div id="title" class="mt-4">
-        <h1 class="titulo-enc" id="titulo-enc">Fin de encuesta</h1>
+        <h1 class="titulo-enc" id="titulo-enc">{{ $mensaje0 }}</h1>
       </div>
       <br>        
-      <div id="quiz" style="display: block;"><p id="cuestmsj">Ha finalizado la encuesta <br>Gracias por su participación.</p></div>
+      <div id="quiz" style="display: block;"><p id="cuestmsj">{{ $mensaje1 }}<br>{{ $mensaje2 }}</p></div>
     </div>
   </div>
 @endsection
@@ -23,7 +23,7 @@
     var home = '{{ route("sistema.inicio") }}';
     setTimeout(function(){
       window.location = home;
-    }, 2000); //dentro de 2 segundos redirecciona 
+    }, {{ $retardo }}); //dentro de 2 o 4 segundos redirecciona 
     var variables = {};
   </script>
 @endsection

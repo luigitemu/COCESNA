@@ -3,7 +3,10 @@
 @section('tituloDashboard')
   <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-3">
     <h1 class="h3 mb-0 text-gray-800">Usuarios</h1>
-    <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg shadow-sm" data-toggle="modal" data-target="#modalAgregarUsuario"><i class="far fa-file-alt mr-1"></i>Agregar Usuario</a>
+    <div>
+      <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-regresar shadow-sm" data-toggle="modal" data-target="#modalNuevaEncuesta"><i class="far fa-plus-square"></i>  Nueva oportunidad de encuesta</a>
+      <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg shadow-sm" data-toggle="modal" data-target="#modalAgregarUsuario"><i class="far fa-file-alt mr-1"></i> Agregar Usuario</a>
+    </div>
   </div>
   <hr>
 @endsection
@@ -97,6 +100,34 @@
     </div>
   </div>
 
+  <div class="modal fade" id="modalNuevaEncuesta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Nueva oportunidad de encuesta</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="noEmpleado-nueOpo" class="col-form-label">Seleccione el número de empleado:</label>
+            <select type="text" class="form-control" id="noEmpleado-nueOpo">
+              @foreach ($usuarios as $usuario)
+                <option value="{{ $usuario->no_empleado }}">{{ $usuario->no_empleado }}</option>
+              @endforeach
+            </select>
+            <div id="valida-noEmpleado-nueOpo"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" onclick="nuevaOportunidadDeEncuesta();">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal fade" id="modalEditarUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -158,6 +189,7 @@
     var ruta = "{{ route('usuarios.mostrar') }}";
     var actualizar = "{{ route('usuarios.actualizar') }}";
     var agregarUsuario = "{{ route('usuario.agregar') }}";
+    var nuevaEncuesta = "{{ route('usuarios.nuevaOportunidad') }}";
   </script>
   <script src="{{ asset('vendor/js/mainUsuarios.js') }}"></script>
 @endsection

@@ -9,7 +9,6 @@ $.ajaxSetup({
 
 
 
-
 /**
  * Al iniciar la pagina, muestra las preguntas previamente creadas
  * y los tipos de respuestas permitidas
@@ -22,7 +21,6 @@ $(document).ready(function(){
         method: 'GET',
         data: parametros,
         success: ( respuesta )=>{
-            //console.log(respuesta);
             mostrarTipos(respuesta);
         }
     });
@@ -36,12 +34,10 @@ $(document).ready(function(){
 
 
 
-
 var campo = {
     id: 'pregunta',
     valido: false
 }
-
 
 
 
@@ -51,10 +47,8 @@ var campo = {
 function validar() {
     ($('#'+campo.id).val() === '')?campo.valido = false: campo.valido=true;
     marcar(campo);
-
     if(campo.valido== false)
-    return;
-
+        return;
     guardarPregunta();
     mostrarPreguntasDelArea();
     $('#'+campo.id).val('');
@@ -66,23 +60,19 @@ function validar() {
  * resalta si la informacion es valida o invalida
  */
 function marcar(valor) {
-    
     if(valor.valido == false){
-         $('#'+valor.id).addClass('is-invalid');
-         $('#'+valor.id).removeClass('is-valid');
+        $('#'+valor.id).addClass('is-invalid');
+        $('#'+valor.id).removeClass('is-valid');
         $('#valida-'+valor.id).removeClass('valid-feedback');
         $('#valida-'+valor.id).addClass('invalid-feedback');
         $('#valida-'+valor.id).html('El campo no debe de ir vacio');
-
-    
     }else{
-       $('#'+valor.id).addClass('is-valid');
-       $('#'+valor.id).removeClass('is-invalid');
+        $('#'+valor.id).addClass('is-valid');
+        $('#'+valor.id).removeClass('is-invalid');
         $('#valida-'+valor.id).removeClass('invalid-feedback');
         $('#valida-'+valor.id).addClass('valid-feedback');
         $('#valida-'+valor.id).html('Campo Correcto');
-    }
-    
+    } 
 }
 
 
@@ -111,20 +101,17 @@ function mostrar (contenido,id,idTipo) {
 
 
 
-
 /**
  * Muestra todas las preguntas del area seleccionada
  */
 function mostrarPreguntasDelArea() {
     $('#areaPreguntas').html('');
     let parametros = `area=${AJAX.idArea}`;
-    // console.log(parametros);
     $.ajax({
         url: AJAX.rutaMostrarPreguntas,
         method: 'GET',
         data: parametros,
         success: ( respuesta )=>{
-            // console.log(respuesta);
             if(respuesta.length == 0){
                 $('#areaPreguntas').html(`
                 <h4 class="ml-5">Sin preguntas aún</h4>
@@ -137,7 +124,6 @@ function mostrarPreguntasDelArea() {
         }
     });
 }
-
 
 
 
@@ -157,7 +143,6 @@ function mostrarTipos(array) {
 
 
 
-
 /**
  * muestra las respuestas que tiene una pregunta
  */
@@ -168,7 +153,6 @@ function mostrarRespuestasDelTipo(idPregunta,tipo) {
         method: 'GET',
         data: parametros,
         success: ( respuesta )=>{
-            //console.log(respuesta);$.().modal();
             respuesta.forEach(element => {
                 $('#respuestasPregunta'+idPregunta).append(`
                 <li class="list-group-item">
@@ -186,12 +170,10 @@ function mostrarRespuestasDelTipo(idPregunta,tipo) {
 
 
 
-
 function editar () {
-  let elemento = document.querySelector('#titulo');
-     elemento.toggleAttribute('disabled');
+    let elemento = document.querySelector('#titulo');
+    elemento.toggleAttribute('disabled');
 }
-
 
 
 
@@ -200,14 +182,11 @@ function editar () {
  */
 function guardarPregunta(){
     let parametros = `area=${AJAX.idArea}&tipo=${$('#inputState').val()}&contenido=${encodeURIComponent($('#'+campo.id).val())}`;
-    //console.log(parametros);
     $.ajax({
         url: AJAX.rutaAgregarPreguntas,
         method: 'GET',
-        //dataType: 'json',
         data: parametros,
         success: ( respuesta )=>{
-            // console.log(respuesta);
             $('#pregunta').removeClass('is-valid','is-invalid');
             $('#valida-pregunta').html('');
         }
@@ -236,14 +215,12 @@ var campoEditar = {
 
 
 
-
 /**
  * valida la informacion del modal editar
  */
 function validarEditar() {
     ($('#'+campoEditar.id).val() === '')?campoEditar.valido = false: campoEditar.valido=true;
     marcar(campoEditar);
-
     if(campoEditar.valido== false)
     return;
     actualizarPregunta();
@@ -251,19 +228,18 @@ function validarEditar() {
 
 
 
-
+/**
+ * Actualiza una pregunta
+ */
 function actualizarPregunta() {
     let parametros = `tipo=${$('#inputState2').val()}&contenido=${encodeURIComponent($('#pregunta-editar').val())}&id=${$('#id-pregunta-editar').val()}`;
-    //console.log(parametros);
     $.ajax({
         url: AJAX.rutaActualizarPreguntas,
         method: 'GET',
         data: parametros,
         success: ( respuesta )=>{
-            // console.log(respuesta);
             $('#pregunta-editar').removeClass('is-valid','is-invalid');
-            $('#valida-pregunta-editar').html('');
-            
+            $('#valida-pregunta-editar').html('');            
             mostrarPreguntasDelArea();
             $('#modalEditarPregunta').modal('hide');
         }
@@ -272,18 +248,21 @@ function actualizarPregunta() {
 
 
 
-
+/**
+ * Muestra el modal de eliminar una pregunta
+ */
 var idEliminar;
 function eliminarPregunta(id) {
     $('#modalEliminarPregunta').modal('show');
-    
     idEliminar = id;
     $('#modal-eliminar-contenido').html(`¿Está seguro de eliminar la pregunta?`);
 }
 
 
 
-
+/**
+ * Elimina una pregunta de la base de datos
+ */
 function validarElminar(){
     let parametros = `id=${idEliminar}`;
     //console.log(parametros);

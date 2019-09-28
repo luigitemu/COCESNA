@@ -1,34 +1,41 @@
 var idEliminar;
 var porEditar;
 
+
+
 // validaciones;
 var campos = [
     {id: 'input-correo-editar', valido: false, corValido: true},
 ];
 
+
+
+// Muestra el modal de eliminar usuario
 function eliminarUsuario(id) {
     $('#modalEliminar').modal('show');
-
     idEliminar = id;
-    $('#contenidoModal').html(`Está seguro de eliminar el usuario con el número de empleado ${id}`);
+    $('#contenidoModal').html(`¿Está seguro de eliminar el usuario con el número de empleado ${id}?`);
 }
 
+
+
+// Se confirma que el usuario se eliminará
 function confirmarEliminar () {
     $.ajax({
-        //url: `pagPriAdm/${id}`,
-        url: `${ruta}/${idEliminar}`,
+        url: `${ruta}/${idEliminar}`, //url: `pagPriAdm/${id}`,
         method: 'get',
         dataType: 'json',
         success: res=>{
-            // console.log(res);
             mostrar(res);
-            // alert('usuario eliminado');
             $('#modalEliminar').modal('hide');
             location.reload();
         }
     });
 }
 
+
+
+// Muestra los usuarios registrados en el sistema
 function mostrar(res) {
     $('#tbl-usuarios').html('');
     res.forEach((usuario)=>{
@@ -47,13 +54,17 @@ function mostrar(res) {
     });
 }
 
+
+
+// Muestra el modal de editar usuarios
 function editarUsuario(noEmp,email,posicion) {
     porEditar = noEmp; 
     $('#modalEditarUsuario').modal('show');
     $('#input-correo-editar').val(email);
     $('#select-posicion').val(posicion).attr("selected", "selected");
-    // console.log(posicion);
 }
+
+
 
 /**
  * resalta si la informacion es valida o invalida
@@ -83,6 +94,7 @@ function marcar(valor) {
 }
 
 
+
 function validarCampoVacio(){
     campos.forEach(valor=>{
         ($('#'+valor.id).val() === '') ? valor.valido = false : valor.valido = true;
@@ -93,12 +105,12 @@ function validarCampoVacio(){
     });
 }
 
+
+
 function validar(tipo){
     if (tipo == null) {
 
-        // console.log('paso por el otro lado');
         validarCampoVacio();
-        // console.log(campos);
         
         for(let i = 0;i<campos.length;i++)
             marcar(campos[i]);
@@ -107,7 +119,6 @@ function validar(tipo){
             if(campos[i].valido == false || campos[i].corValido == false)
                 return;
         }
-        // console.log('listo');
         let parametros = `no_empleado=${porEditar}&email=${$('#input-correo-editar').val()}&posicion=${$('#select-posicion').val()}`;
         $.ajax({
             url: actualizar,
@@ -115,7 +126,6 @@ function validar(tipo){
             dataType: 'json',
             data: parametros,
             success: res=>{
-                // console.log(res);
                 $('#input-correo-editar').removeClass('is-valid','is-invalid');
                 $('#valida-input-correo-editar').html('');
 
@@ -124,7 +134,6 @@ function validar(tipo){
             }
         });
     } else {
-        // console.log('paso por donde se espera');
         var x = $('#correo-agregar').val();
         var atposition=x.indexOf("@");  
         var dotposition=x.lastIndexOf(".");  
@@ -142,8 +151,6 @@ function validar(tipo){
                 dataType: 'json',
                 data: parametros,
                 success: res=>{
-                    console.log(res);
-                    // mostrar(res);
                     $('#modalAgregarUsuario').modal('hide');
                     location.reload();
                 }
@@ -152,6 +159,20 @@ function validar(tipo){
     }
 }
 
+
+
+function nuevaOportunidadDeEncuesta() {
+    let parametros = `no_empleado=${$('#noEmpleado-nueOpo').val()}`;
+    $.ajax({
+        url: nuevaEncuesta,
+        method: 'get',
+        data: parametros,
+        success: res=>{
+            alert('Nueva oportunidad asignada con éxito!');
+            $('#modalNuevaEncuesta').modal('hide');
+        }
+    });
+}
 
 
 

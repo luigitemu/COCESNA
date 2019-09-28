@@ -226,7 +226,7 @@ class ReportesController extends Controller
 
 
 
-        // Para el quinto grafico se cuenta las preguntas que tiene cada area 
+        // Para el cuarto grafico se cuenta las preguntas que tiene cada area 
         $cantidad = DB::table('preguntas')
                             ->select('areas_de_preguntas.nombre',DB::raw('count(*) as total'))
                             ->join('areas_de_preguntas','preguntas.id_area','=','areas_de_preguntas.id_area')
@@ -255,7 +255,7 @@ class ReportesController extends Controller
 
 
 
-        // Para el sexto grafico se cuenta las preguntas respondidas por áreas 
+        // Para el quinto grafico se cuenta las preguntas respondidas por áreas 
         $cantidad = DB::table('log_usuarios')
                             ->select('areas_de_preguntas.nombre',DB::raw('count(*) as total'))
                             ->join('areas_de_preguntas','log_usuarios.id_area','=','areas_de_preguntas.id_area')
@@ -286,7 +286,7 @@ class ReportesController extends Controller
 
 
 
-        // Para el setimo grafico se muestra las horas que mas se usa el sistema 
+        // Para el sexto grafico se muestra las horas que mas se usa el sistema 
         $cantidad = DB::table('user')
                             ->select(DB::raw('DATE_FORMAT(FROM_UNIXTIME(created_at), "%H") as hora'),DB::raw('count(*) as total'))
                             ->groupBy('hora')
@@ -316,7 +316,7 @@ class ReportesController extends Controller
 
 
 
-        // Para el octavo grafico se muestra las veces que cada usuario ha ingresado al sistema 
+        // Para el septimo grafico se muestra las veces que cada usuario ha ingresado al sistema 
         $cantidad = DB::table('user')
                             ->select('username',DB::raw('count(*) as total'))
                             ->groupBy('username')
@@ -345,7 +345,7 @@ class ReportesController extends Controller
         
         
 
-        // Para el noveno grafico se muestra el uso del sistema por meses 
+        // Para el octavo grafico se muestra el uso del sistema por meses 
         $cantidad = DB::table('user')
                             ->select(DB::raw('DATE_FORMAT(FROM_UNIXTIME(created_at), "%m") as mes'),DB::raw('count(*) as total'))
                             ->groupBy('mes')
@@ -371,7 +371,40 @@ class ReportesController extends Controller
             ]),
         ]);
 
+        
 
+        // Para el noveno grafico se muestra las cantidades de registros de las tablas aisladas 
+        $PerConRep = DB::table('perdidas_de_contrasena')
+                            ->select(DB::raw('count(id_perdida) as total'))
+                            ->first();
+        $ModPreFil = DB::table('pregunta_filtro')
+                            ->select(DB::raw('count(id_pregunta)-1 as total'))
+                            ->first();
+        $RazEncCon = DB::table('razones')
+                            ->select(DB::raw('count(id_razon) as total'))
+                            ->first();
+                // dd($PerConRep);
+                // dd($ModPreFil);
+                // dd($RazEncCon);
+        $etiquetas = ['Perdidas de contraseñas reportadas','Veces que la pregunta filtro ha sido modificada','Razones para llenar la encuesta de un controlador'];
+        $ejeY = [$PerConRep->total,$ModPreFil->total,$RazEncCon->total];
+        // obtenemos los colores para el grafico
+        $colores = $this->colores_aleatorios(count($etiquetas));
+
+        // creamos el objeto chart
+        $chart9 = new UsersChart();
+        $chart9->labels($etiquetas);
+        $dataset = $chart9->dataset('','bar',$ejeY);
+        $dataset->backgroundColor($colores);
+        $chart9->options([
+            'legend' => collect([
+                'display' => false,
+            ]),
+            'title' => collect([
+                'display' => true,
+                'text' => 'Otros datos importantes'
+            ]),
+        ]);
         
 
 
@@ -382,9 +415,8 @@ class ReportesController extends Controller
                 'chart3','chart4',
                 'chart5','chart6',
                 'chart7','chart8',
-                // 'chart9',
+                'chart9',
             ),
-            // 'reportes' => [$chart1,$chart2,$chart3,$chart4,$chart5,$chart6,$chart7],
         ]);
     }
 
@@ -395,15 +427,18 @@ class ReportesController extends Controller
     protected function colores_aleatorios($cantidad)
     {
         $colores = collect();
-        for ($i=0; $i < $cantidad; $i++) { 
+        for ($i=0; $i < $cantidad; $i++) 
+        { 
             $colores->push('#'.$this->random_color());
         }
         return $colores;
     }
-    protected function random_color() {
+    protected function random_color() 
+    {
         return $this->random_color_part() . $this->random_color_part() . $this->random_color_part();
     }
-    protected function random_color_part() {
+    protected function random_color_part() 
+    {
         return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
     }
 }

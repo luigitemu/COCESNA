@@ -96,7 +96,7 @@ class UserController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
             array(
                 $request->session()->get('noEmpleado'),
-                $request->session()->get('nombreCompleto'),
+                $request->session()->get('nombres'),
                 'Nuevo usuario',
                 'usuarios',
                 'sp usuarios guardar',
@@ -140,7 +140,6 @@ class UserController extends Controller
                         ->orderBy('personal.no_empleado')
                         ->get();
 
-        // dd($disponibles);
         return view('usuarios' , [
             'usuarios' => $user,
             'personal' => $personal,
@@ -187,7 +186,7 @@ class UserController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
             array(
                 $request->session()->get('noEmpleado'),
-                $request->session()->get('nombreCompleto'),
+                $request->session()->get('nombres'),
                 'Actualizar usuario',
                 'usuarios',
                 'Actualizar usuario '.$request->no_empleado. ' usando el id_posicion "'.$posicion->id_posicion.'" y el email "'.$request->email.'"',
@@ -227,7 +226,7 @@ class UserController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
             array(
                 request()->session()->get('noEmpleado'),
-                request()->session()->get('nombreCompleto'),
+                request()->session()->get('nombres'),
                 'Eliminar usuario',
                 'usuarios',
                 'Eliminar el usuario con no_empleado "'.request()->session()->get('noEmpleado').'"',
@@ -245,10 +244,8 @@ class UserController extends Controller
         {
             return abort(404);
         }
-        // Yu10fWWTWv
-        // $cadena = str_random(10);
-        // $RandomPassword = Crypt::encryptString($cadena);
 
+        // $RandomPassword = Crypt::encryptString($cadena);
         // $RandomPassword = Crypt::encryptString('2');
 
         $idPersonal = DB::table('personal')
@@ -259,11 +256,8 @@ class UserController extends Controller
         DB::table('usuarios')
             ->where('id_personal','=',$idPersonal->id_personal)
             ->update([
-                // 'contrasena' => $RandomPassword,
                 'contrasena' => Crypt::encryptString($request->contrasena),
             ]);
-        // return 'Cambio de contraseña exitoso, contraseña: '.$cadena;
-        // return 'Cambio de contraseña exitoso, contraseña: 2';
         return $request;
     }
 
@@ -337,8 +331,20 @@ class UserController extends Controller
         $request->session()->forget('noEmpleado');
         $request->session()->forget('nombreCompleto');
         $request->session()->forget('nombres');
-        return 'correo enviado con exito';//.$respuestas;
-        // return $respuestas;
+        return 'correo enviado con exito';
+    }
+
+
+
+
+    //
+    public function registroContrasena(Request $request)
+    {
+        DB::select('call perdidas_de_contrasena_guardar(?)',
+        array(
+            $request->ip(),
+        ));
+        return 'guardado con exito';
     }
 }
 

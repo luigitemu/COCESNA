@@ -19,29 +19,29 @@
                     {{method_field('PUT')}}     {{-- cambia de method="POST" a method="PUT" --}}
                     {!! csrf_field() !!}   
                     <div class="form-group form-st mb-1">
-                        <label for="exampleInputEmail1">Número de empleado</label>
+                        <label for="numeroEmpleado">Número de empleado</label>
                         <input type="number" name="numeroEmpleado" class="form-control form-inp" id="numeroEmpleado" aria-describedby="emailHelp" placeholder="Ingrese su número de empleado" value="{{ old('numeroEmpleado') }}">
                         <label class="mt-2 ml-3" for="numeroEmpleado" style="color:#ff3300;">
                             <small>
-                                    @if ($errors->has('numeroEmpleado'))
-                                        {{$errors->first('numeroEmpleado')}}
-                                    @endif
+                                @if ($errors->has('numeroEmpleado'))
+                                    {{$errors->first('numeroEmpleado')}}
+                                @endif
                             </small>
                         </label>
                     </div>
                     <div class="form-group form-st mb-1">
-                        <label for="exampleInputPassword1">Contraseña</label>
+                        <label for="contrasena">Contraseña</label>
                         <input type="password" name="contrasena" id="contrasena" class="form-control form-inp" placeholder="Ingrese su contraseña" >
                         <label class="mt-2 ml-3" for="contrasena" style="color:#ff3300;">
                             <small>
-                                    @if ($errors->has('contrasena'))
-                                        {{$errors->first('contrasena')}}
-                                    @endif
+                                @if ($errors->has('contrasena'))
+                                    {{$errors->first('contrasena')}}
+                                @endif
                             </small>
                         </label>
                     </div>
                     <button type="submit" class="btn btn-primary mb-3">Ingresar</button>
-                    <a role="button" class="text-primary" data-toggle="modal" data-target="#modalContrasena">Olvidé mi contraseña</a>
+                    <a role="button" class="text-primary" onclick="gdc();" data-toggle="modal" data-target="#modalContrasena">Olvidé mi contraseña</a>
                   </form>
             </div>
         </div>
@@ -106,16 +106,9 @@
                 </div>
             <div class="modal-body">
                 Para reinicio de contraseña contacte con el administrador del sistema
-                {{-- <br><br>
-                <div class="form-group">
-                    <label for="noEmpleadoContrasena" class="col-form-label">Ingrese su número de empleado:</label>
-                    <input type="number" class="form-control" id="noEmpleadoContrasena">
-                    <div id="valida-noEmpleadoContrasena"></div>
-                </div> --}}
             </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="//gdc();">Cerrar</button>
-                    {{-- <button type="button" class="btn btn-danger" onclick="cambiarContrasena('{{ route('usuario.cambiarContrasena') }}','{{ Session::get('noEmpleado') }}');">Obtener contraseña</button> --}}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -124,6 +117,13 @@
 
 @section('scripts')
     <script>
-        
+        function gdc() {
+            $.ajax({
+                url: '{{ route("olvidar.contrasena") }}',
+                method: 'GET',
+                success: ( respuesta )=>{
+                }
+            });
+        }
     </script>
 @endsection

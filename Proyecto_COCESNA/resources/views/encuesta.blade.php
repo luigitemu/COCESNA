@@ -22,20 +22,16 @@
 					<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body" id="mail-cont"> 
-					{{-- Presione "enviar" y automaticamente recibirá un correo con instrucciones para cambiar su contraseña. --}}
-					<div class="form-group">
-						<label for="contrasena1" class="col-form-label">Contraseña actual:</label>
-						<input type="password" class="form-control" id="contrasena1">
-						<div id="valida-contrasena1"></div>
-						<label for="contrasena2" class="col-form-label">Nueva contraseña:</label>
-						<input type="password" class="form-control" id="contrasena2">
-						<div id="valida-contrasena2"></div>
-						<label for="contrasena3" class="col-form-label">Repita la nueva contraseña:</label>
-						<input type="password" class="form-control" id="contrasena3">
-						<div id="valida-contrasena3"></div>
+				<div class="modal-body">
+						<div class="form-group">
+							<label for="nuevaContrasena1" class="col-form-label">Ingrese una nueva contraseña:</label>
+							<input type="password" class="form-control" id="nuevaContrasena1">
+							<div id="valida-nuevaContrasena1"></div>
+							<label for="nuevaContrasena2" class="col-form-label">Confirme la nueva contraseña:</label>
+							<input type="password" class="form-control" id="nuevaContrasena2">
+							<div id="valida-nuevaContrasena2"></div>
+						</div>
 					</div>
-				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="mail-cancel">Cancelar</button>
 					<button type="button" class="btn btn-primary" id="mail-send" onclick="confirmarEnviar('{{ Session::get('noEmpleado') }}');">Enviar</button>

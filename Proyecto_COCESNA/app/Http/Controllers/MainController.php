@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Crypt;   // Encriptar/Desencriptar contraseñas
 use Illuminate\Support\Facades\Hash;    // Manejo de hashes
 use Mail;                               // Clase Mail
 use App\Mail\SendMailable;
+use View;
 
 class MainController extends Controller
 {
-
 
 
 
@@ -38,14 +38,12 @@ class MainController extends Controller
             'contrasena' => ['required']
         ],[
             'numeroEmpleado.required' => 'El número de empleado es obligatorio',
-            'numeroEmpleado.exists' => 'El número de empleado es invalido',
+            'numeroEmpleado.exists' => 'El número de empleado es inválido',
             'contrasena.required' => 'La contraseña es obligatoria',
         ]);
 
         /**
-         * 
          * Metodo 1: Usando cifrado (encrypt/decrypt)
-         * 
          *  */
         // Busca la contraseña perteneciente al numero de empleado y la desencripta
         // se almacena en la variable $pass
@@ -67,19 +65,63 @@ class MainController extends Controller
         }
         else
         {
-            // Almacenar la hora de entrada al sistema
-            DB::select('call reg_entrada_guardar(?,?,?,?,?,?)',
-            array(
-                $usuario->nombres." ".$usuario->apellidos,
-                substr(env('APP_KEY'),7,-12),
-                Hash::make($usuario->contrasena),
-                $usuario->email,
-                $usuario->activo,
-                $request->_token,
-            ));
+            $actualDia = date('d/m/Y', time());
+            $encuestaCompletada = DB::table('user')
+                                    ->where('auth_key','=',$data['numeroEmpleado'])
+                                    ->where(DB::raw('DATE_FORMAT(FROM_UNIXTIME(created_at), "%d/%m/%Y")'),'=',$actualDia)
+                                    ->first();
 
+            // si el controlador ya lleno la encuesta y no se le ha permitido una nueva oportunidad entonces no iniciar la encuesta                        
+            if($encuestaCompletada != NULL && $usuario->id_posicion == 2 && $usuario->nuevo_intento == 0)
+            {
+                return view('finEncuesta',[
+                    'mensaje0' => 'Encuesta terminada por hoy',
+                    'mensaje1' => 'Para nuevos intentos en el dia',
+                    'mensaje2' => 'contacte con el administrador del sistema.',
+                    'retardo' => '4000',
+                ]);
+            }
+            else
+            {
+                // si el cualquier usuario tiene permitido una nueva oportunidad entonces reiniciar el atributo y guardar el registro
+                if($usuario->nuevo_intento == 1)
+                {
+                    $idPersonal = DB::table('personal')
+                        ->select('id_personal')
+                        ->where('no_empleado','=',$data['numeroEmpleado'])
+                        ->first();
+                        DB::table('usuarios')
+                            ->where('id_personal','=',$idPersonal->id_personal)
+                            ->update([
+                                'nuevo_intento' => 0,
+                            ]);
+                    DB::select('call reg_entrada_guardar(?,?,?,?,?,?)',
+                    array(
+                        $usuario->nombres." ".$usuario->apellidos,
+                        $data['numeroEmpleado'],
+                        Hash::make($usuario->contrasena),
+                        $usuario->email,
+                        $usuario->activo,
+                        $request->_token,
+                    ));
+                }
+                // si es la primera vez en el dia entonces almacenar, es para todos los usuarios
+                else if($encuestaCompletada == NULL)
+                {
+                    DB::select('call reg_entrada_guardar(?,?,?,?,?,?)',
+                    array(
+                        $usuario->nombres." ".$usuario->apellidos,
+                        $data['numeroEmpleado'],
+                        Hash::make($usuario->contrasena),
+                        $usuario->email,
+                        $usuario->activo,
+                        $request->_token,
+                    ));
+                }
+            }
+
+            $this->permitirNoEmpleado = '';
             $posicion = $usuario->id_posicion;
-
             $request->session()->put('noEmpleado',$usuario->no_empleado);
             $request->session()->put('nombres',$usuario->nombres);
             $request->session()->put('nombreCompleto',$usuario->nombres." ".$usuario->apellidos);
@@ -99,7 +141,8 @@ class MainController extends Controller
                     'areas'=> $areas,
                     'PreguntaF' => $pregFiltro->pregunta,
                 ]);
-            } else
+            }
+            else
             {
                 $request->session()->put('auth','2');
 
@@ -107,14 +150,10 @@ class MainController extends Controller
                         'datos' => $data['numeroEmpleado'],
                         'preguntaFiltro' => $pregFiltro->pregunta,
                     ]);   
-            }
-            
+            }  
         } 
-        
-        /**
-         * 
+        /** 
          * Metodo 2: Usando hashes
-         * 
          *  */
         /*
         $usuario = DB::table('personal')
@@ -137,8 +176,6 @@ class MainController extends Controller
             ])->withInput();
         }    
         */
-
-        
     }
 
 
@@ -201,7 +238,12 @@ class MainController extends Controller
                 request()->session()->forget('noEmpleado');
                 request()->session()->forget('nombreCompleto');
                 request()->session()->forget('nombres');
-                return view('finEncuesta');
+                return view('finEncuesta',[
+                    'mensaje0' => 'Fin de encuesta',
+                    'mensaje1' => 'Ha finalizado la encuesta',
+                    'mensaje2' => 'Gracias por su participación.',
+                    'retardo' => '2000',
+                ]);
             }
             else
             {
@@ -279,6 +321,26 @@ class MainController extends Controller
         array(
             $request->pregunta,
         ));
-        return $request;
+        return 1;
+    }
+
+
+
+
+    // Permite una nueva oportunidad de llenar una encuesta
+    public function nuevaOportunidad(Request $request)
+    {
+        $idPersonal = DB::table('personal')
+                        ->select('id_personal')
+                        ->where('no_empleado','=',$request->no_empleado)
+                        ->first();
+
+        DB::table('usuarios')
+            ->where('id_personal','=',$idPersonal->id_personal)
+            ->update([
+                'nuevo_intento' => 1,
+            ]);
+        
+        return 1;
     }
 }

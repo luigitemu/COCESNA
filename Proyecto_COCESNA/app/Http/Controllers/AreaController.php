@@ -47,7 +47,7 @@ class AreaController extends Controller
         DB::select('call area_guardar(?,?)',
         array(
             $request->nombre,
-            $request->descripcion,
+            $request->descripcion
         ));
 
         $areas = DB::table('areas_de_preguntas')->get();
@@ -55,10 +55,10 @@ class AreaController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             $request->session()->get('noEmpleado'),
-            $request->session()->get('nombreCompleto'),
+            $request->session()->get('nombres'),
             'Nueva area',
             'areas_de_preguntas',
-            'area_guardar(?,?)',
+            'area_guardar',
             'INSERT',
             $request->ip(),
         ));
@@ -87,7 +87,7 @@ class AreaController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             request()->session()->get('noEmpleado'),
-            request()->session()->get('nombreCompleto'),
+            request()->session()->get('nombres'),
             'Actualizar area',
             'areas_de_preguntas',
             'Actualizar area '.request()->id. ' usando el nombre "'.request()->nombre.'" y la descripcion "'.request()->descripcion.'"',
@@ -126,7 +126,7 @@ class AreaController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             request()->session()->get('noEmpleado'),
-            request()->session()->get('nombreCompleto'),
+            request()->session()->get('nombres'),
             'Borrar area',
             'areas_de_preguntas',
             'Borra el area'.$id,
@@ -143,10 +143,6 @@ class AreaController extends Controller
     // Muestra las preguntas de un area, de forma sincrona
     public function paginaPreguntas()
     {
-        // if(!(request()->session()->get('auth')=='1'))
-        // {
-        //     return abort(404);
-        // }
         if(request()->session()->get('auth')=='1')
         {
             $nombreArea = DB::table('areas_de_preguntas')
@@ -167,12 +163,9 @@ class AreaController extends Controller
 
             $preguntas = DB::table('preguntas')
                             ->select(DB::raw('preguntas.contenido as cuest'),'preguntas.id_tipo')
-                            //->select(DB::raw('preguntas.contenido as cuest'),'preguntas.id_tipo','respuestas.contenido')
-                            //->Join('respuestas','respuestas.id_tipo','=','preguntas.id_tipo')
                             ->where('id_area',request()->id)
                             ->get();
             
-            //return $preguntas;
             $FormatoPreguntas = array();
             foreach ($preguntas as $pregunta) 
             {
@@ -184,14 +177,11 @@ class AreaController extends Controller
                                     ->get();
                 $respuestas = array_values($respuestas->pluck('contenido')->toArray());
                 $temp['respuestas'] = $respuestas;
-                //return $temp;
                 array_push($FormatoPreguntas,$temp);
             }
-            //return $FormatoPreguntas;
             return view('encuesta',[
                 'id' => request()->id,
                 'nombreArea' => $nombreArea->nombre,
-                //'preguntas' => json_encode($FormatoPreguntas),
             ]);
         }
     }
@@ -217,12 +207,9 @@ class AreaController extends Controller
 
             $preguntas = DB::table('preguntas')
                             ->select(DB::raw('preguntas.contenido as cuest'),'preguntas.id_tipo')
-                            //->select(DB::raw('preguntas.contenido as cuest'),'preguntas.id_tipo','respuestas.contenido')
-                            //->Join('respuestas','respuestas.id_tipo','=','preguntas.id_tipo')
                             ->where('id_area',request()->id)
                             ->get();
             
-            //return $preguntas;
             $FormatoPreguntas = array();
             foreach ($preguntas as $pregunta) 
             {
@@ -234,21 +221,14 @@ class AreaController extends Controller
                                     ->get();
                 $respuestas = array_values($respuestas->pluck('contenido')->toArray());
                 $temp['respuestas'] = $respuestas;
-                //return $temp;
                 array_push($FormatoPreguntas,$temp);
             }
-            //return $FormatoPreguntas;
             return [
                 'id' => request()->id,
                 'nombreArea' => $nombreArea->nombre,
                 'preguntas' => $FormatoPreguntas,
             ];
         }
-
-        
-        // $preguntas = DB::table('preguntas')
-        //                 ->where('id_area',request()->area)->get();
-        // return $preguntas;
     }
 
 
@@ -272,7 +252,7 @@ class AreaController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             request()->session()->get('noEmpleado'),
-            request()->session()->get('nombreCompleto'),
+            request()->session()->get('nombres'),
             'Nueva pregunta',
             'preguntas',
             'pregunta_guardar(?,?)',
@@ -303,7 +283,7 @@ class AreaController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             request()->session()->get('noEmpleado'),
-            request()->session()->get('nombreCompleto'),
+            request()->session()->get('nombres'),
             'Actualizar pregunta',
             'preguntas',
             'Actualizar pregunta '.request()->id. ' usando el contenido "'.request()->contenido.'" y el tipo "'.request()->tipo.'"',
@@ -332,12 +312,12 @@ class AreaController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             request()->session()->get('noEmpleado'),
-            request()->session()->get('nombreCompleto'),
+            request()->session()->get('nombres'),
             'Borrar pregunta',
             'preguntas',
             'Borra la pregunta '.request()->id,
             'DELETE',
-            request()->id(),
+            request()->id,
         ));
 
         return request();
@@ -374,7 +354,6 @@ class AreaController extends Controller
                     ->where('id_tipo',request()->id_tipo)
                     ->get();
         return $elementos;
-        
     }
 
 

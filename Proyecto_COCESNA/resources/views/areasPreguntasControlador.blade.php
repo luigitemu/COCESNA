@@ -12,6 +12,15 @@
 @endsection
 
 @section('contenido')
+
+  @if (count($areas) == 0)
+    <h4>Sin áreas</h4>
+    <script>
+      setTimeout(function(){
+        window.location = "{{ route('sistema.inicio') }}";
+      }, 3000); //dentro de 2 o 4 segundos redirecciona
+    </script>
+  @endif
   
   @foreach ($areas as $area)
 
