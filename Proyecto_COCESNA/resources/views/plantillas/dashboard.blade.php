@@ -31,6 +31,7 @@
         <a href="{{ route('administrador.principal') }}" class="list-group-item list-group-item-action bg-light">Area de Preguntas</a>
         <a href="{{ route('usuarios.mostrar') }}" class="list-group-item list-group-item-action bg-light">Usuarios</a>
         <a href="{{ route('reportes.mostrar') }}" class="list-group-item list-group-item-action bg-light">Reportes</a>
+        <a href="{{ route('logs.cargar') }}" class="list-group-item list-group-item-action bg-light">Registro de Actividad</a>
         <a  class="list-group-item list-group-item-action bg-light">Acerca de</a>
       </div>
     </div>

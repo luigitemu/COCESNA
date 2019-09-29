@@ -8,7 +8,7 @@
 
 @section('cuerpoPagina')
   <div style="height:100px;"></div>
-  <button data-toggle="modal" data-target="#modalCambioContrasena">Cambiar contraseña</button>
+  {{-- <button data-toggle="modal" data-target="#modalCambioContrasena">Cambiar contraseña</button> --}}
   <div class="container">
     <div class="row">
       <div class="col-8 mx-auto px-5 py-5 shadow-lg">
@@ -28,7 +28,7 @@
     </div>
   </div>
   <div style="height:100px;"></div>
-
+{{-- 
   <div class="modal fade" id="modalCambioContrasena" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -54,10 +54,10 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
 @endsection
 
-
+{{-- 
 @section('scripts')
   <script>
     $.ajaxSetup({
@@ -86,4 +86,4 @@
       }
     }
   </script>
-@endsection
+@endsection --}}

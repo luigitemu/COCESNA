@@ -139,3 +139,60 @@
     background-color: #06c000;
     border-color: #06c000;
 }
+
+/* ------------------cambio de clave-------------------------- */
+
+#form-clav{
+    padding: 22px;
+}
+
+.form-control{
+    font-size: 19px;
+    height: 43px;
+}
+
+.input-group-btn{
+    margin-left: -1px;
+}
+
+.label-sty{
+    font-weight: 400;
+    color: #585858;
+    font-size: 19px;
+}
+
+.input-btn-most{
+    display: flex;
+    height: 43px;
+    align-items: center;
+    padding: .375rem .75rem;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-btn{
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+/* Para forzar el ancho de una columna de la tabla */
+/* table
+{
+    table-layout: fixed;
+    width: 40%;
+} */
+/* 
+td { word-wrap: break-word; }
+th, td { width: 40%; } */
+

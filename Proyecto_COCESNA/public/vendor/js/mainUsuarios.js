@@ -44,10 +44,12 @@ function mostrar(res) {
         <th scope="row"> ${usuario.no_empleado}</th>
         <td> ${usuario.nombres} ${usuario.apellidos}</td>
         <td> ${usuario.posicion}</td>
+        <td> ${usuario.turno}</td>
         <td> ${usuario.email}</td>
         <td>
         <button class="btn btn-success" onclick="editarUsuario(${usuario.no_empleado},'${usuario.email}','${usuario.posicion}');"> <i class="far fa-edit"></i></button>
         <button class="btn btn-danger" onclick="eliminarUsuario(${usuario.no_empleado})"><i class="fas fa-user-minus"></i></button>
+        <button class="btn btn-info" onclick="cambioClave(${usuario.no_empleado})"><i class="fas fa-unlock"></i></button>
         </td>
         </tr>
         `);
@@ -175,6 +177,115 @@ function nuevaOportunidadDeEncuesta() {
 }
 
 
+
+//--------------------------------------------------------------------------------------------------------------------------------------
+// Muestra el modal de cambiar clave
+function cambioClave(codigo) {
+    noEmp = codigo;
+    $('#modalCambioClave').modal('show');
+    // $('#input-correo-editar').val(email);
+    // $('#select-posicion').val(posicion).attr("selected", "selected");
+}
+
+
+
+//JS para cambio de clave
+$('#vc').on('click',function(){
+    var tipo=$('#con1').attr('type');
+    if(tipo== 'password'){
+        $('#con1').attr('type','text');
+        $('#vc').html('<i class="far fa-eye"></i>');
+    }else{
+        $('#con1').attr('type','password');
+        $('#vc').html('<i class="far fa-eye-slash"></i>');
+    }
+});
+
+$('#vcc').on('click',function(){
+    var tipo=$('#con2').attr('type');
+    if(tipo== 'password'){
+        $('#con2').attr('type','text');
+        $('#vcc').html('<i class="far fa-eye"></i>');
+    }else{
+        $('#con2').attr('type','password');
+        $('#vcc').html('<i class="far fa-eye-slash"></i>');
+    }
+
+});
+//Asegurarse de que la nueva clave cumpla con los requisitos
+function val(valor){
+    var con = valor.value;
+    // var pattmay = /^(?=.*[A-Z]).*$/;
+    // var resmay = pattmay.test(cont);
+    // var pattmin =/^(?=.*[a-z]).*$/;
+    // var resmin = pattmin.test(cont);
+    // var pattnum = /^(?=.*\d).*$/;
+    // var resnum =pattnum.test(cont);
+    // var pattchar =/^(?=.*[!@#$%&*,.?]).*$/
+    // var reschar = pattchar.test(cont);
+    // if (!resmay){
+    //     $('val-feed').html('La contraseña debe contener al menos una mayuscula');
+    //     document.getElementById('con1').classList.add('is-invalid');
+    //     document.getElementById('con1').classList.remove('is-valid');
+    // }else if(!resmin){
+    //     $('val-feed').html('La contraseña debe contener al menos una minuscula');
+    //     document.getElementById('con1').classList.add('is-invalid');
+    //     document.getElementById('con1').classList.remove('is-valid');
+    // }else if(!resnum){
+    //     $('val-feed').html('La contraseña debe contener al menos un numero');
+    //     document.getElementById('con1').classList.add('is-invalid');
+    //     document.getElementById('con1').classList.remove('is-valid');
+    // }else if(!reschar){
+    //     $('val-feed').html('La contraseña debe contener al menos un caracter especial(!@#$%&*,.?)');
+    //     document.getElementById('con1').classList.add('is-invalid');
+    //     document.getElementById('con1').classList.remove('is-valid');
+    // }else{
+    //     document.getElementById('con1').classList.add('is-valid');
+    //     document.getElementById('con1').classList.remove('is-invalid');        
+    // }
+    var patt= /^(?=.*[!@#$%&*,.?])(?=.*[A-Z])(?=.*[a-z])(?=.*\d).*$/;
+    var res = patt.test(con);
+    // console.log(con);
+    // console.log(res);
+    if(!res){
+        document.getElementById('con1').classList.add('is-invalid');
+        document.getElementById('con1').classList.remove('is-valid');
+    }else{
+        document.getElementById('con1').classList.add('is-valid');
+        document.getElementById('con1').classList.remove('is-invalid');
+    }
+}
+
+/*$('#btn-env').on('click',*/
+function cambiarContrasena(ruta){
+    var linea= document.getElementById('con1').value;
+    var confir = document.getElementById('con2').value;
+
+    // console.log(`${linea} == ${confir}`);
+    if (confir !== linea){
+        alert("las contraseñas no coinciden");
+    }else{
+       if (confir != '') {
+            // alert("Contraseñas correctas");
+            let parametros = `noEmp=${ noEmp }&contrasena=${ encodeURIComponent(confir) }`;
+            // console.log(ruta);
+            // console.log(parametros);
+            $.ajax({
+              url: ruta,
+              method: 'GET',
+              data: parametros,
+              success: ( respuesta )=>{
+                console.log(respuesta);
+                alert('Contraseña cambiada exitosamente');
+                $('#modalCambioClave').modal('hide');
+              }
+            });
+       } else {
+          alert('Las contraseña no puede ser nula') 
+       }
+    }
+}
+//--------------------------------------------------------------------------------------------------------------------------------------
 
 
 

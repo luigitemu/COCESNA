@@ -60,7 +60,7 @@ class UserController extends Controller
         }
 
         $idPersonal = DB::table('personal')
-                        ->select('id_personal')
+                        // ->select('id_personal')
                         ->where('no_empleado','=',$request->no_empleado)
                         ->first();
 
@@ -74,7 +74,7 @@ class UserController extends Controller
                         ->where('id_posicion','=',$request->posicion)
                         ->first();
 
-        $contrasena = Crypt::encryptString('123');
+        $contrasena = Crypt::encryptString('0000');
 
         DB::select('call usuarios_guardar(?,?,?,?,?)',
         array(
@@ -99,7 +99,7 @@ class UserController extends Controller
                 $request->session()->get('nombres'),
                 'Nuevo usuario',
                 'usuarios',
-                'sp usuarios guardar',
+                'Guardar el personal con numero de empleado '.$idPersonal->no_empleado.' en la tabla usuarios',
                 'INSERT',
                 $request->ip(),
             ));
@@ -117,9 +117,10 @@ class UserController extends Controller
         }
         $user = array();
         $user = DB::table('usuarios')
-                        ->select('personal.no_empleado' , 'usuarios.email', 'personal.nombres' , 'personal.apellidos','posicion.posicion' )
+                        ->select('personal.no_empleado' , 'usuarios.email', 'personal.nombres' , 'personal.apellidos','posicion.posicion', 'turnos.turno')
                         ->join('personal' , 'usuarios.id_personal' ,'=' ,'personal.id_personal')
                         ->join('posicion' , 'posicion.id_posicion','=','usuarios.id_posicion')
+                        ->join('turnos' , 'turnos.id_turno','=','usuarios.id_turno')
                         ->orderBy('personal.no_empleado')
                         ->get();
 
@@ -177,11 +178,12 @@ class UserController extends Controller
             ]);
 
             $usuarios = DB::table('usuarios')
-                        ->select('personal.no_empleado' , 'usuarios.email', 'personal.nombres' , 'personal.apellidos','posicion.posicion' )
-                        ->join('personal' , 'usuarios.id_personal' ,'=' ,'personal.id_personal')
-                        ->join('posicion' , 'posicion.id_posicion','=','usuarios.id_posicion')
-                        ->orderBy('personal.no_empleado')
-                        ->get();
+                            ->select('personal.no_empleado' , 'usuarios.email', 'personal.nombres' , 'personal.apellidos','posicion.posicion', 'turnos.turno')
+                            ->join('personal' , 'usuarios.id_personal' ,'=' ,'personal.id_personal')
+                            ->join('posicion' , 'posicion.id_posicion','=','usuarios.id_posicion')
+                            ->join('turnos' , 'turnos.id_turno','=','usuarios.id_turno')
+                            ->orderBy('personal.no_empleado')
+                            ->get();
 
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
             array(
@@ -208,7 +210,7 @@ class UserController extends Controller
         }
 
         $idPersonal = DB::table('personal')
-                        ->select('id_personal')
+                        // ->select('id_personal')
                         ->where('no_empleado','=',$id)
                         ->first();
 
@@ -217,9 +219,10 @@ class UserController extends Controller
             ->delete();
 
          $usuarios = DB::table('usuarios')
-                        ->select('personal.no_empleado' , 'usuarios.email', 'personal.nombres' , 'personal.apellidos','posicion.posicion' )
+                        ->select('personal.no_empleado' , 'usuarios.email', 'personal.nombres' , 'personal.apellidos','posicion.posicion', 'turnos.turno')
                         ->join('personal' , 'usuarios.id_personal' ,'=' ,'personal.id_personal')
                         ->join('posicion' , 'posicion.id_posicion','=','usuarios.id_posicion')
+                        ->join('turnos' , 'turnos.id_turno','=','usuarios.id_turno')
                         ->orderBy('personal.no_empleado')
                         ->get();
 
@@ -229,7 +232,7 @@ class UserController extends Controller
                 request()->session()->get('nombres'),
                 'Eliminar usuario',
                 'usuarios',
-                'Eliminar el usuario con no_empleado "'.request()->session()->get('noEmpleado').'"',
+                'Eliminar el usuario con no_empleado "'.$idPersonal->no_empleado.'"',
                 'DELETE',
                 request()->ip(),
             ));
@@ -240,7 +243,7 @@ class UserController extends Controller
 
     public function cambiarContrasena(Request $request)
     {
-        if(!(request()->session()->get('auth')=='2'))
+        if(!(request()->session()->get('auth')=='1'))
         {
             return abort(404);
         }
@@ -258,7 +261,8 @@ class UserController extends Controller
             ->update([
                 'contrasena' => Crypt::encryptString($request->contrasena),
             ]);
-        return $request;
+        // return $request;
+        return 'cambios realizados correctamente';
     }
 
 
@@ -316,16 +320,16 @@ class UserController extends Controller
 
         $this->enviarCorreo($request->session()->get('noEmpleado'),$resultados);
 
-        // DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
-        //     array(
-        //         request()->session()->get('noEmpleado'),
-        //         request()->session()->get('nombreCompleto'),
-        //         'Eliminar usuario',
-        //         'usuarios',
-        //         'Eliminar el usuario con no_empleado "'.request()->session()->get('noEmpleado').'"',
-        //         'DELETE',
-        //         request()->ip(),
-        //     ));
+        DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
+            array(
+                $request->session()->get('noEmpleado'),
+                $request->session()->get('nombres'),
+                'Enviar correos',
+                'usuarios',
+                'Se envió por correo los resultados de la encuesta del usuario con Numero de empleado '.$request->session()->get('noEmpleado'),
+                'SEND',
+                $request->ip(),
+            ));
 
         $request->session()->forget('auth');
         $request->session()->forget('noEmpleado');
@@ -344,6 +348,17 @@ class UserController extends Controller
         array(
             $request->ip(),
         ));
+        DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
+            array(
+                'Vacio',
+                'Vacio',
+                'Cuardar reporte',
+                'perdidas_de_contrasena',
+                'Un usuario reporto olvidar la contraseña.',
+                'INSERT',
+                request()->ip(),
+            ));
+
         return 'guardado con exito';
     }
 }

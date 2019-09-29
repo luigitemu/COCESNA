@@ -37,6 +37,8 @@ Route::get('/fin','UserController@finalizar')->name('encuesta.fin');    //dirige
 
 Route::get('/grdRes','MainController@guardarRespuestas')->name('encuesta.guardar');
 
+Route::get('/logs' , 'MainController@verLogs')->name('logs.cargar');
+
 Route::get('/nuevaOportunidad','MainController@nuevaOportunidad')->name('usuarios.nuevaOportunidad');
 
 Route::get('/registroContrasena','UserController@registroContrasena')->name('olvidar.contrasena');

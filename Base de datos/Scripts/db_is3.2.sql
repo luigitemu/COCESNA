@@ -15,7 +15,7 @@ DROP SCHEMA IF EXISTS `db_is` ;
 -- -----------------------------------------------------
 -- Schema db_is
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `db_is` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+CREATE SCHEMA IF NOT EXISTS `db_is` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8_general_ci ;
 USE `db_is` ;
 
 -- -----------------------------------------------------
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `db_is`.`seglog` (
   PRIMARY KEY (`SegLogKey`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+COLLATE = utf8_general_ci;
 
 
 -- -----------------------------------------------------

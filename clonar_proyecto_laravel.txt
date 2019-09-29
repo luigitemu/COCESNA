@@ -17,13 +17,17 @@ Se deben tener los servicios de Apache y MySQL activados
 
 	$ npm install
 
-5. Copiar el archivo .env.example a .env
-	
-	$ cp .env.example .env
+5. Renombrar el archivo .env.example a .env y borrar la cache con el siguiente comando:
 
-6. Generar llave de encriptación 
+	$ php artisan config:clear
+
+6. Modificar las variables en el archivo .env con la siguiente información:
 	
-	$ php artisan key:generate
+	APP_NAME=Laravel
+	APP_ENV=local
+	APP_KEY=base64:p7nks91KjyjeC+nJRC2LIdFQBqRqT6/RC0+D0PLmmoQ=
+	APP_DEBUG=true
+	APP_URL=http://localhost
 
 7. Modificar las variables en el archivo .env con la siguiente información:
 
@@ -33,6 +37,15 @@ Se deben tener los servicios de Apache y MySQL activados
 	DB_DATABASE=db_is
 	DB_USERNAME=NOMBRE-DE-USUARIO
 	DB_PASSWORD=CONTRASEÑA-DE-LA-BASE-DE-DATOS
+
+	Para usar el correo modificamos las siguientes variables:
+	
+	MAIL_DRIVER=smtp
+	MAIL_HOST=smtp.googlemail.com
+	MAIL_PORT=465
+	MAIL_USERNAME=rrhh.notifier@gmail.com
+	MAIL_PASSWORD=dBgv%434c223!@sa
+	MAIL_ENCRYPTION=ssl
 
 	Por lo general el nombre de usuario es root y si no se tiene contrasena se deja en blanco ('')
 

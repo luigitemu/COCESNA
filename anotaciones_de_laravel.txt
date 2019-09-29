@@ -177,3 +177,31 @@ Se resuelve simplemente reemplazando
 "CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;"
 por "CHARSET=utf8 COLLATE=utf8_general_ci;"
 =========================================================================
+
+
+Ejecutar el proyecto a nivel de red LAN
+=========================================================================
+Solo definimos el puerto y la IP asignada por el punto de acceso
+$ sudo php artisan serve --host IP_ASIGNADA --port 80
+=========================================================================
+
+
+Solucion problema Apache
+=========================================================================
+Ocurre al ejecutar el comando anterior y este bloquea el puerto 80
+Primero buscamos el proceso
+
+$ sudo netstat -ltnp | grep ':80'
+
+Nos retornará el ID del proceso que está ocupando el puerto (ejemplo):
+
+tcp 0 0 127.0.0.1:80 0.0.0.0:* LISTEN 1588/aolserver4-nsd
+
+entonces simplemente terminamos con el proceso mencionando el ID del
+proceso:
+
+$ sudo kill -9 1588
+=========================================================================
+
+
+

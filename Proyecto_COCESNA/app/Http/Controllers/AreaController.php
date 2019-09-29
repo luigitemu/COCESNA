@@ -317,7 +317,7 @@ class AreaController extends Controller
             'preguntas',
             'Borra la pregunta '.request()->id,
             'DELETE',
-            request()->id,
+            request()->ip(),
         ));
 
         return request();

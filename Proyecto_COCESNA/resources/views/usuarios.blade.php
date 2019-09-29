@@ -17,9 +17,10 @@
       <tr>
         <th scope="col">No. empleado</th>
         <th scope="col">Nombre completo</th>
-        <th scope="col">Posicion</th>
+        <th scope="col">Posición</th>
+        <th scope="col">Turno</th>
         <th scope="col">Correo</th>
-        <th scope="col">Accion</th>
+        <th scope="col">Acción</th>
       </tr>
     </thead>
     <tbody id="tbl-usuarios">
@@ -29,10 +30,12 @@
           <th scope="row">{{ $usuario->no_empleado }}</th>
           <td>{{ $usuario->nombres }} {{ $usuario->apellidos }}</td>
           <td>{{ $usuario->posicion }}</td>
+          <td>{{ $usuario->turno }}</td>
           <td>{{ $usuario->email }}</td>
           <td>
             <button class="btn btn-success" onclick="editarUsuario({{ $usuario->no_empleado }},'{{ $usuario->email }}','{{ $usuario->posicion }}');"> <i class="far fa-edit"></i></button>
             <button class="btn btn-danger" onclick="eliminarUsuario({{ $usuario->no_empleado }})"><i class="fas fa-user-minus"></i></button>
+            <button class="btn btn-info" onclick="cambioClave({{ $usuario->no_empleado }})"><i class="fas fa-unlock"></i></button>
           </td>
         </tr>
         @empty
@@ -160,6 +163,52 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="modalCambioClave" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Cambio de clave</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <form id="form-clav">
+                  <div class="form-group">
+                      <label for="exampleFormControlInput1" class="label-sty">Nueva Clave</label>
+                      <div class="input-group" id="input-clave">
+                          <input type="password" class="form-control" id="con1" onkeyup="val(this)" placeholder="contraseña">
+                          <div class="input-group-btn">
+                              <!-- <div class="input-btn-most">@</div> -->
+                              <button type="button" class="input-btn-most" id="vc"><i class="far fa-eye-slash"></i></button>
+                          </div>
+                          <!-- <div class="invalid-feedback" id="val-feed">
+                            La contraseña debe contener al menos una mayuscula una minuscula un numero y un caracter especial(!@#$%&*,.?)
+                          </div> -->
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="exampleFormControlSelect1" class="label-sty">Confirmar Clave</label>
+                      <div class="input-group">
+                          <input type="password" class="form-control" id="con2" onkeyup="val(this)" placeholder="contraseña">
+                          <div class="input-group-btn">
+                              <!-- <div class="input-btn-most">@</div> -->
+                              <button type="button" class="input-btn-most" id="vcc"><i class="far fa-eye-slash"></i></button>
+                          </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary" id="btn-env" onclick="cambiarContrasena('{{ route('usuario.cambiarContrasena') }}');">Confirmar</button>
+            <!-- <button type="button" class="btn btn-primary mb-2" id="btn-env">Confirmar</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    
 @endsection
 
 @section('modalEliminar')

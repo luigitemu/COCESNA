@@ -70,7 +70,7 @@ class MainController extends Controller
                                     ->where('auth_key','=',$data['numeroEmpleado'])
                                     ->where(DB::raw('DATE_FORMAT(FROM_UNIXTIME(created_at), "%d/%m/%Y")'),'=',$actualDia)
                                     ->first();
-
+            // dd($usuario);
             // si el controlador ya lleno la encuesta y no se le ha permitido una nueva oportunidad entonces no iniciar la encuesta                        
             if($encuestaCompletada != NULL && $usuario->id_posicion == 2 && $usuario->nuevo_intento == 0)
             {
@@ -321,6 +321,16 @@ class MainController extends Controller
         array(
             $request->pregunta,
         ));
+        DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
+        array(
+            request()->session()->get('noEmpleado'),
+            request()->session()->get('nombres'),
+            'Actualizar pregunta filtro',
+            'pregunta_filtro',
+            'Actualizar pregunta filtro a: '.$request->pregunta,
+            'UPDATE',
+            request()->ip(),
+        ));
         return 1;
     }
 
@@ -343,4 +353,19 @@ class MainController extends Controller
         
         return 1;
     }
+
+
+
+    // Muestra todas las acciones realizadas en el sistema
+    public function verLogs(){
+        $registros = DB::table('seglog')
+                        ->orderBy('segLogFecha','DESC')
+                        ->orderBy('segLogHora','DESC')
+                        ->get();
+
+        return view('logUsuarios' ,[
+            'registros'=> $registros
+        ] 
+       );
+   }
 }

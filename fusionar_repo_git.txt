@@ -1,0 +1,37 @@
+Se describe acontinuación, como actualizar una carpeta con los cambios que se generen en un repositorio
+de github, manteniendo la carpeta local actualizada y combinada con nueva información de dicho
+repositorio
+
+
+
+
+IMPORTANTE: Hacer copia de la carpeta antes de iniciar por cualquier problema que pueda presentarse
+
+
+
+
+
+Primero, posicionarse en la carpeta donde se este trabajando
+luego agregar el repositorio github:
+
+	$ git init 
+	$ git remote add origin https://github.com/Arbert407/Ingenieria-de-Software.git
+
+Como vamos a modificar nuestros archivos locales entonces debemos guardar cualquier cambio antes
+de actualizar, es decir, antes de actualizar creamos un commit, 
+agregamos los cambios:
+	
+	$ git add -A
+
+despues hacemos el commit
+
+	$ git commit -m "NOMBRE_DE_COMMIT"
+
+una vez hecho el commit podemos actualizar 
+y para actualizar los cambios del repositorio hacemos:
+
+	$ git pull origin master --no-edit
+
+y con esto la carpeta de trabajo fusionará el nuevo código del repositorio con el código 
+que se tiene localmente.
+
