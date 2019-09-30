@@ -33,6 +33,8 @@ Route::get('/cambiarContrasena','UserController@cambiarContrasena')->name('usuar
 
 Route::get('/elementosDelTipo','AreaController@mostrarRespuestasDelTipo')->name('tipoRespuesta.elementos');   // muestra todos los tipos de respuesta
 
+Route::get('/estadisticas','ReportesController@estadisticas')->name('controlador.estadisticas');
+
 Route::get('/fin','UserController@finalizar')->name('encuesta.fin');    //dirige hacia el final de la encuesta
 
 Route::get('/grdRes','MainController@guardarRespuestas')->name('encuesta.guardar');

@@ -96,7 +96,7 @@ class UserController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
             array(
                 $request->session()->get('noEmpleado'),
-                $request->session()->get('nombres'),
+                substr($request->session()->get('nombres'),20),
                 'Nuevo usuario',
                 'usuarios',
                 'Guardar el personal con numero de empleado '.$idPersonal->no_empleado.' en la tabla usuarios',
@@ -188,7 +188,7 @@ class UserController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
             array(
                 $request->session()->get('noEmpleado'),
-                $request->session()->get('nombres'),
+                substr($request->session()->get('nombres'),20),
                 'Actualizar usuario',
                 'usuarios',
                 'Actualizar usuario '.$request->no_empleado. ' usando el id_posicion "'.$posicion->id_posicion.'" y el email "'.$request->email.'"',
@@ -229,7 +229,7 @@ class UserController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
             array(
                 request()->session()->get('noEmpleado'),
-                request()->session()->get('nombres'),
+                substr(request()->session()->get('nombres'),20),
                 'Eliminar usuario',
                 'usuarios',
                 'Eliminar el usuario con no_empleado "'.$idPersonal->no_empleado.'"',
@@ -323,7 +323,7 @@ class UserController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
             array(
                 $request->session()->get('noEmpleado'),
-                $request->session()->get('nombres'),
+                substr($request->session()->get('nombres'),20),
                 'Enviar correos',
                 'usuarios',
                 'Se envió por correo los resultados de la encuesta del usuario con Numero de empleado '.$request->session()->get('noEmpleado'),

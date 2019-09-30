@@ -41,7 +41,7 @@
                         </label>
                     </div>
                     <button type="submit" class="btn btn-primary mb-3">Ingresar</button>
-                    <a role="button" class="text-primary" onclick="gdc();" data-toggle="modal" data-target="#modalContrasena">Olvidé mi contraseña</a>
+                    <button type="button" class="btn btn-link" onclick="gdc();" data-toggle="modal" data-target="#modalContrasena">Olvidé mi contraseña</button>
                   </form>
             </div>
         </div>

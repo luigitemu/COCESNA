@@ -30,7 +30,7 @@ CREATE TABLE `areas_de_preguntas` (
   PRIMARY KEY (`id_area`),
   UNIQUE KEY `id_area_UNIQUE` (`id_area`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `areas_de_preguntas` (
 
 LOCK TABLES `areas_de_preguntas` WRITE;
 /*!40000 ALTER TABLE `areas_de_preguntas` DISABLE KEYS */;
-INSERT INTO `areas_de_preguntas` VALUES (1,'Fatiga','Lorem ipsum dolor sit amet',NULL);
+INSERT INTO `areas_de_preguntas` VALUES (1,'Enfermedad','Acerca del estado fisico',NULL),(2,'Automedicación','Uso de medicamentos',NULL),(3,'Estado de animo','Acerca de problemas psicologicos',NULL),(4,'Fatiga','Causas que generan fatiga',NULL),(5,'Alimentación','Confirmar niveles de energia',NULL),(6,'Matemáticas','Problemas fáciles',NULL);
 /*!40000 ALTER TABLE `areas_de_preguntas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -135,7 +135,7 @@ CREATE TABLE `personal` (
 
 LOCK TABLES `personal` WRITE;
 /*!40000 ALTER TABLE `personal` DISABLE KEYS */;
-INSERT INTO `personal` VALUES (1,'ab quia','tempora earum','1976-01-22','1989-06-27','F','111',1),(2,'odio rem','aut voluptates','1997-05-29','2011-06-03','F','222',1),(3,'nostrum molestias','laborum et','2016-12-07','1998-12-10','F','333',1),(4,'consequatur facere','qui est','2011-08-11','2008-03-19','M','444',1),(5,'recusandae iure','nihil perspiciatis','1973-12-25','1981-10-31','M','354',1),(6,'officia quis','ab facere','1983-06-19','1995-06-21','M','702',1),(7,'consequatur sequi','corporis error','2002-08-10','2017-03-06','F','15',1),(8,'perferendis eum','illo distinctio','2005-10-19','2001-05-22','M','271',1),(9,'et repellat','perferendis fuga','2015-06-22','2015-02-25','F','603',1),(10,'omnis ut','vero laboriosam','1989-12-28','1987-12-18','M','605',1),(11,'omnis voluptas','perferendis labore','1978-01-29','2012-04-15','M','331',1),(12,'voluptatibus dolor','minus impedit','2014-06-04','1979-03-17','F','822',1),(13,'totam ut','perspiciatis quia','2014-09-26','2012-10-16','F','561',1),(14,'ut est','non dolorem','1980-05-11','2003-11-12','F','758',1),(15,'magni et','distinctio dicta','1990-05-26','1984-07-09','M','449',1),(16,'ut corrupti','tenetur laborum','2008-04-07','2000-01-29','F','102',1),(17,'asperiores natus','molestiae laborum','1999-01-28','1994-06-01','M','747',1),(18,'qui ipsa','voluptatem provident','2004-09-27','1977-10-28','M','208',1),(19,'id necessitatibus','modi culpa','2004-04-14','1979-03-05','F','574',1),(20,'est et','quia voluptatem','1971-01-26','1996-01-15','F','493',1),(21,'excepturi consequuntur','rerum voluptas','1986-02-21','2005-03-19','M','474',1),(22,'non velit','deserunt optio','2011-04-14','2012-05-27','F','13',1),(23,'dolorem magni','consequatur tempora','1983-03-31','1986-04-02','M','549',1),(24,'voluptatem sed','itaque sed','2002-12-28','1984-07-05','M','388',1),(25,'necessitatibus esse','nobis unde','1979-06-22','1989-05-22','M','269',1),(26,'optio omnis','quia fuga','2007-05-31','1976-10-26','F','880',1),(27,'illo eos','et sed','1997-02-19','1994-10-07','F','704',1),(28,'modi sit','fugiat molestiae','1990-06-27','2012-07-18','M','815',1),(29,'delectus inventore','ipsam eaque','2007-04-03','1990-08-02','F','647',1),(30,'laudantium laborum','in aut','1978-04-27','2002-01-13','F','342',1),(31,'fugiat debitis','voluptatem accusantium','1979-02-19','2015-03-16','M','996',1),(32,'illum aspernatur','nam dolor','2002-07-18','2003-04-21','M','769',1),(33,'qui voluptas','adipisci officiis','2011-08-20','1994-08-31','M','838',1),(34,'voluptatem id','quidem omnis','2002-07-09','1989-03-17','M','90',1);
+INSERT INTO `personal` VALUES (1,'dolor nobis','illum eligendi','1988-12-07','1991-12-10','F','111',1),(2,'tenetur dignissimos','voluptas saepe','2014-10-01','1980-03-11','F','222',1),(3,'omnis dolor','accusamus adipisci','1982-04-25','2018-09-25','M','333',1),(4,'eos praesentium','sit esse','2015-05-23','1970-06-30','M','444',1),(5,'qui minus','sit molestiae','1982-01-06','2015-05-14','M','125',1),(6,'vel cum','id enim','2012-10-10','1999-03-10','F','134',1),(7,'autem nihil','et error','1992-01-28','2007-02-17','F','161',1),(8,'necessitatibus sunt','quia aliquam','1986-08-29','1978-11-28','F','458',1),(9,'illo minima','maiores cumque','1970-02-13','2004-05-13','M','501',1),(10,'inventore similique','quia illum','1989-09-13','1975-05-14','M','669',1),(11,'qui tempora','eos molestiae','1996-11-03','1993-04-29','F','627',1),(12,'recusandae est','consequatur aliquam','1986-08-14','2001-09-20','F','651',1),(13,'rerum iure','voluptas voluptatem','1986-05-14','2001-02-06','M','770',1),(14,'esse quod','voluptas natus','1979-10-15','2009-09-05','F','24',1),(15,'rem recusandae','exercitationem illum','1994-04-06','1988-06-20','M','543',1),(16,'sapiente saepe','distinctio qui','2010-06-17','2005-02-01','M','341',1),(17,'molestiae nesciunt','debitis rerum','2000-08-19','1979-05-07','M','663',1),(18,'qui sit','incidunt deleniti','2009-09-15','2008-05-21','F','862',1),(19,'fugit illo','eius ad','2006-04-21','1979-06-01','F','810',1),(20,'exercitationem aut','rerum perspiciatis','2017-03-24','2005-01-16','F','723',1),(21,'minus maiores','vel enim','2007-09-01','1974-02-24','M','837',1),(22,'magni esse','consequatur iste','2013-06-16','1981-06-03','F','968',1),(23,'necessitatibus nam','pariatur commodi','1981-05-28','2000-10-16','M','859',1),(24,'dolores aut','mollitia at','1992-04-19','1982-02-01','M','177',1),(25,'omnis necessitatibus','impedit sapiente','1971-06-01','1979-01-16','M','851',1),(26,'velit quaerat','neque repellendus','2001-09-11','1988-08-10','F','135',1),(27,'nesciunt dignissimos','quisquam quia','2014-11-04','1975-07-04','F','875',1),(28,'quos expedita','nulla nobis','1997-06-22','1977-01-03','F','827',1),(29,'eaque rerum','qui rerum','2013-04-09','1991-06-04','F','912',1),(30,'itaque et','sapiente quibusdam','1991-11-13','1980-09-26','M','3',1),(31,'itaque qui','et consequatur','1986-08-10','2007-01-29','M','195',1),(32,'mollitia dolorem','dolorum ut','2005-02-10','1985-10-05','F','151',1),(33,'sapiente veritatis','nesciunt esse','1976-07-16','1982-04-20','M','754',1),(34,'ut ea','sequi in','1971-10-12','1981-08-05','F','21',1);
 /*!40000 ALTER TABLE `personal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,7 +187,7 @@ CREATE TABLE `pregunta_filtro` (
 
 LOCK TABLES `pregunta_filtro` WRITE;
 /*!40000 ALTER TABLE `pregunta_filtro` DISABLE KEYS */;
-INSERT INTO `pregunta_filtro` VALUES (1,'¿Estoy en forma para realizar el turno?','2019-09-28','2019-09-28');
+INSERT INTO `pregunta_filtro` VALUES (1,'¿Estoy en forma para realizar el turno?','2019-09-29','2019-09-29');
 /*!40000 ALTER TABLE `pregunta_filtro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -210,7 +210,7 @@ CREATE TABLE `preguntas` (
   KEY `fk_preguntas_tipos_de_respuesta1_idx` (`id_tipo`),
   CONSTRAINT `fk_preguntas_areas_de_preguntas1` FOREIGN KEY (`id_area`) REFERENCES `areas_de_preguntas` (`id_area`),
   CONSTRAINT `fk_preguntas_tipos_de_respuesta1` FOREIGN KEY (`id_tipo`) REFERENCES `tipos_de_respuesta` (`id_tipo`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,7 +219,7 @@ CREATE TABLE `preguntas` (
 
 LOCK TABLES `preguntas` WRITE;
 /*!40000 ALTER TABLE `preguntas` DISABLE KEYS */;
-INSERT INTO `preguntas` VALUES (1,1,1,'¿Existes?',NULL),(2,1,3,'¿Cómo está el calor?',NULL);
+INSERT INTO `preguntas` VALUES (1,1,1,'¿Tengo algún malestar fisico?',NULL),(2,1,1,'¿Tengo algún dolor?',NULL),(3,1,1,'¿Tengo algún sintoma?',NULL),(4,1,1,'¿Representa ese sintoma alguna enfermedad?',NULL),(5,2,1,'¿Me encuentro usando algún medicamento autorecetado?',NULL),(6,2,1,'¿Me encuentro usando algún medicamento recomendado por un amigo?',NULL),(7,2,1,'¿He vuelto a tomar algún medicamento si consultar a un especialista?',NULL),(8,3,1,'¿Me siento bajo presión psicologica?',NULL),(9,3,1,'¿Siento que tengo problemas en mi ambiente laboral?',NULL),(10,3,1,'¿Siento que tengo problemas personales?',NULL),(11,4,1,'¿Estoy cansado?',NULL),(12,4,1,'¿Tengo sueño constantemente?',NULL),(13,4,1,'¿Tengo necesidad constantemente de acostarme o recostarme?',NULL),(14,4,1,'¿Siento que todo me cuesta el doble?',NULL),(15,5,1,'¿He comido en los horarios correspondientes hoy?',NULL),(16,6,2,'¿2 + 2?',NULL),(17,6,1,'¿2 = 5?',NULL);
 /*!40000 ALTER TABLE `preguntas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -357,7 +357,7 @@ CREATE TABLE `turnos` (
 
 LOCK TABLES `turnos` WRITE;
 /*!40000 ALTER TABLE `turnos` DISABLE KEYS */;
-INSERT INTO `turnos` VALUES (1,'et','20:30:04','04:13:57',1),(2,'tempore','22:48:50','16:10:03',1),(3,'commodi','23:28:23','07:33:48',1);
+INSERT INTO `turnos` VALUES (1,'id','22:15:53','21:54:47',1),(2,'amet','00:22:29','00:43:11',1),(3,'similique','06:06:40','13:43:23',1);
 /*!40000 ALTER TABLE `turnos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -425,7 +425,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,1,1,'el@administrador.p','eyJpdiI6ImY4dUEwWVB0Z1NnXC94VWEwdTZUYk9RPT0iLCJ2YWx1ZSI6Imh5TjRXXC9icmkxa1VYdUU5U3AwUlhnPT0iLCJtYWMiOiJlMDJiZThjNTZjYzAyOTU4NjFiZDQ5MWQ1MDMxNGVkOGY4ZmMwYTMzMDJhYWY5ZjUzNGViYzY3ODE3MjUzODcyIn0=',0,NULL),(2,1,2,'primer@controlador.p','eyJpdiI6IkcrbENEMGJyWGxFQzlTQUFXUUg3dnc9PSIsInZhbHVlIjoiNnp5TTRTamlLbmdwUWRURENZRDlyZz09IiwibWFjIjoiNmQ1ZDZmNzVkYmY5MGYyMTU2YzIyM2NlYWQ5Y2VhYjUyMjFhYmIwNmI5ZWMzMGFjYzI0ODQ2NTNlYWJmMGNmNSJ9',0,NULL),(3,1,3,'el@supervisor.p','eyJpdiI6InEzbEU0Z2p1TUJ3YzVGUmRRc2w4RUE9PSIsInZhbHVlIjoiRTVRa0I5RXVsV1Y1SnhrTndXQ1l1QT09IiwibWFjIjoiNWM1OWZmMDViYjVhYTBhNGVlMDc3MDM2ZWM0MzZiN2NjNTU3OGM1ODI4M2E4MDQ4YzNjYjExMzlkMjVkM2JmMyJ9',0,NULL),(4,1,4,'RR@HH.p','eyJpdiI6IklqY0lBZzRDWXlsXC9WR0NmS25IMnV3PT0iLCJ2YWx1ZSI6IkZtalpnYW02QUxXajhIWEoyR3FJMkE9PSIsIm1hYyI6IjYyN2Y2YzJlYWFjMDQ3OWM5ZDdlM2Y0ZmM4MTUwZmVhZGZmMzZmNGVmYWY2OTQ2MjI0NTRjYjc5NzhhZjc2OWQifQ==',0,NULL),(5,2,4,'hahn.rhea@hoppe.com','eyJpdiI6IjdvVkhXKzJSS1RROGRSdXliSksrYlE9PSIsInZhbHVlIjoiS3g1OUZpRnk1QnRuXC9XdFpSUVk1RVE9PSIsIm1hYyI6Ijk5ZWE2OWFjOGQ3Mzc1MGY5NWVlNWU5NTQ5YTBiOTJhMzE4MDJjNDI3NjMwMDVhZjRhZTIxOTlmMzEyNWFhNGYifQ==',0,NULL),(6,1,2,'milan56@hirthe.net','eyJpdiI6ImZ2c3d2WHl2bmdqZExEd0VxTE9cL093PT0iLCJ2YWx1ZSI6InVyY05QM25EamR1V0xJbVVheG9RMEE9PSIsIm1hYyI6IjNiM2EwZTkzY2EzNDNjY2JjNmU1NWRiZTRlZDcyYjdiMzBiYWZiNjJjMTMwOTdmNWFhMjc0OGIyMTU5MjIwZTAifQ==',0,NULL),(7,2,2,'lenore.thiel@ryan.com','eyJpdiI6IlgwQkRrWnU1d3NleW1vTUJvNFZOclE9PSIsInZhbHVlIjoiVytpYnoxZ3R3RTRQR2FWNFNLOTlEdz09IiwibWFjIjoiMDhjZjU3NTQ2MTA3OWM4MmE3NzM5NjI5ZmVmNDMwYTIzMWFlNWM2ZGNhNWM1OWVhMjc2MWVkNmI2ZGI5MmM1OCJ9',0,NULL),(8,1,3,'oreilly.julian@hotmail.com','eyJpdiI6IlVjTnFhNmpBU3BobTRKUTF3Tkg0bGc9PSIsInZhbHVlIjoiR3lhM0xqWDF2VWV4K3BjU0JYRVMxdz09IiwibWFjIjoiZDAzYzJhYTM1NDdiMDk2MjY5NzFhN2Y1MjM2YjNiMTczMTAxNTE0YjRiNWVhMjczZTVhYzJjNzk3YWUzZGIxZCJ9',0,NULL),(9,3,3,'glenda.hammes@gmail.com','eyJpdiI6Iml5V3cyM0RGbVFybStpR2dVTnFOOFE9PSIsInZhbHVlIjoiaEZMcVFzcXh5UTZ0M255anZKTE83QT09IiwibWFjIjoiMmMyYjczOTQxNDNhYmFkYjM4NzIzNGFhZDg4ODY3OTM5Mjc5ODA4YzlhNjM2MDhiNTdmOWU1OTdlODAzYjU0OCJ9',0,NULL),(10,1,2,'fritz08@hotmail.com','eyJpdiI6Ijg5Q0JSTVZCeUdoc0VaTnV1WlhCbVE9PSIsInZhbHVlIjoiM01mQVhDeWxYOEgybUhlTEZwcVwvRmc9PSIsIm1hYyI6ImFiZDFkNzYyZjE4YWNlZDA0MGNkY2Q5Y2E5NGU0OWNjYmVmMzE5YmRiY2E4NjliYTY5MDE1N2Y3MTdiY2IxMzgifQ==',0,NULL),(11,2,1,'lacy99@borer.com','eyJpdiI6ImFoVDlaRTM4ajJDUjdYR2tRZkFoRFE9PSIsInZhbHVlIjoiM0xFYnVYK3F4dHJRaVloUjNPZWlhZz09IiwibWFjIjoiYjAxMDIwNmRhM2Y3YjM0NWNmYjk0MDVjODg3MzM2ZDI1OTA5MWFlZmIyZDUzOGEzN2I4MWFjNWRiNzk5YmIzMSJ9',0,NULL);
+INSERT INTO `usuarios` VALUES (1,1,1,'el@administrador.p','eyJpdiI6IkFJblpsdjNKRHYrR1JMZFNpSGM2WUE9PSIsInZhbHVlIjoiU1JZall2MFJ5Tmh3M1ZNZE9jXC9GaFE9PSIsIm1hYyI6ImFmMWI2ZDY2MmM1YjhlYzlhMjhhNWVkYmZiOGYzYTBiYzYwNjIzOGI1MDIwOGM4ZGQ2NjdmZTU5MmQ1Yzc0NjIifQ==',0,NULL),(2,1,2,'primer@controlador.p','eyJpdiI6IjVFVUNpZHRMZGpEQ3VjUkRSXC9ESHVnPT0iLCJ2YWx1ZSI6InRvaFBBTFVkVHZQd1NhZ0wzTUIxYlE9PSIsIm1hYyI6ImU5NjY2YjEwMmIzYjEwNzc3MTY3MjE3OTAzZjU3NzRmZjRkMzUxZjQwNDY4ZjQwOWJkODc2YmRmMDRmOGViYjMifQ==',0,NULL),(3,1,3,'el@supervisor.p','eyJpdiI6Imd0dmpRejZoSHZlcXF3Mk1ldUg1VGc9PSIsInZhbHVlIjoiblBoYytva2dNNUtpYXpmOFRsNlVQUT09IiwibWFjIjoiMTRhODVkM2RmMTUzMTZiZGIzZjZlMDQ0ZTY5MWRlZjcxYmY0YjRjN2I4NzIxMTI2NmNmOTc0YWE0YWE2N2UwZiJ9',0,NULL),(4,1,4,'RR@HH.p','eyJpdiI6InhLMlEyWlkwdWRtYnJCNWlDcjhNM3c9PSIsInZhbHVlIjoicDNtOW1LZzVDVWhPdDdITzdqM2dZdz09IiwibWFjIjoiYjVhYmM2OTdmMTU2NjE4MzNlNDY0Yzc0ZGUzYjU2M2FjMDVjYjgzYjNkMWJmZGUzMDdjOTkxNTY3NmZmMDc4NyJ9',0,NULL),(5,2,4,'carter.karianne@gmail.com','eyJpdiI6IkxpK1g3RVlzQTRvbjIzanpCXC9HcVdRPT0iLCJ2YWx1ZSI6IlA1bWtQTE5WOVl3a2FCME5vdytvV3c9PSIsIm1hYyI6ImNjODliM2U5ODBlMzAxNTMxOTQ3Y2M2NDhmYWUwOGFkZjhmNjFhNTMwYzg5YWNmNWFjNjM5ZjdiNWIzZTkyNTgifQ==',0,NULL),(6,2,2,'fisher.dorothea@funk.com','eyJpdiI6InE3czV6ZitaRjBwVld2U2prU3QxeGc9PSIsInZhbHVlIjoidjN1TlhNU3JuXC81TFkxV1NIK0ZBK3c9PSIsIm1hYyI6ImE0MTQzYmFhMzRkMWEyZTYyZjczNmJkNzFmMmMxYjdmYWEyM2IwMGJhYjdmZTE1YjIwMmZjOWU2MTU5ZWQ0N2YifQ==',0,NULL),(7,2,4,'yost.tyrel@gmail.com','eyJpdiI6Iis1SG1jVjA4ZmxHK01SdU9ub3gxZUE9PSIsInZhbHVlIjoiSVl1NkJxUEJiQjlic0VFbjA2bXBTUT09IiwibWFjIjoiZWJmNTZmYTYwNmEwNzhlZmI0OTcyYzQxZTdlZTA1ZTJjMDAwMzM5ZTU0OTExNzZlZTM3OWFkMDhjYjMxMjI5NyJ9',0,NULL),(8,1,1,'yost.favian@ullrich.com','eyJpdiI6InBFa0JHeVAySXZzdlppR3UxMDhjVWc9PSIsInZhbHVlIjoiTmlMZUVGZUJPQThBS0VJRVJHYWFxUT09IiwibWFjIjoiNTQ4MzY2MjdiYWI3N2I3ZjRiMTBlYTdlMGQyNWI1MDg3NWQ5OWQxYzdlMzNmMTczNzM2NDE1ZGVjNTMwMmYwMyJ9',0,NULL),(9,3,4,'teresa56@wolff.com','eyJpdiI6IkczeThXQnI3eENPOVNTdnJCNVZIVEE9PSIsInZhbHVlIjoiUFZtNHNQQVZvbmdIcGs3VTBYN0M5QT09IiwibWFjIjoiYWEwMjFkNmJkNDJmNTg0OWZmMGUwODM2MTdjMzI4ZTJmZGE4N2Q5YzU2NjdkNTEwNjk4ZmVjNWY4MTlhNTA5ZCJ9',0,NULL),(10,2,1,'waelchi.retta@gmail.com','eyJpdiI6Im5EMzExUWN1UkRnemFSR096SDVcL2FRPT0iLCJ2YWx1ZSI6IkNlbUhBSlJDbTczbU1MNkxrd3R3WUE9PSIsIm1hYyI6IjBiZjQ1MzY0ZGU3YzY2NTRiZGU3NjE0MzJmYWJlZGRhZjY0MWU1M2E2Zjg2NjQxMjQ1MTY2NTM3YzE4NzdmNzMifQ==',0,NULL),(11,1,3,'barrett18@dare.biz','eyJpdiI6IlNSWEtjNWJIV3Z2UXROUHhvTFpTVHc9PSIsInZhbHVlIjoibW91bzFtdVVSUFwvNzZ2TUoyUjJLRUE9PSIsIm1hYyI6IjU1YzlhM2E1N2NlZmMzZDBhOWMyNGJhNzJiZDdmNTVjYzM4ZTIxY2VhZDA0ZjkxZTcwNjcwZjVjZWI0MGY1NWYifQ==',0,NULL);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -438,4 +438,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-28 21:57:28
+-- Dump completed on 2019-09-29 23:47:49

@@ -46,10 +46,13 @@ function mostrar(res) {
         <td> ${usuario.posicion}</td>
         <td> ${usuario.turno}</td>
         <td> ${usuario.email}</td>
-        <td>
-        <button class="btn btn-success" onclick="editarUsuario(${usuario.no_empleado},'${usuario.email}','${usuario.posicion}');"> <i class="far fa-edit"></i></button>
-        <button class="btn btn-danger" onclick="eliminarUsuario(${usuario.no_empleado})"><i class="fas fa-user-minus"></i></button>
-        <button class="btn btn-info" onclick="cambioClave(${usuario.no_empleado})"><i class="fas fa-unlock"></i></button>
+        <td class="form-inline">
+        <button class="btn btn-success mr-1" onclick="editarUsuario(${usuario.no_empleado},'${usuario.email}','${usuario.posicion}');"> <i class="far fa-edit"></i></button>
+        <button class="btn btn-danger mr-1" onclick="eliminarUsuario(${usuario.no_empleado})"><i class="fas fa-user-minus"></i></button>
+        <button class="btn btn-info mr-1" onclick="cambioClave(${usuario.no_empleado})"><i class="fas fa-unlock"></i></button>
+        <form method="GET" action="${rutaEstadistica}">
+        <button type="submit" class="btn btn-secondary" name="estadisticaEmpleado" value="${ usuario.no_empleado }"><i class="far fa-chart-bar"></i></button>
+        </form>
         </td>
         </tr>
         `);

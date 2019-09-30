@@ -324,7 +324,7 @@ class MainController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             request()->session()->get('noEmpleado'),
-            request()->session()->get('nombres'),
+            substr(request()->session()->get('nombres'),20),
             'Actualizar pregunta filtro',
             'pregunta_filtro',
             'Actualizar pregunta filtro a: '.$request->pregunta,

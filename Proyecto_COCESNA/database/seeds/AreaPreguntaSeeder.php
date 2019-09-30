@@ -13,8 +13,28 @@ class AreaPreguntaSeeder extends Seeder
     public function run()
     {
         factory(AreaPregunta::class)->create([
+            'nombre' => 'Enfermedad',
+            'descripcion' => 'Acerca del estado fisico',
+        ]);
+        factory(AreaPregunta::class)->create([
+            'nombre' => 'Automedicación',
+            'descripcion' => 'Uso de medicamentos',
+        ]);
+        factory(AreaPregunta::class)->create([
+            'nombre' => 'Estado de animo',
+            'descripcion' => 'Acerca de problemas psicologicos',
+        ]);
+        factory(AreaPregunta::class)->create([
             'nombre' => 'Fatiga',
-            'descripcion' => 'Lorem ipsum dolor sit amet',
+            'descripcion' => 'Causas que generan fatiga',
+        ]);
+        factory(AreaPregunta::class)->create([
+            'nombre' => 'Alimentación',
+            'descripcion' => 'Confirmar niveles de energia',
+        ]);
+        factory(AreaPregunta::class)->create([
+            'nombre' => 'Matemáticas',
+            'descripcion' => 'Problemas fáciles',
         ]);
     }
 }

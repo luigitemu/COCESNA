@@ -9,10 +9,32 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;      // Importar DB
 use Illuminate\Support\Facades\Crypt;   // Encriptar/Desencriptar contraseñas
 use Illuminate\Support\Facades\Hash;    // Manejo de hashes
-
+use Carbon\Carbon;
 
 class ReportesController extends Controller
 {
+
+
+
+
+    // Permite obtener determinada cantidad de colores aleatorios
+    protected function colores_aleatorios($cantidad)
+    {
+        $colores = collect();
+        for ($i=0; $i < $cantidad; $i++) 
+        { 
+            $colores->push('#'.$this->random_color());
+        }
+        return $colores;
+    }
+    protected function random_color() 
+    {
+        return $this->random_color_part() . $this->random_color_part() . $this->random_color_part();
+    }
+    protected function random_color_part() 
+    {
+        return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+    }
 
 
 
@@ -103,14 +125,24 @@ class ReportesController extends Controller
         // Para el cuarto grafico se cuenta las veces que han respondido "si" y "no" en la 
         // pregunta filtro
         $etiquetas = ['Contestaron "SI"','Contestaron "NO"'];
-        $cantidad = DB::table('log_usuarios')
-                            ->select('id_respuesta',DB::raw('count(id_respuesta) as total'))
+        // $cantidad = DB::table('log_usuarios')
+        //                     ->select('id_respuesta',DB::raw('count(id_respuesta) as total'))
+        //                     ->where('es_pregunta_filtro','=','1')
+        //                     ->groupBy('id_respuesta')
+        //                     ->orderBy('id_respuesta')
+        //                     ->get();
+
+        $contestaSI = DB::table('log_usuarios')
                             ->where('es_pregunta_filtro','=','1')
-                            ->groupBy('id_respuesta')
-                            ->orderBy('id_respuesta')
-                            ->get();
-                            // dd($cantidad);
-        $cantidad = array_values($cantidad->pluck('total')->toArray());
+                            ->where('id_respuesta','=',DB::raw('(select id_respuesta from respuestas where contenido = "si")'))
+                            ->count();
+        $contestaNO = DB::table('log_usuarios')
+                            ->where('es_pregunta_filtro','=','1')
+                            ->where('id_respuesta','=',DB::raw('(select id_respuesta from respuestas where contenido = "no")'))
+                            ->count();
+        // dd($contestaNO);    
+        $cantidad = [$contestaSI, $contestaNO];
+        // $cantidad = array_values($cantidad->pluck('total')->toArray());
         // dd($cantidad);
         // obtenemos los colores para el grafico
         $colores = $this->colores_aleatorios(count($etiquetas));
@@ -301,17 +333,24 @@ class ReportesController extends Controller
         $chart6 = new UsersChart();
         $chart6->labels($etiquetas);
         $dataset = $chart6->dataset('Ingresos','line',$cantidad);
-        $dataset->fill(false);
         $dataset->color($colores[0]);
         $dataset->lineTension(0.1);
         $chart6->options([
-            'legend' => collect([
+            'legend' =>[
                 'display' => false,
-            ]),
+            ],
             'title' => collect([
                 'display' => true,
                 'text' => 'Horas de mayor uso del sistema'
             ]),
+            'scales' => [
+                'yAxes' => array(collect([
+                    'ticks' => [ 
+                        'suggestedMax' => max($cantidad) + ((max($cantidad))/100)*10,
+                        'suggestedMin' => 0
+                    ]
+                ]))
+            ],
         ]);
 
 
@@ -423,22 +462,265 @@ class ReportesController extends Controller
 
 
 
-    // Permite obtener determinada cantidad de colores aleatorios
-    protected function colores_aleatorios($cantidad)
+    // Muestra reportes e informacion resumida sobre un usuario
+    public function estadisticas(Request $request)
     {
-        $colores = collect();
-        for ($i=0; $i < $cantidad; $i++) 
-        { 
-            $colores->push('#'.$this->random_color());
-        }
-        return $colores;
-    }
-    protected function random_color() 
-    {
-        return $this->random_color_part() . $this->random_color_part() . $this->random_color_part();
-    }
-    protected function random_color_part() 
-    {
-        return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+        // Informacion resumida
+        $user = DB::table('usuarios')
+                        ->join('personal' , 'usuarios.id_personal' ,'=' ,'personal.id_personal')
+                        ->join('posicion' , 'posicion.id_posicion','=','usuarios.id_posicion')
+                        ->join('turnos' , 'turnos.id_turno','=','usuarios.id_turno')
+                        ->where('personal.no_empleado','=',$request->estadisticaEmpleado)
+                        ->orderBy('personal.no_empleado')
+                        ->first();
+        $idPersonal = DB::table('personal')
+                        ->where('no_empleado','=',$request->estadisticaEmpleado)
+                        ->first();
+        $preRes = DB::table('log_usuarios')
+                        ->where('id_personal','=',$idPersonal->id_personal)
+                        ->count();
+        $areasRes = collect(DB::select(DB::raw('
+                        SELECT SUM(aa.total) as total_seleccionadas
+                        from(
+                            SELECT a.nombre, ROUND(IFNULL(IFNULL(COUNT(b.id_area),0)/c.total_preguntas,0),0) as total
+                            FROM areas_de_preguntas a 
+                            LEFT JOIN (SELECT * 
+                                    FROM log_usuarios 
+                                    WHERE id_personal = '.$idPersonal->id_personal.') b 
+                            on a.id_area = b.id_area
+                            LEFT JOIN (SELECT id_area, IFNULL(COUNT(*),0) as total_preguntas 
+                                    FROM preguntas 
+                                    GROUP BY id_area) c 
+                            on a.id_area = c.id_area
+                            GROUP BY a.id_area
+                        ) aa
+                    ')))->first();
+                    // dd($areasRes);
+        $correosEnviados = DB::table('seglog')
+                                ->where('SegUsrKey','=',$idPersonal->no_empleado)
+                                ->where('SegLogComando','=','SEND')
+                                ->count();
+                                // dd($correosEnviados);
+
+        // Reportes 
+        $etiquetas = ['Contestó "SI"','Contestó "NO"'];
+        $contestaSI = DB::table('log_usuarios')
+                        ->where('id_personal','=',$idPersonal->id_personal)
+                        ->where('es_pregunta_filtro','=','1')
+                        ->where('id_respuesta','=',DB::raw('(select id_respuesta from respuestas where contenido = "si")'))
+                        ->count();
+        $contestaNO = DB::table('log_usuarios')
+                        ->where('id_personal','=',$idPersonal->id_personal)
+                        ->where('es_pregunta_filtro','=','1')
+                        ->where('id_respuesta','=',DB::raw('(select id_respuesta from respuestas where contenido = "no")'))
+                        ->count();
+        $cantidad = [$contestaSI, $contestaNO];
+        $colores = $this->colores_aleatorios(count($etiquetas));
+        $chartA = new UsersChart();
+        $chartA->labels($etiquetas);
+        $dataset = $chartA->dataset('ed','pie',$cantidad);
+        $dataset->backgroundColor($colores);
+        $chartA->options([
+            'legend' => collect([
+                'display' => false,
+            ]),
+            'title' => collect([
+                'display' => true,
+                'text' => 'Cantidad de veces que ha respondido "si" y "no" a la pregunta filtro'
+            ]),
+        ]);
+
+        $cantidad  = collect(DB::select(DB::raw('
+                            SELECT a.nombre, ROUND(IFNULL(IFNULL(COUNT(b.id_area),0)/c.total_preguntas,0),0) as total
+                            FROM areas_de_preguntas a 
+                            LEFT JOIN (SELECT * 
+                                    FROM log_usuarios 
+                                    WHERE id_personal = '.$idPersonal->id_personal.') b 
+                            on a.id_area = b.id_area
+                            LEFT JOIN (SELECT id_area, IFNULL(COUNT(*),0) as total_preguntas 
+                                    FROM preguntas 
+                                    GROUP BY id_area) c 
+                            on a.id_area = c.id_area
+                            GROUP BY a.id_area
+                        ')));
+        $etiquetas = array_values($cantidad->pluck('nombre')->toArray());
+        // if(count($etiquetas) == 0){ return abort(404); }
+        $cantidad = array_values($cantidad->pluck('total')->toArray());
+        if(!$cantidad){ $cantidad = ['0']; $etiquetas = []; }
+        $colores = $this->colores_aleatorios(count($etiquetas));
+        $chartB = new UsersChart();
+        $chartB->labels($etiquetas);
+        $dataset = $chartB->dataset('Veces seleccionada','bar',$cantidad);
+        $dataset->backgroundColor($colores);
+        $dataset->color($colores);
+        $chartB->options([
+            'legend' => collect([
+                'display' => false,
+            ]),
+            'title' => collect([
+                'display' => true,
+                'text' => 'Veces que ha seleccionado cada área'
+            ]),
+        ]);
+ 
+        $cantidad  = collect(DB::select(DB::raw('
+                                SELECT a.dia, IFNULL(COUNT(b.id_personal), 0) as preguntas_por_dia
+                                FROM (
+                                    SELECT date_format(x.fecha_creacion,"%Y-%m-%d") as dia
+                                    FROM (SELECT * 
+                                            FROM `log_usuarios`
+                                            ) x
+                                    GROUP BY dia
+                                    ) a 
+                                LEFT JOIN (SELECT * 
+                                        FROM log_usuarios
+                                        WHERE id_personal = '.$idPersonal->id_personal.'
+                                        ) b 
+                                on a.dia = date_format(b.fecha_creacion,"%Y-%m-%d")
+                                GROUP BY a.dia
+                            ')));
+        $etiquetas = array_values($cantidad->pluck('dia')->toArray());
+        $cantidad = array_values($cantidad->pluck('preguntas_por_dia')->toArray());
+        $colores = $this->colores_aleatorios(count($etiquetas));
+        $chartC = new UsersChart();
+        $chartC->labels($etiquetas);
+        $dataset = $chartC->dataset('Preguntas respondidas','line',$cantidad);
+        $dataset->color($colores[0]);
+        $dataset->fill(false);
+        $dataset->lineTension(0.1);
+        $chartC->options([
+            'legend' => [
+                'display' => false,
+            ],
+            'title' => [
+                'display' => true,
+                'text' => 'Preguntas respondidas por dia'
+            ],
+            'scales' => [
+                'yAxes' => array(collect([
+                    'ticks' => [
+                        'suggestedMax' => max($cantidad) + ((max($cantidad))/100)*10,
+                        'suggestedMin' => 0, 
+                    ]
+                ]))
+            ],
+        ]);
+
+        $cantidad = DB::table('user')
+                            ->select(DB::raw('DATE_FORMAT(FROM_UNIXTIME(created_at), "%H") as hora'),DB::raw('count(*) as total'))
+                            ->where('auth_key','=',$idPersonal->no_empleado)
+                            ->groupBy('hora')
+                            ->get();
+        $etiquetas = array_values($cantidad->pluck('hora')->toArray());
+        $cantidad = array_values($cantidad->pluck('total')->toArray());
+        if(!$cantidad){ $cantidad = ['0']; $etiquetas = []; }
+        $chartD = new UsersChart();
+        $chartD->labels($etiquetas);
+        $dataset = $chartD->dataset('Ingresos','line',$cantidad);
+        $dataset->color($this->colores_aleatorios(1));
+        $dataset->fill(false);
+        $dataset->lineTension(0.1);
+        $chartD->options([
+            'legend' =>[
+                'display' => false,
+            ],
+            'title' => collect([
+                'display' => true,
+                'text' => 'Horas de entrada'
+            ]),
+            'scales' => [
+                'yAxes' => array(collect([
+                    'ticks' => [ 
+                        'suggestedMax' => max($cantidad) + ((max($cantidad))/100)*10,
+                        'suggestedMin' => 0
+                    ]
+                ]))
+            ],
+        ]);
+
+        $cantidad  = collect(DB::select(DB::raw('
+                                SELECT a.dia, IFNULL(COUNT(b.id_personal), 0) as preguntas_por_dia
+                                FROM (
+                                    SELECT date_format(x.fecha_creacion,"%Y-%m-%d") as dia
+                                    FROM (SELECT * 
+                                            FROM `log_usuarios`
+                                            ) x
+                                    GROUP BY dia
+                                    ) a 
+                                LEFT JOIN (SELECT * 
+                                        FROM log_usuarios
+                                        WHERE id_personal = '.$idPersonal->id_personal.'
+                                        AND es_pregunta_filtro = 1
+                                        AND id_respuesta = ( select id_respuesta from respuestas where contenido = "si" )
+                                        ) b 
+                                on a.dia = date_format(b.fecha_creacion,"%Y-%m-%d")
+                                GROUP BY a.dia
+                            ')));
+        $cantidad2  = collect(DB::select(DB::raw('
+                            SELECT a.dia, IFNULL(COUNT(b.id_personal), 0) as preguntas_por_dia
+                            FROM (
+                                SELECT date_format(x.fecha_creacion,"%Y-%m-%d") as dia
+                                FROM (SELECT * 
+                                        FROM `log_usuarios`
+                                        ) x
+                                GROUP BY dia
+                                ) a 
+                            LEFT JOIN (SELECT * 
+                                    FROM log_usuarios
+                                    WHERE id_personal = '.$idPersonal->id_personal.'
+                                    AND es_pregunta_filtro = 1
+                                    AND id_respuesta = ( select id_respuesta from respuestas where contenido = "no" )
+                                    ) b 
+                            on a.dia = date_format(b.fecha_creacion,"%Y-%m-%d")
+                            GROUP BY a.dia
+                        ')));
+        $etiquetas = array_values($cantidad->pluck('dia')->toArray());
+        $cantidad = array_values($cantidad->pluck('preguntas_por_dia')->toArray());
+        $cantidad2 = array_values($cantidad2->pluck('preguntas_por_dia')->toArray());
+        $chartE = new UsersChart();
+        $chartE->labels($etiquetas);
+        $dataset = $chartE->dataset('Contesto Si','line',$cantidad);
+        $dataset2 = $chartE->dataset('Contesto No','line',$cantidad2);
+        $dataset->fill(false);
+        $dataset->color($this->colores_aleatorios(1));
+        $dataset->lineTension(0.1);
+        $dataset2->fill(false);
+        $dataset2->color($this->colores_aleatorios(1));
+        $dataset2->lineTension(0.1);
+        $chartE->options([
+            // 'legend' => [
+            //     'display' => false,
+            // ],
+            'title' => [
+                'display' => true,
+                'text' => 'Respuestas a la pregunta filtro por dia'
+            ],
+            'scales' => [
+                'yAxes' => array(collect([
+                    'ticks' => [
+                        'suggestedMax' => max([max($cantidad),max($cantidad2)]) + ((max([max($cantidad),max($cantidad2)]))/100)*10,
+                        'suggestedMin' => 0, 
+                    ]
+                ]))
+            ],
+        ]);
+
+
+        return view('estadisticasUsuario',[
+            'reportes' => compact(
+                'chartB',
+                'chartA',
+                'chartC',
+                'chartD',
+                'chartE'
+            ),
+            'estadisticaEmpleado' => $request->estadisticaEmpleado,
+            'usuario' => $user,
+            'edad' => Carbon::parse($user->fecha_nacimiento)->age,
+            'tiempoTrabajando' => Carbon::parse($user->fecha_ingreso)->age,
+            'preguntasRespondidas' => $preRes,
+            'areasRespondidas' => $areasRes->total_seleccionadas,
+            'correosEnviados' => $correosEnviados
+        ]);
     }
 }
