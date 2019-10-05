@@ -243,7 +243,7 @@ class UserController extends Controller
 
     public function cambiarContrasena(Request $request)
     {
-        if(!(request()->session()->get('auth')=='1'))
+        if(!(request()->session()->get('auth')=='1') && !(request()->session()->get('auth')=='2'))
         {
             return abort(404);
         }
@@ -318,24 +318,29 @@ class UserController extends Controller
                         ->whereDate('log_usuarios.fecha_creacion','=',date('Y-m-d'))
                         ->get();
 
-        $this->enviarCorreo($request->session()->get('noEmpleado'),$resultados);
+        $alert = 'correo enviado con exito';
+        try {
+            $this->enviarCorreo($request->session()->get('noEmpleado'),$resultados);
 
-        DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
-            array(
-                $request->session()->get('noEmpleado'),
-                substr($request->session()->get('nombres'),20),
-                'Enviar correos',
-                'usuarios',
-                'Se envió por correo los resultados de la encuesta del usuario con Numero de empleado '.$request->session()->get('noEmpleado'),
-                'SEND',
-                $request->ip(),
-            ));
+            DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
+                array(
+                    $request->session()->get('noEmpleado'),
+                    substr($request->session()->get('nombres'),20),
+                    'Enviar correos',
+                    'usuarios',
+                    'Se envió por correo los resultados de la encuesta del usuario con Numero de empleado '.$request->session()->get('noEmpleado'),
+                    'SEND',
+                    $request->ip(),
+                ));
+        } catch (\Throwable $th) {
+            $alert = 'Correo no enviado, revise la conexion a internet';
+        }
 
         $request->session()->forget('auth');
         $request->session()->forget('noEmpleado');
         $request->session()->forget('nombreCompleto');
         $request->session()->forget('nombres');
-        return 'correo enviado con exito';
+        return $alert;
     }
 
 

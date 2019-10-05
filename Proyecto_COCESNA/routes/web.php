@@ -55,7 +55,7 @@ Route::get('/preguntas', 'AreaController@paginaPreguntas')->name('pagina.pregunt
 
 Route::get('/preguntas/{id}', 'AreaController@borrarPregunta')->name('administrador.borrarPreguntas');
 
-Route::get('/recCon','MainController@recuperarContrasena')->name('usuario.recuperar');
+Route::get('/recCon','UserController@cambiarContrasena')->name('usuario.recuperar');
 
 Route::put('/si-no','MainController@seleccionarEstado')->name('encuesta.seleccionar');   //dirige de acuerdo a la respuesta
 

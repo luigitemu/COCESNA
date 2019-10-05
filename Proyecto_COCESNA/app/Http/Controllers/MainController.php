@@ -52,6 +52,12 @@ class MainController extends Controller
                     ->where('no_empleado',$data['numeroEmpleado'])
                     ->first();
 
+        if(!$usuario)
+        {
+            return back()->withErrors([
+                'numeroEmpleado'=>'El número de empleado es inválido',
+            ])->withInput();
+        }
         $pass = Crypt::decryptString($usuario->contrasena);
         
         // Compara la contraseña ingresada con la obtenida en la consulta, si son iguales
@@ -142,7 +148,7 @@ class MainController extends Controller
                     'PreguntaF' => $pregFiltro->pregunta,
                 ]);
             }
-            else
+            else if($posicion == 2)
             {
                 $request->session()->put('auth','2');
 
@@ -150,7 +156,24 @@ class MainController extends Controller
                         'datos' => $data['numeroEmpleado'],
                         'preguntaFiltro' => $pregFiltro->pregunta,
                     ]);   
+            }
+            else if($posicion == 3)
+            {   
+                $request->session()->put('auth','3');
+
+                return view('preguntaFiltro')->with([
+                        'datos' => $data['numeroEmpleado'],
+                        'preguntaFiltro' => $pregFiltro->pregunta,
+                    ]);   
             }  
+            else if($posicion == 4)
+            {
+                $request->session()->put('auth','4');
+                return redirect()->route('reportes.mostrar');
+            }  
+            else{
+                return abort(404);
+            }
         } 
         /** 
          * Metodo 2: Usando hashes
