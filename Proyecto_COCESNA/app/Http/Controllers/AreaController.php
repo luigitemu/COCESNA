@@ -55,7 +55,7 @@ class AreaController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             $request->session()->get('noEmpleado'),
-            substr($request->session()->get('nombres'),20),
+            substr($request->session()->get('nombres'),0,20),
             'Nueva area',
             'areas_de_preguntas',
             'area_guardar',
@@ -87,7 +87,7 @@ class AreaController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             request()->session()->get('noEmpleado'),
-            substr(request()->session()->get('nombres'),20),
+            substr(request()->session()->get('nombres'),0,20),
             'Actualizar area',
             'areas_de_preguntas',
             'Actualizar area '.request()->id. ' usando el nombre "'.request()->nombre.'" y la descripcion "'.request()->descripcion.'"',
@@ -126,7 +126,7 @@ class AreaController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             request()->session()->get('noEmpleado'),
-            substr(request()->session()->get('nombres'),20),
+            substr(request()->session()->get('nombres'),0,20),
             'Borrar area',
             'areas_de_preguntas',
             'Borra el area'.$id,
@@ -252,7 +252,7 @@ class AreaController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             request()->session()->get('noEmpleado'),
-            substr(request()->session()->get('nombres'),20),
+            substr(request()->session()->get('nombres'),0,20),
             'Nueva pregunta',
             'preguntas',
             'pregunta_guardar(?,?)',
@@ -283,7 +283,7 @@ class AreaController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             request()->session()->get('noEmpleado'),
-            substr(request()->session()->get('nombres'),20),
+            substr(request()->session()->get('nombres'),0,20),
             'Actualizar pregunta',
             'preguntas',
             'Actualizar pregunta '.request()->id. ' usando el contenido "'.request()->contenido.'" y el tipo "'.request()->tipo.'"',
@@ -312,7 +312,7 @@ class AreaController extends Controller
         DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
         array(
             request()->session()->get('noEmpleado'),
-            substr(request()->session()->get('nombres'),20),
+            substr(request()->session()->get('nombres'),0,20),
             'Borrar pregunta',
             'preguntas',
             'Borra la pregunta '.request()->id,
