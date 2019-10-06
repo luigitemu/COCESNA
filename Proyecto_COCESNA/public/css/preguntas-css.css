@@ -140,6 +140,13 @@
     border-color: #06c000;
 }
 
+.btn-llenar{
+    color: #fff !important;
+    background-color: #00c0a6;
+    border-color: #00c0a6;
+}
+
+
 /* ------------------cambio de clave-------------------------- */
 
 #form-clav{

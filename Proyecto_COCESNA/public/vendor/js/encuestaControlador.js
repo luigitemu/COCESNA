@@ -18,17 +18,19 @@ var quiz = $('#quiz');  // div del Quiz
 
 
 $(document).ready(function(){
-  let parametros = `id=${variables.id}`;
-  $.ajax({
-    url: variables.rutaMostrarPreguntas,
-    method: 'GET',
-    data: parametros,
-    success: ( respuesta )=>{
-      preguntas = respuesta.preguntas;
-      idArea = respuesta.id;
-      mostrarSig();  // Mostrar pregunta inicial
-    }
-  });
+  if (variables.id != null) {
+    let parametros = `id=${variables.id}`;
+    $.ajax({
+      url: variables.rutaMostrarPreguntas,
+      method: 'GET',
+      data: parametros,
+      success: ( respuesta )=>{
+        preguntas = respuesta.preguntas;
+        idArea = respuesta.id;
+        mostrarSig();  // Mostrar pregunta inicial
+      }
+    });
+  } 
 });
 
 
@@ -331,6 +333,18 @@ function cambiarContrasena(ruta){
   }
 }
 //--------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+// llenar encuesta de un controlador
+function llenarEncuesta() {
+  if($('#txta-razon').val()==''){
+    alert('Ingrese la razón de llenar la encuesta');
+    return false;
+  }
+  document.getElementById("FormularioLlenarEncuesta").submit();
+}
+
 
 
 

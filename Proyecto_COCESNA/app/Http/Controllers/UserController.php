@@ -141,12 +141,19 @@ class UserController extends Controller
                         ->orderBy('personal.no_empleado')
                         ->get();
 
+        $user2 = DB::table('usuarios')
+                        ->join('personal' , 'usuarios.id_personal' ,'=' ,'personal.id_personal')
+                        ->orderBy('personal.no_empleado')
+                        ->where('usuarios.id_posicion','=','2')
+                        ->get();
+
         return view('usuarios' , [
             'usuarios' => $user,
             'personal' => $personal,
             'id_disponibles' => $disponibles,
             'posiciones' => $posicion,
-            'turnos' =>$turnos,
+            'turnos' => $turnos,
+            'numerosDeEmpleados' => $user2
         ]);
     }
 

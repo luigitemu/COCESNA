@@ -129,7 +129,7 @@ class AreaController extends Controller
             substr(request()->session()->get('nombres'),0,20),
             'Borrar area',
             'areas_de_preguntas',
-            'Borra el area'.$id,
+            'Borra el area '.$id,
             'DELETE',
             request()->ip(),
         ));

@@ -292,3 +292,13 @@ function cambiarContrasena(ruta){
 
 
 
+// llenar encuesta de un controlador
+function llenarEncuesta() {
+    if($('#txta-razon').val()==''){
+      alert('Ingrese la razón de llenar la encuesta');
+      return false;
+    }
+    document.getElementById("FormularioLlenarEncuesta").submit();
+  }
+
+

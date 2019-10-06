@@ -136,7 +136,7 @@ class MainController extends Controller
                                 ->latest('id_pregunta')
                                 ->first();
 
-            if($posicion == 1)
+            if($posicion == 1)  // Es administrador
             {
                 $areas  = array();
                 $areas = DB::table('areas_de_preguntas')->get();
@@ -148,7 +148,7 @@ class MainController extends Controller
                     'PreguntaF' => $pregFiltro->pregunta,
                 ]);
             }
-            else if($posicion == 2)
+            else if($posicion == 2) // Es controlador
             {
                 $request->session()->put('auth','2');
 
@@ -157,16 +157,22 @@ class MainController extends Controller
                         'preguntaFiltro' => $pregFiltro->pregunta,
                     ]);   
             }
-            else if($posicion == 3)
+            else if($posicion == 3) // Es supervisor
             {   
                 $request->session()->put('auth','3');
 
-                return view('preguntaFiltro')->with([
-                        'datos' => $data['numeroEmpleado'],
-                        'preguntaFiltro' => $pregFiltro->pregunta,
-                    ]);   
+                $user = DB::table('usuarios')
+                        ->join('personal' , 'usuarios.id_personal' ,'=' ,'personal.id_personal')
+                        ->orderBy('personal.no_empleado')
+                        ->where('usuarios.id_posicion','=','2')
+                        ->get();
+
+
+                return view('supervisor')->with([
+                    'numerosDeEmpleados' => $user,
+                ]);   
             }  
-            else if($posicion == 4)
+            else if($posicion == 4) // Es RRHH
             {
                 $request->session()->put('auth','4');
                 return redirect()->route('reportes.mostrar');
@@ -380,7 +386,8 @@ class MainController extends Controller
 
 
     // Muestra todas las acciones realizadas en el sistema
-    public function verLogs(){
+    public function verLogs()
+    {
         $registros = DB::table('seglog')
                         ->orderBy('segLogFecha','DESC')
                         ->orderBy('segLogHora','DESC')
@@ -390,5 +397,72 @@ class MainController extends Controller
             'registros'=> $registros
         ] 
        );
+   }
+
+
+
+   // LLena la encuesta de un controlador
+   public function llenarEncuesta(Request $request)
+   {
+        $request->noEmpleado = substr($request->noEmpleado,0,3);
+        $idPersonal = DB::table('personal')
+                        ->select('id_personal')
+                        ->where('no_empleado','=',$request->noEmpleado)
+                        ->first();
+
+        DB::table('usuarios')
+            ->where('id_personal','=',$idPersonal->id_personal)
+            ->update([
+                'nuevo_intento' => 0,
+            ]);
+        
+        DB::table('razones')
+            ->insert(
+                array(
+                    'razon' => $request->razon,
+                    'fecha_creacion' => date("Y-m-d H:i:s"),
+                )
+            );
+
+        DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
+            array(
+                request()->session()->get('noEmpleado'),
+                substr(request()->session()->get('nombres'),0,20),
+                'Ingresa razon de llenar encuesta',
+                'razones',
+                'Razon: '.$request->razon,
+                'INSERT',
+                request()->ip(),
+            ));
+                
+        $usuario = DB::table('usuarios')
+                ->join('personal','usuarios.id_personal','=','personal.id_personal')
+                ->where('no_empleado',$request->noEmpleado)
+                ->first();
+
+        $pregFiltro = DB::table('pregunta_filtro')
+                ->latest('id_pregunta')
+                ->first();
+
+        DB::select('call seglog_guardar(?,?,?,?,?,?,?)',
+        array(
+            request()->session()->get('noEmpleado'),
+            substr(request()->session()->get('nombres'),0,20),
+            'Llenar encuesta de un controlador',
+            'razones',
+            'Se llena la encuesta del controlador: '.$usuario->no_empleado,
+            'INSERT',
+            request()->ip(),
+        ));
+
+        $request->session()->put('noEmpleado',$usuario->no_empleado);
+        $request->session()->put('nombres',$usuario->nombres);
+        $request->session()->put('nombreCompleto',$usuario->nombres." ".$usuario->apellidos);
+        $request->session()->put('auth','2');
+
+        return view('preguntaFiltro')->with([
+                'datos' => $request->noEmpleado,
+                'preguntaFiltro' => $pregFiltro->pregunta,
+            ]);
    }
 }

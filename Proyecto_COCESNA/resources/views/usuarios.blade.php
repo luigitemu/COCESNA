@@ -4,6 +4,7 @@
   <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-3">
     <h1 class="h3 mb-0 text-gray-800">Usuarios</h1>
     <div>
+      <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-llenar shadow-sm" data-toggle="modal" data-target="#modalLlenarEncuesta"><i class="fas fa-marker"></i>  Llenar encuesta de un controlador</a>
       <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-regresar shadow-sm" data-toggle="modal" data-target="#modalNuevaEncuesta"><i class="far fa-plus-square"></i>  Nueva oportunidad de encuesta</a>
       <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg shadow-sm" data-toggle="modal" data-target="#modalAgregarUsuario"><i class="far fa-file-alt mr-1"></i> Agregar Usuario</a>
     </div>
@@ -212,6 +213,42 @@
     </div>
   </div>
     
+  <!-- Modal -->
+  <div class="modal fade" id="modalLlenarEncuesta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Responder Encuestas</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <form id="FormularioLlenarEncuesta" action="{{ route('llenar.encuesta') }}">
+                <div class="form-group">
+                  <label for="slc-controlador">Seleccione el controlador del cual llenará la encuesta</label>
+                  <select name="noEmpleado" class="form-control" id="slc-controlador">
+                    @foreach ($numerosDeEmpleados as $numero)
+                    
+                      <option>{{ $numero->no_empleado.' '.$numero->nombres.' '.$numero->apellidos }}</option>
+    
+                    @endforeach
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="txta-razon">Razón por la que se está llenando la encuesta</label>
+                  <textarea name="razon" class="form-control" id="txta-razon" rows="3"></textarea>
+                </div>
+              </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" onclick="llenarEncuesta();">Iniciar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>	
 @endsection
 
 @section('modalEliminar')
