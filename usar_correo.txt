@@ -1,8 +1,0 @@
-Para usar un correo el laravel copiamos lo siguiente en el archivo .env
-	MAIL_DRIVER=smtp
-	MAIL_HOST=smtp.googlemail.com
-	MAIL_PORT=465
-	MAIL_USERNAME=rrhh.notifier@gmail.com
-	MAIL_PASSWORD=dBgv%434c223!@sa
-	MAIL_ENCRYPTION=ssl
-
