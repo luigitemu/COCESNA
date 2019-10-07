@@ -120,7 +120,7 @@
           <div class="form-group">
             <label for="noEmpleado-nueOpo" class="col-form-label">Seleccione el número de empleado:</label>
             <select type="text" class="form-control" id="noEmpleado-nueOpo">
-              @foreach ($numerosDeEmpleados as $usuario)
+              @foreach ($usuarios as $usuario)
                 <option value="{{ $usuario->no_empleado }}">{{ $usuario->no_empleado }}</option>
               @endforeach
             </select>
