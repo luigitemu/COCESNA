@@ -13,6 +13,8 @@
 
 Route::get('/','MainController@index')->name('sistema.inicio');     // pagina inicial
 
+Route::get('/acercaDe','MainController@acerca_de')->name('acerca.de');
+
 Route::get('/actualizarArea','AreaController@actualizarArea')->name('administrador.actualizarArea');    // Actualiza los atributos de un area
 
 Route::get('/actualizarPF','MainController@actualizarPF')->name('administrador.actualizarPF');    // Actualiza la pregunta filtro

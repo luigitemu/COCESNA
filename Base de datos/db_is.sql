@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 05-10-2019 a las 13:39:52
+-- Tiempo de generación: 06-10-2019 a las 18:11:12
 -- Versión del servidor: 8.0.17
 -- Versión de PHP: 7.3.9
 
@@ -21,11 +21,14 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `db_is`
 --
+CREATE DATABASE IF NOT EXISTS `db_is` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `db_is`;
 
 DELIMITER $$
 --
 -- Procedimientos
 --
+DROP PROCEDURE IF EXISTS `area_guardar`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `area_guardar` (IN `nombre` VARCHAR(45), IN `descripcion` VARCHAR(300))  BEGIN
 	INSERT INTO `areas_de_preguntas`( 
 		`nombre`, 
@@ -39,6 +42,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `area_guardar` (IN `nombre` VARCHAR(
 	);
 END$$
 
+DROP PROCEDURE IF EXISTS `log_guardar`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `log_guardar` (IN `log_key` INT, IN `user_key` INT, IN `usuario` VARCHAR(20), IN `detalle` MEDIUMTEXT, IN `llave` INT, IN `tabla` VARCHAR(60), IN `accion` MEDIUMTEXT, IN `comando` MEDIUMTEXT, IN `ip` VARCHAR(20))  BEGIN
 	INSERT INTO `seglog`(
 		`SegLogKey`,
@@ -66,6 +70,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `log_guardar` (IN `log_key` INT, IN 
         ip);
 END$$
 
+DROP PROCEDURE IF EXISTS `log_usuarios_guardar`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `log_usuarios_guardar` (IN `id_personal` INT, IN `id_respuesta` INT, IN `id_area` INT, IN `id_pregunta` INT, IN `id_turno` INT, IN `ip` VARCHAR(20), IN `es_pregunta_fltro` TINYINT)  BEGIN
 	INSERT INTO `log_usuarios`(
     `id_personal`, 
@@ -87,6 +92,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `log_usuarios_guardar` (IN `id_perso
     now());
 END$$
 
+DROP PROCEDURE IF EXISTS `perdidas_de_contrasena_guardar`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `perdidas_de_contrasena_guardar` (IN `ip` VARCHAR(20))  BEGIN
 	INSERT INTO `perdidas_de_contrasena`(
 			`ip`, 
@@ -97,6 +103,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `perdidas_de_contrasena_guardar` (IN
 	);
 END$$
 
+DROP PROCEDURE IF EXISTS `pregunta_crear`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `pregunta_crear` (IN `id_area` INT, IN `id_tipo` INT, IN `contenido` VARCHAR(100))  BEGIN
 	INSERT INTO `preguntas`(
 		`id_area`, 
@@ -110,6 +117,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `pregunta_crear` (IN `id_area` INT, 
         now());
 END$$
 
+DROP PROCEDURE IF EXISTS `preg_filtro_crear`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `preg_filtro_crear` (IN `pregunta` VARCHAR(60))  BEGIN
 	INSERT INTO `pregunta_filtro`(
 		`pregunta`,
@@ -123,6 +131,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `preg_filtro_crear` (IN `pregunta` V
     );
 END$$
 
+DROP PROCEDURE IF EXISTS `preg_filtro_modificar`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `preg_filtro_modificar` (IN `pregunta` VARCHAR(60))  BEGIN
 	INSERT INTO `pregunta_filtro`(
 		`pregunta`,
@@ -134,6 +143,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `preg_filtro_modificar` (IN `pregunt
     );
 END$$
 
+DROP PROCEDURE IF EXISTS `reg_entrada_guardar`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `reg_entrada_guardar` (IN `nombreUsuario` VARCHAR(255), IN `llaveAutorizacion` VARCHAR(32), IN `hashContrasena` VARCHAR(255), IN `correo` VARCHAR(255), IN `estado` SMALLINT(6), IN `token` VARCHAR(255))  BEGIN
 INSERT INTO `user`(
 	`username`, 
@@ -157,6 +167,7 @@ VALUES (
 );
 END$$
 
+DROP PROCEDURE IF EXISTS `seglog_guardar`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `seglog_guardar` (IN `noEmpleado` INT, IN `nombre` VARCHAR(20), IN `accion` MEDIUMTEXT, IN `tabla` VARCHAR(60), IN `accionTabla` MEDIUMTEXT, IN `comando` MEDIUMTEXT, IN `ip` VARCHAR(20))  BEGIN
 	INSERT INTO `seglog`(
                     `SegLogFecha`, 
@@ -184,6 +195,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `seglog_guardar` (IN `noEmpleado` IN
 		);
 END$$
 
+DROP PROCEDURE IF EXISTS `usuarios_guardar`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `usuarios_guardar` (IN `idPersonal` INT, IN `idTurno` INT, IN `idPosicion` INT, IN `email` VARCHAR(45), IN `contrasena` VARCHAR(200))  BEGIN
 	INSERT INTO `usuarios`(
 		`id_personal`, 
@@ -210,12 +222,13 @@ DELIMITER ;
 -- Estructura de tabla para la tabla `areas_de_preguntas`
 --
 
+DROP TABLE IF EXISTS `areas_de_preguntas`;
 CREATE TABLE `areas_de_preguntas` (
   `id_area` int(6) NOT NULL,
-  `nombre` varchar(45) NOT NULL,
-  `descripcion` varchar(300) NOT NULL,
+  `nombre` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `descripcion` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `fecha_creacion` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `areas_de_preguntas`
@@ -235,6 +248,7 @@ INSERT INTO `areas_de_preguntas` (`id_area`, `nombre`, `descripcion`, `fecha_cre
 -- Estructura de tabla para la tabla `log_usuarios`
 --
 
+DROP TABLE IF EXISTS `log_usuarios`;
 CREATE TABLE `log_usuarios` (
   `id_log_usuario` int(11) NOT NULL,
   `id_personal` int(3) NOT NULL,
@@ -242,10 +256,10 @@ CREATE TABLE `log_usuarios` (
   `id_area` int(6) DEFAULT NULL,
   `id_pregunta` int(6) DEFAULT NULL,
   `id_turno` int(3) DEFAULT NULL,
-  `ip` varchar(20) DEFAULT NULL,
+  `ip` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `es_pregunta_filtro` tinyint(4) DEFAULT '0',
   `fecha_creacion` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `log_usuarios`
@@ -326,7 +340,41 @@ INSERT INTO `log_usuarios` (`id_log_usuario`, `id_personal`, `id_respuesta`, `id
 (72, 2, 1, 4, 11, NULL, '127.0.0.1', 0, '2019-10-05 13:30:25'),
 (73, 2, 2, 4, 12, NULL, '127.0.0.1', 0, '2019-10-05 13:30:27'),
 (74, 2, 1, 4, 13, NULL, '127.0.0.1', 0, '2019-10-05 13:30:28'),
-(75, 2, 2, 4, 14, NULL, '127.0.0.1', 0, '2019-10-05 13:30:29');
+(75, 2, 2, 4, 14, NULL, '127.0.0.1', 0, '2019-10-05 13:30:29'),
+(76, 5, 1, NULL, NULL, NULL, '127.0.0.1', 1, '2019-10-06 00:37:30'),
+(77, 5, 2, NULL, NULL, NULL, '127.0.0.1', 1, '2019-10-06 00:38:19'),
+(78, 5, 2, 4, 11, NULL, '127.0.0.1', 0, '2019-10-06 00:38:22'),
+(79, 5, 2, 4, 12, NULL, '127.0.0.1', 0, '2019-10-06 00:38:23'),
+(80, 5, 2, 4, 13, NULL, '127.0.0.1', 0, '2019-10-06 00:38:25'),
+(81, 5, 2, 4, 14, NULL, '127.0.0.1', 0, '2019-10-06 00:38:27'),
+(82, 5, 1, NULL, NULL, NULL, '127.0.0.1', 1, '2019-10-06 00:42:23'),
+(83, 5, 2, NULL, NULL, NULL, '127.0.0.1', 1, '2019-10-06 00:56:49'),
+(84, 5, 2, 5, 15, NULL, '127.0.0.1', 0, '2019-10-06 00:56:53'),
+(85, 2, 2, NULL, NULL, NULL, '127.0.0.1', 1, '2019-10-06 01:00:57'),
+(86, 2, 1, 5, 15, NULL, '127.0.0.1', 0, '2019-10-06 01:01:01'),
+(87, 2, 2, NULL, NULL, NULL, '127.0.0.1', 1, '2019-10-06 01:01:58'),
+(88, 2, 1, 5, 15, NULL, '127.0.0.1', 0, '2019-10-06 01:02:01'),
+(89, 5, 2, NULL, NULL, NULL, '127.0.0.1', 1, '2019-10-06 14:41:58'),
+(90, 5, 2, 1, 1, NULL, '127.0.0.1', 0, '2019-10-06 14:42:02'),
+(91, 5, 1, 1, 2, NULL, '127.0.0.1', 0, '2019-10-06 14:42:04'),
+(92, 5, 2, 1, 3, NULL, '127.0.0.1', 0, '2019-10-06 14:42:06'),
+(93, 5, 1, 1, 4, NULL, '127.0.0.1', 0, '2019-10-06 14:42:08'),
+(94, 5, 2, NULL, NULL, NULL, '127.0.0.1', 1, '2019-10-06 15:17:38'),
+(95, 5, 2, NULL, NULL, NULL, '127.0.0.1', 1, '2019-10-06 15:46:25'),
+(96, 5, 1, NULL, NULL, NULL, '127.0.0.1', 1, '2019-10-06 15:46:39'),
+(97, 2, 2, NULL, NULL, NULL, '127.0.0.1', 1, '2019-10-06 16:03:39'),
+(98, 2, 1, 4, 11, NULL, '127.0.0.1', 0, '2019-10-06 16:03:49'),
+(99, 2, 1, 4, 12, NULL, '127.0.0.1', 0, '2019-10-06 16:03:51'),
+(100, 2, 2, 4, 13, NULL, '127.0.0.1', 0, '2019-10-06 16:03:54'),
+(101, 2, 1, 4, 14, NULL, '127.0.0.1', 0, '2019-10-06 16:03:56'),
+(102, 5, 2, NULL, NULL, NULL, '127.0.0.1', 1, '2019-10-06 16:05:29'),
+(103, 5, 4, 6, 16, NULL, '127.0.0.1', 0, '2019-10-06 16:13:03'),
+(104, 5, 1, 6, 17, NULL, '127.0.0.1', 0, '2019-10-06 16:13:05'),
+(105, 2, 2, NULL, NULL, NULL, '127.0.0.1', 1, '2019-10-06 17:02:04'),
+(106, 2, 2, 4, 11, NULL, '127.0.0.1', 0, '2019-10-06 17:02:22'),
+(107, 2, 2, 4, 12, NULL, '127.0.0.1', 0, '2019-10-06 17:02:24'),
+(108, 2, 2, 4, 13, NULL, '127.0.0.1', 0, '2019-10-06 17:02:26'),
+(109, 2, 2, 4, 14, NULL, '127.0.0.1', 0, '2019-10-06 17:02:28');
 
 -- --------------------------------------------------------
 
@@ -334,11 +382,12 @@ INSERT INTO `log_usuarios` (`id_log_usuario`, `id_personal`, `id_respuesta`, `id
 -- Estructura de tabla para la tabla `perdidas_de_contrasena`
 --
 
+DROP TABLE IF EXISTS `perdidas_de_contrasena`;
 CREATE TABLE `perdidas_de_contrasena` (
   `id_perdida` int(11) NOT NULL,
-  `ip` varchar(20) DEFAULT NULL,
+  `ip` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `fecha_creacion` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `perdidas_de_contrasena`
@@ -354,16 +403,17 @@ INSERT INTO `perdidas_de_contrasena` (`id_perdida`, `ip`, `fecha_creacion`) VALU
 -- Estructura de tabla para la tabla `personal`
 --
 
+DROP TABLE IF EXISTS `personal`;
 CREATE TABLE `personal` (
   `id_personal` int(3) NOT NULL,
-  `nombres` varchar(50) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
-  `apellidos` varchar(50) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
+  `nombres` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `apellidos` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `fecha_nacimiento` date NOT NULL,
   `fecha_ingreso` date NOT NULL,
-  `sexo` enum('M','F') CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
-  `no_empleado` varchar(10) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
+  `sexo` enum('M','F') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `no_empleado` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `personal`
@@ -411,10 +461,11 @@ INSERT INTO `personal` (`id_personal`, `nombres`, `apellidos`, `fecha_nacimiento
 -- Estructura de tabla para la tabla `posicion`
 --
 
+DROP TABLE IF EXISTS `posicion`;
 CREATE TABLE `posicion` (
   `id_posicion` int(3) NOT NULL,
-  `posicion` varchar(50) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+  `posicion` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `posicion`
@@ -432,13 +483,14 @@ INSERT INTO `posicion` (`id_posicion`, `posicion`) VALUES
 -- Estructura de tabla para la tabla `preguntas`
 --
 
+DROP TABLE IF EXISTS `preguntas`;
 CREATE TABLE `preguntas` (
   `id_pregunta` int(6) NOT NULL,
   `id_area` int(6) NOT NULL,
   `id_tipo` int(11) NOT NULL,
-  `contenido` varchar(100) NOT NULL,
+  `contenido` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `fecha_creacion` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `preguntas`
@@ -469,12 +521,13 @@ INSERT INTO `preguntas` (`id_pregunta`, `id_area`, `id_tipo`, `contenido`, `fech
 -- Estructura de tabla para la tabla `pregunta_filtro`
 --
 
+DROP TABLE IF EXISTS `pregunta_filtro`;
 CREATE TABLE `pregunta_filtro` (
   `id_pregunta` int(11) NOT NULL,
-  `pregunta` varchar(100) NOT NULL,
+  `pregunta` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `fecha_creacion` date NOT NULL,
   `fecha_modificacion` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `pregunta_filtro`
@@ -491,11 +544,63 @@ INSERT INTO `pregunta_filtro` (`id_pregunta`, `pregunta`, `fecha_creacion`, `fec
 -- Estructura de tabla para la tabla `razones`
 --
 
+DROP TABLE IF EXISTS `razones`;
 CREATE TABLE `razones` (
   `id_razon` int(11) NOT NULL,
-  `razon` varchar(500) DEFAULT NULL,
+  `razon` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `fecha_creacion` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `razones`
+--
+
+INSERT INTO `razones` (`id_razon`, `razon`, `fecha_creacion`) VALUES
+(6, 's', '2019-10-06 00:03:30'),
+(7, 's', '2019-10-06 00:03:35'),
+(8, 's', '2019-10-06 00:04:02'),
+(9, 's', '2019-10-06 00:04:06'),
+(10, 'zzz', '2019-10-06 00:37:24'),
+(11, 'Esta muy enfermo', '2019-10-06 00:38:17'),
+(12, 'asd', '2019-10-06 00:42:12'),
+(13, 'Asd', '2019-10-06 00:56:47'),
+(14, 'asd', '2019-10-06 14:41:56'),
+(15, 'asd', '2019-10-06 15:09:09'),
+(16, 'asd', '2019-10-06 15:09:24'),
+(17, 'asd', '2019-10-06 15:14:26'),
+(18, 'asd', '2019-10-06 15:15:07'),
+(19, 'asd', '2019-10-06 15:15:58'),
+(20, 'asd', '2019-10-06 15:16:02'),
+(21, 'asd', '2019-10-06 15:17:26'),
+(22, 'asd', '2019-10-06 15:17:35'),
+(23, 'asd', '2019-10-06 15:19:17'),
+(24, 'asd', '2019-10-06 15:19:23'),
+(25, 'asd', '2019-10-06 15:20:49'),
+(26, 'asd', '2019-10-06 15:21:40'),
+(27, 'asd', '2019-10-06 15:22:53'),
+(28, 'asd', '2019-10-06 15:23:00'),
+(29, 'asd', '2019-10-06 15:23:31'),
+(30, 'asd', '2019-10-06 15:23:54'),
+(31, 'asd', '2019-10-06 15:24:17'),
+(32, 'asd', '2019-10-06 15:24:39'),
+(33, 'asd', '2019-10-06 15:25:58'),
+(34, 'asd', '2019-10-06 15:26:19'),
+(35, 'asd', '2019-10-06 15:26:32'),
+(36, 'asd', '2019-10-06 15:26:38'),
+(37, 'asd', '2019-10-06 15:26:42'),
+(38, 'asd', '2019-10-06 15:36:54'),
+(39, 'asd', '2019-10-06 15:37:11'),
+(40, 'asd', '2019-10-06 15:37:18'),
+(41, 'asd', '2019-10-06 15:38:03'),
+(42, 'asd', '2019-10-06 15:38:58'),
+(43, 'asd', '2019-10-06 15:40:28'),
+(44, 'asd', '2019-10-06 15:40:39'),
+(45, 'asd', '2019-10-06 15:40:49'),
+(46, 'asd', '2019-10-06 15:43:52'),
+(47, 'asd', '2019-10-06 15:47:58'),
+(48, 'asd', '2019-10-06 15:47:59'),
+(49, 'asd', '2019-10-06 15:47:59'),
+(50, 'asd', '2019-10-06 15:48:00');
 
 -- --------------------------------------------------------
 
@@ -503,12 +608,13 @@ CREATE TABLE `razones` (
 -- Estructura de tabla para la tabla `respuestas`
 --
 
+DROP TABLE IF EXISTS `respuestas`;
 CREATE TABLE `respuestas` (
   `id_respuesta` int(6) NOT NULL,
   `id_tipo` int(11) NOT NULL,
-  `contenido` varchar(100) NOT NULL,
+  `contenido` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `fecha_creacion` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `respuestas`
@@ -541,19 +647,20 @@ INSERT INTO `respuestas` (`id_respuesta`, `id_tipo`, `contenido`, `fecha_creacio
 -- Estructura de tabla para la tabla `seglog`
 --
 
+DROP TABLE IF EXISTS `seglog`;
 CREATE TABLE `seglog` (
   `SegLogKey` int(11) NOT NULL,
   `SegLogFecha` date DEFAULT NULL,
   `SegLogHora` time DEFAULT NULL,
   `SegUsrKey` int(11) DEFAULT NULL,
-  `SegUsrUsuario` varchar(20) DEFAULT NULL,
-  `SegLogDetalle` mediumtext,
+  `SegUsrUsuario` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `SegLogDetalle` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci,
   `SegLogLlave` int(11) DEFAULT NULL,
-  `SegLogTabla` varchar(60) DEFAULT NULL,
-  `SegLogAccion` mediumtext,
-  `SegLogComando` mediumtext,
-  `SegLogIp` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `SegLogTabla` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `SegLogAccion` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `SegLogComando` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `SegLogIp` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `seglog`
@@ -595,7 +702,103 @@ INSERT INTO `seglog` (`SegLogKey`, `SegLogFecha`, `SegLogHora`, `SegUsrKey`, `Se
 (33, '2019-10-05', '13:14:16', 222, '0', 'Enviar correos', 222, 'usuarios', 'Se envió por correo los resultados de la encuesta del usuario con Numero de empleado 222', 'SEND', '127.0.0.1'),
 (34, '2019-10-05', '13:15:47', 111, '0', 'Actualizar usuario', 111, 'usuarios', 'Actualizar usuario 125 usando el id_posicion \"2\" y el email \"carter.karianne@gmail.com\"', 'UPDATE', '127.0.0.1'),
 (35, '2019-10-05', '13:25:14', 125, '0', 'Enviar correos', 125, 'usuarios', 'Se envió por correo los resultados de la encuesta del usuario con Numero de empleado 125', 'SEND', '127.0.0.1'),
-(36, '2019-10-05', '13:30:35', 222, '0', 'Enviar correos', 222, 'usuarios', 'Se envió por correo los resultados de la encuesta del usuario con Numero de empleado 222', 'SEND', '127.0.0.1');
+(36, '2019-10-05', '13:30:35', 222, '0', 'Enviar correos', 222, 'usuarios', 'Se envió por correo los resultados de la encuesta del usuario con Numero de empleado 222', 'SEND', '127.0.0.1'),
+(37, '2019-10-05', '19:52:51', 111, 'dolor nobis', 'Nueva area', 111, 'areas_de_preguntas', 'area_guardar', 'INSERT', '127.0.0.1'),
+(38, '2019-10-05', '20:04:44', 111, 'dolor nobis', 'Borrar area', 111, 'areas_de_preguntas', 'Borra el area9', 'DELETE', '127.0.0.1'),
+(39, '2019-10-05', '22:58:03', 111, 'dolor nobis', 'Nuevo usuario', 111, 'usuarios', 'Guardar el personal con numero de empleado 333 en la tabla usuarios', 'INSERT', '127.0.0.1'),
+(40, '2019-10-06', '00:01:50', 333, 'omnis dolor', 'Llenar encuesta de un controlador', 333, 'razones', 'Se llena la encuesta del controlador: 111', 'INSERT', '127.0.0.1'),
+(41, '2019-10-06', '00:01:52', 333, 'omnis dolor', 'Llenar encuesta de un controlador', 333, 'razones', 'Se llena la encuesta del controlador: 111', 'INSERT', '127.0.0.1'),
+(42, '2019-10-06', '00:03:30', 333, 'omnis dolor', 'Llenar encuesta de un controlador', 333, 'razones', 'Se llena la encuesta del controlador: 111', 'INSERT', '127.0.0.1'),
+(43, '2019-10-06', '00:03:35', 333, 'omnis dolor', 'Llenar encuesta de un controlador', 333, 'razones', 'Se llena la encuesta del controlador: 111', 'INSERT', '127.0.0.1'),
+(44, '2019-10-06', '00:04:02', 333, 'omnis dolor', 'Llenar encuesta de un controlador', 333, 'razones', 'Se llena la encuesta del controlador: 111', 'INSERT', '127.0.0.1'),
+(45, '2019-10-06', '00:04:06', 111, 'dolor nobis', 'Llenar encuesta de un controlador', 111, 'razones', 'Se llena la encuesta del controlador: 111', 'INSERT', '127.0.0.1'),
+(46, '2019-10-06', '00:37:24', 333, 'omnis dolor', 'Llenar encuesta de un controlador', 333, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(47, '2019-10-06', '00:38:17', 333, 'omnis dolor', 'Llenar encuesta de un controlador', 333, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(48, '2019-10-06', '00:38:31', 125, 'qui minus', 'Enviar correos', 125, 'usuarios', 'Se envió por correo los resultados de la encuesta del usuario con Numero de empleado 125', 'SEND', '127.0.0.1'),
+(49, '2019-10-06', '00:42:12', 333, 'omnis dolor', 'Ingresa razon de llenar encuesta', 333, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(50, '2019-10-06', '00:42:12', 333, 'omnis dolor', 'Llenar encuesta de un controlador', 333, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(51, '2019-10-06', '00:56:47', 111, 'dolor nobis', 'Ingresa razon de llenar encuesta', 111, 'razones', 'Razon: Asd', 'INSERT', '127.0.0.1'),
+(52, '2019-10-06', '00:56:47', 111, 'dolor nobis', 'Llenar encuesta de un controlador', 111, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(53, '2019-10-06', '00:57:00', 125, 'qui minus', 'Enviar correos', 125, 'usuarios', 'Se envió por correo los resultados de la encuesta del usuario con Numero de empleado 125', 'SEND', '127.0.0.1'),
+(54, '2019-10-06', '01:02:05', 222, 'Controlador de ', 'Enviar correos', 222, 'usuarios', 'Se envió por correo los resultados de la encuesta del usuario con Numero de empleado 222', 'SEND', '127.0.0.1'),
+(55, '2019-10-06', '14:41:56', 111, 'dolor nobis', 'Ingresa razon de llenar encuesta', 111, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(56, '2019-10-06', '14:41:56', 111, 'dolor nobis', 'Llenar encuesta de un controlador', 111, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(57, '2019-10-06', '14:42:17', 125, 'qui minus', 'Enviar correos', 125, 'usuarios', 'Se envió por correo los resultados de la encuesta del usuario con Numero de empleado 125', 'SEND', '127.0.0.1'),
+(58, '2019-10-06', '15:09:09', 111, 'dolor nobis', 'Ingresa razon de llenar encuesta', 111, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(59, '2019-10-06', '15:09:09', 111, 'dolor nobis', 'Llenar encuesta de un controlador', 111, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(60, '2019-10-06', '15:09:24', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(61, '2019-10-06', '15:09:24', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(62, '2019-10-06', '15:14:26', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(63, '2019-10-06', '15:14:26', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(64, '2019-10-06', '15:15:07', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(65, '2019-10-06', '15:15:07', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(66, '2019-10-06', '15:15:58', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(67, '2019-10-06', '15:15:58', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(68, '2019-10-06', '15:16:02', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(69, '2019-10-06', '15:16:02', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(70, '2019-10-06', '15:17:26', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(71, '2019-10-06', '15:17:26', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(72, '2019-10-06', '15:17:35', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(73, '2019-10-06', '15:17:35', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(74, '2019-10-06', '15:19:17', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(75, '2019-10-06', '15:19:17', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(76, '2019-10-06', '15:19:23', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(77, '2019-10-06', '15:19:23', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(78, '2019-10-06', '15:20:49', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(79, '2019-10-06', '15:20:49', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(80, '2019-10-06', '15:21:40', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(81, '2019-10-06', '15:21:40', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(82, '2019-10-06', '15:22:53', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(83, '2019-10-06', '15:22:53', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(84, '2019-10-06', '15:23:00', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(85, '2019-10-06', '15:23:00', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(86, '2019-10-06', '15:23:31', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(87, '2019-10-06', '15:23:31', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(88, '2019-10-06', '15:23:54', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(89, '2019-10-06', '15:23:54', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(90, '2019-10-06', '15:24:17', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(91, '2019-10-06', '15:24:17', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(92, '2019-10-06', '15:24:39', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(93, '2019-10-06', '15:24:39', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(94, '2019-10-06', '15:25:58', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(95, '2019-10-06', '15:25:58', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(96, '2019-10-06', '15:26:19', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(97, '2019-10-06', '15:26:19', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(98, '2019-10-06', '15:26:32', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(99, '2019-10-06', '15:26:32', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(100, '2019-10-06', '15:26:38', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(101, '2019-10-06', '15:26:38', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(102, '2019-10-06', '15:26:42', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(103, '2019-10-06', '15:26:42', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(104, '2019-10-06', '15:36:54', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(105, '2019-10-06', '15:36:54', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(106, '2019-10-06', '15:37:11', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(107, '2019-10-06', '15:37:11', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(108, '2019-10-06', '15:37:18', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(109, '2019-10-06', '15:37:18', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(110, '2019-10-06', '15:38:03', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(111, '2019-10-06', '15:38:03', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(112, '2019-10-06', '15:38:58', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(113, '2019-10-06', '15:38:58', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(114, '2019-10-06', '15:40:28', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(115, '2019-10-06', '15:40:28', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(116, '2019-10-06', '15:40:39', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(117, '2019-10-06', '15:40:39', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(118, '2019-10-06', '15:40:49', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(119, '2019-10-06', '15:40:49', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(120, '2019-10-06', '15:43:52', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(121, '2019-10-06', '15:43:52', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(122, '2019-10-06', '15:47:58', NULL, '', 'Ingresa razon de llenar encuesta', NULL, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(123, '2019-10-06', '15:47:58', NULL, '', 'Llenar encuesta de un controlador', NULL, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(124, '2019-10-06', '15:47:59', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(125, '2019-10-06', '15:47:59', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(126, '2019-10-06', '15:47:59', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(127, '2019-10-06', '15:47:59', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(128, '2019-10-06', '15:48:00', 125, 'qui minus', 'Ingresa razon de llenar encuesta', 125, 'razones', 'Razon: asd', 'INSERT', '127.0.0.1'),
+(129, '2019-10-06', '15:48:00', 125, 'qui minus', 'Llenar encuesta de un controlador', 125, 'razones', 'Se llena la encuesta del controlador: 125', 'INSERT', '127.0.0.1'),
+(130, '2019-10-06', '16:04:07', 222, 'Controlador de ', 'Enviar correos', 222, 'usuarios', 'Se envió por correo los resultados de la encuesta del usuario con Numero de empleado 222', 'SEND', '127.0.0.1'),
+(131, '2019-10-06', '16:13:14', 125, 'qui minus', 'Enviar correos', 125, 'usuarios', 'Se envió por correo los resultados de la encuesta del usuario con Numero de empleado 125', 'SEND', '127.0.0.1'),
+(132, '2019-10-06', '17:02:31', 222, 'Controlador de ', 'Enviar correos', 222, 'usuarios', 'Se envió por correo los resultados de la encuesta del usuario con Numero de empleado 222', 'SEND', '127.0.0.1');
 
 -- --------------------------------------------------------
 
@@ -603,11 +806,12 @@ INSERT INTO `seglog` (`SegLogKey`, `SegLogFecha`, `SegLogHora`, `SegUsrKey`, `Se
 -- Estructura de tabla para la tabla `tipos_de_respuesta`
 --
 
+DROP TABLE IF EXISTS `tipos_de_respuesta`;
 CREATE TABLE `tipos_de_respuesta` (
   `id_tipo` int(11) NOT NULL,
-  `tipo` varchar(80) NOT NULL,
+  `tipo` varchar(80) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `fecha_creacion` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tipos_de_respuesta`
@@ -626,13 +830,14 @@ INSERT INTO `tipos_de_respuesta` (`id_tipo`, `tipo`, `fecha_creacion`) VALUES
 -- Estructura de tabla para la tabla `turnos`
 --
 
+DROP TABLE IF EXISTS `turnos`;
 CREATE TABLE `turnos` (
   `id_turno` int(3) NOT NULL,
-  `turno` varchar(25) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
+  `turno` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `hora_inicio` time NOT NULL,
   `hora_fin` time NOT NULL,
   `activo` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `turnos`
@@ -649,18 +854,19 @@ INSERT INTO `turnos` (`id_turno`, `turno`, `hora_inicio`, `hora_fin`, `activo`) 
 -- Estructura de tabla para la tabla `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `auth_key` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `password_hash` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `password_reset_token` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `username` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `auth_key` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `password_hash` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `password_reset_token` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `status` smallint(6) NOT NULL DEFAULT '10',
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL,
   `verification_token` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `user`
@@ -693,7 +899,16 @@ INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_res
 (24, 'Controlador de  Trafico aéreo', '222', '$2y$10$0bILJNTxjgnAT/m9.wI6ieHohdQZK9uJkpEzfFtwBl/i8wgEGrAbu', NULL, 'primer@controlador.p', 1, 1570302291, 1570302291, '6OypFa5G2ek5pO4ENvZZVrqkBR0rEZTC1DU8Rvv3'),
 (25, 'qui minus sit molestiae', '125', '$2y$10$xhNOC9QTZ7dYFzejBdKe3uBRbGddI.l6FqHvOysXqLE76dl5k.Gwm', NULL, 'carter.karianne@gmail.com', 1, 1570302922, 1570302922, '6OypFa5G2ek5pO4ENvZZVrqkBR0rEZTC1DU8Rvv3'),
 (26, 'qui minus sit molestiae', '125', '$2y$10$PmNF44UCwBpIXDLxGnBErei.qddttTVawjv9hSL/49.PzwNLfE/QS', NULL, 'carter.karianne@gmail.com', 1, 1570303027, 1570303027, '6OypFa5G2ek5pO4ENvZZVrqkBR0rEZTC1DU8Rvv3'),
-(27, 'Controlador de  Trafico aéreo', '222', '$2y$10$9XeWp.Up47NswVamSIDXr.QUoBApFucYB94U.cAR2fiaJT3W5tAkO', NULL, 'primer@controlador.p', 1, 1570303817, 1570303817, '6OypFa5G2ek5pO4ENvZZVrqkBR0rEZTC1DU8Rvv3');
+(27, 'Controlador de  Trafico aéreo', '222', '$2y$10$9XeWp.Up47NswVamSIDXr.QUoBApFucYB94U.cAR2fiaJT3W5tAkO', NULL, 'primer@controlador.p', 1, 1570303817, 1570303817, '6OypFa5G2ek5pO4ENvZZVrqkBR0rEZTC1DU8Rvv3'),
+(28, 'omnis dolor accusamus adipisci', '333', '$2y$10$DTfE3pn.qd5l1y4myF2.6eOAB4RpwNTs/O6bgppoP5l/1Nkd6iyN2', NULL, 'el@supervisor.p', 1, 1570337930, 1570337930, 'PuBzrJT5bOBKN1rdNlMwTgJUHXomfLyQNn9BbLbx'),
+(29, 'omnis dolor accusamus adipisci', '333', '$2y$10$nvwmiBbi.1fJ3w/nOj850O01O.ZfLvFm6VWOORVFi7HZGe3/aHBfq', NULL, 'el@supervisor.p', 1, 1570341882, 1570341882, 'PuBzrJT5bOBKN1rdNlMwTgJUHXomfLyQNn9BbLbx'),
+(30, 'dolor nobis illum eligendi', '111', '$2y$10$TRclqad4l02YuGGe4854A.OaXPjGM/6jXVWhZNA5wiBPKS.OnwWxm', NULL, 'el@administrador.p', 1, 1570343922, 1570343922, 'PuBzrJT5bOBKN1rdNlMwTgJUHXomfLyQNn9BbLbx'),
+(31, 'Controlador de  Trafico aéreo', '222', '$2y$10$V1ygRQvWILrOawiYvzR7ouau8d0LAqArxFOfd3igNxHSjBgPQtLNu', NULL, 'primer@controlador.p', 1, 1570345255, 1570345255, 'PuBzrJT5bOBKN1rdNlMwTgJUHXomfLyQNn9BbLbx'),
+(32, 'Controlador de  Trafico aéreo', '222', '$2y$10$EJBOOIBMx/CNDMzSR3ZJxOIRq4owT5kjundQaeqJI8a8G05OjcLRC', NULL, 'primer@controlador.p', 1, 1570345317, 1570345317, 'PuBzrJT5bOBKN1rdNlMwTgJUHXomfLyQNn9BbLbx'),
+(33, 'Controlador de  Trafico aéreo', '222', '$2y$10$FX5BTwXgFp/FZqFaQ5gu7e.WuBPD58oGoKhIrEk1OI/Iy28703fKi', NULL, 'primer@controlador.p', 1, 1570399416, 1570399416, 'PuBzrJT5bOBKN1rdNlMwTgJUHXomfLyQNn9BbLbx'),
+(34, 'qui minus sit molestiae', '125', '$2y$10$RrM4H9dRNx9ZnbNLWjQJMeDPH/uSi2ptAmW/TvdHr.BO1E0vfI.Xe', NULL, 'carter.karianne@gmail.com', 1, 1570399527, 1570399527, 'PuBzrJT5bOBKN1rdNlMwTgJUHXomfLyQNn9BbLbx'),
+(35, 'eos praesentium sit esse', '444', '$2y$10$AgLss06Jo/wmC/yq2YQkLOC9rWnPhmmugSM2S9Nbv6GcwLj3qJGZC', NULL, 'RR@HH.p', 1, 1570402769, 1570402769, 'PuBzrJT5bOBKN1rdNlMwTgJUHXomfLyQNn9BbLbx'),
+(36, 'Controlador de  Trafico aéreo', '222', '$2y$10$YizoCFDKGcM65RAwWdgTneVH4U2YzEXSu3G6UmpkECHIdMDRzAq4e', NULL, 'primer@controlador.p', 1, 1570402909, 1570402909, 'PuBzrJT5bOBKN1rdNlMwTgJUHXomfLyQNn9BbLbx');
 
 -- --------------------------------------------------------
 
@@ -701,15 +916,16 @@ INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_res
 -- Estructura de tabla para la tabla `usuarios`
 --
 
+DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
   `id_personal` int(3) NOT NULL,
   `id_turno` int(3) NOT NULL,
   `id_posicion` int(3) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `contrasena` varchar(200) NOT NULL DEFAULT '0000',
+  `email` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `contrasena` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0000',
   `nuevo_intento` tinyint(4) DEFAULT '0',
   `fecha_creacion` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -718,8 +934,9 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id_personal`, `id_turno`, `id_posicion`, `email`, `contrasena`, `nuevo_intento`, `fecha_creacion`) VALUES
 (1, 1, 1, 'el@administrador.p', 'eyJpdiI6IkFJblpsdjNKRHYrR1JMZFNpSGM2WUE9PSIsInZhbHVlIjoiU1JZall2MFJ5Tmh3M1ZNZE9jXC9GaFE9PSIsIm1hYyI6ImFmMWI2ZDY2MmM1YjhlYzlhMjhhNWVkYmZiOGYzYTBiYzYwNjIzOGI1MDIwOGM4ZGQ2NjdmZTU5MmQ1Yzc0NjIifQ==', 0, NULL),
 (2, 1, 2, 'primer@controlador.p', 'eyJpdiI6IjVFVUNpZHRMZGpEQ3VjUkRSXC9ESHVnPT0iLCJ2YWx1ZSI6InRvaFBBTFVkVHZQd1NhZ0wzTUIxYlE9PSIsIm1hYyI6ImU5NjY2YjEwMmIzYjEwNzc3MTY3MjE3OTAzZjU3NzRmZjRkMzUxZjQwNDY4ZjQwOWJkODc2YmRmMDRmOGViYjMifQ==', 0, NULL),
+(3, 1, 3, 'el@supervisor.p', 'eyJpdiI6ImVQZ0IyVEZsVU5UaEZDWFJxNWhzdUE9PSIsInZhbHVlIjoiSWtHMVwvamhqMnhGZGpQRTJ4elAwU3c9PSIsIm1hYyI6ImFiMjNhMDQzYmZmZDZkOTBlYjRiMzE1YjU5NzBkZjVjYTA0MzhjMGM2YzFmYmJjOTY2MGNmYjUxYTI2MzVkMDIifQ==', 0, '2019-10-05 22:58:03'),
 (4, 1, 4, 'RR@HH.p', 'eyJpdiI6InhLMlEyWlkwdWRtYnJCNWlDcjhNM3c9PSIsInZhbHVlIjoicDNtOW1LZzVDVWhPdDdITzdqM2dZdz09IiwibWFjIjoiYjVhYmM2OTdmMTU2NjE4MzNlNDY0Yzc0ZGUzYjU2M2FjMDVjYjgzYjNkMWJmZGUzMDdjOTkxNTY3NmZmMDc4NyJ9', 0, NULL),
-(5, 2, 2, 'carter.karianne@gmail.com', 'eyJpdiI6Ikc4djNscjdCa0VrV3Z2UitxU0dmV2c9PSIsInZhbHVlIjoiaXA3UXpJR0VXWitOR1YyT3FXMHQwUT09IiwibWFjIjoiNWU5NDA4Nzg1MjhiNTFkYzlkMzA3ZTljZGU5ODJhMjAzZjZjYTY4OTNlNjcxOTM3OTQ2Y2EwZDAwOGViZDhlYiJ9', 0, NULL),
+(5, 2, 2, 'carter.karianne@gmail.com', 'eyJpdiI6ImlCYjZMdnFod003aU4reDBvUjFiYWc9PSIsInZhbHVlIjoiYVZLNHFEblZ5TWdxWE9EanRHRjRjdz09IiwibWFjIjoiNTRkNDNlZmU5MDY0ZDNiMmEyYjEyZTMxNTliYmQ4YzBmOWZlNWNhMzhhOGQ5MTkxZmYwNThlZjZmZTU3OGZjNiJ9', 0, NULL),
 (6, 2, 2, 'fisher.dorothea@funk.com', 'eyJpdiI6InE3czV6ZitaRjBwVld2U2prU3QxeGc9PSIsInZhbHVlIjoidjN1TlhNU3JuXC81TFkxV1NIK0ZBK3c9PSIsIm1hYyI6ImE0MTQzYmFhMzRkMWEyZTYyZjczNmJkNzFmMmMxYjdmYWEyM2IwMGJhYjdmZTE1YjIwMmZjOWU2MTU5ZWQ0N2YifQ==', 0, NULL),
 (7, 2, 4, 'yost.tyrel@gmail.com', 'eyJpdiI6Iis1SG1jVjA4ZmxHK01SdU9ub3gxZUE9PSIsInZhbHVlIjoiSVl1NkJxUEJiQjlic0VFbjA2bXBTUT09IiwibWFjIjoiZWJmNTZmYTYwNmEwNzhlZmI0OTcyYzQxZTdlZTA1ZTJjMDAwMzM5ZTU0OTExNzZlZTM3OWFkMDhjYjMxMjI5NyJ9', 0, NULL),
 (8, 1, 2, 'yost.favian@ullrich.com', 'eyJpdiI6InBFa0JHeVAySXZzdlppR3UxMDhjVWc9PSIsInZhbHVlIjoiTmlMZUVGZUJPQThBS0VJRVJHYWFxUT09IiwibWFjIjoiNTQ4MzY2MjdiYWI3N2I3ZjRiMTBlYTdlMGQyNWI1MDg3NWQ5OWQxYzdlMzNmMTczNzM2NDE1ZGVjNTMwMmYwMyJ9', 0, NULL),
@@ -843,13 +1060,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `areas_de_preguntas`
 --
 ALTER TABLE `areas_de_preguntas`
-  MODIFY `id_area` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_area` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `log_usuarios`
 --
 ALTER TABLE `log_usuarios`
-  MODIFY `id_log_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id_log_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT de la tabla `perdidas_de_contrasena`
@@ -885,7 +1102,7 @@ ALTER TABLE `pregunta_filtro`
 -- AUTO_INCREMENT de la tabla `razones`
 --
 ALTER TABLE `razones`
-  MODIFY `id_razon` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_razon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT de la tabla `respuestas`
@@ -897,7 +1114,7 @@ ALTER TABLE `respuestas`
 -- AUTO_INCREMENT de la tabla `seglog`
 --
 ALTER TABLE `seglog`
-  MODIFY `SegLogKey` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `SegLogKey` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 
 --
 -- AUTO_INCREMENT de la tabla `tipos_de_respuesta`
@@ -915,7 +1132,7 @@ ALTER TABLE `turnos`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- Restricciones para tablas volcadas

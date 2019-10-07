@@ -1,89 +1,83 @@
-@extends('plantillas.plantilla1')
-
-@section('tituloPagina','Pregunta filtro')
+@extends('plantillas.encuesta')
 
 @section('head')
-  <link rel="stylesheet" href="{{ asset('css/r34.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/preguntas-css.css') }}">
 @endsection
 
 @section('cuerpoPagina')
-  <div style="height:100px;"></div>
-  {{-- <button data-toggle="modal" data-target="#modalCambioContrasena">Cambiar contraseña</button> --}}
-  <div class="container">
-    <div class="row">
-      <div class="col-8 mx-auto px-5 py-5 shadow-lg">
-        <h2 class="d-flex justify-content-center mb-5">{{ $preguntaFiltro }}</h2>
-        <form method="POST" action="{{ route('encuesta.seleccionar') }}" id="box-repuestas-filtro" class="d-flex justify-content-center p-3">
-          {{method_field('PUT')}}     {{-- cambia de method="POST" a method="PUT" --}}
-          {!! csrf_field() !!}        <!--Proteccion de ataques csrf-->
-          <input name="noEmpleado" type="hidden" value="{{ $datos }}">
-          <button name="btn" type="submit" value="1" id="btn-filtro-si" class="btn btn-success mr-3">Si</button>
-          <button name="btn" type="submit" value="0" id="btn-filtro-no" class="btn btn-danger">No</button>
-        </form>
-        
-        {{-- Para pasar campos a una plantilla llamada por @include, primero
-             definimos las secciones @section y por ultimo hacemos el llamado 
-             @include a dicha plantilla --}}
-      </div>
-    </div>
-  </div>
-  <div style="height:100px;"></div>
-{{-- 
-  <div class="modal fade" id="modalCambioContrasena" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div id='container'>
+		<button type="button" id="contras" class="btn btn-outline-secondary" data-toggle="tooltip" data-placement="bottom" title="Cambiar contraseña" onclick="cambioClave({{ Session::get('noEmpleado') }});" ><i class="fas fa-wrench"></i></button>
+		<div id="envolver">
+			<div id='title' class="mt-5 px-5">
+				<h1 class="titulo-enc" id="titulo-enc">{{ $preguntaFiltro }}</h1>
+			</div>
+      <br/>
+      
+      <form method="POST" action="{{ route('encuesta.seleccionar') }}" id="box-repuestas-filtro" class="d-flex justify-content-center p-3 mb-4">
+        {{method_field('PUT')}}     {{-- cambia de method="POST" a method="PUT" --}}
+        {!! csrf_field() !!}        <!--Proteccion de ataques csrf-->
+        <input name="noEmpleado" type="hidden" value="{{ $datos }}">
+        <button name="btn" type="submit" value="1" id="btn-filtro-si" class="button quiz-btn btn-filtro-si mr-3">Si</button>
+        <button name="btn" type="submit" value="0" id="btn-filtro-no" class="button quiz-btn btn-filtro-no">No</button>
+      </form>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalCambioClave" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Cambio de Contraseña</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Cambio de clave</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
           </button>
         </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="nuevaContrasena1" class="col-form-label">Ingrese una nueva contraseña:</label>
-          <input type="password" class="form-control" id="nuevaContrasena1">
-          <div id="valida-nuevaContrasena1"></div>
-          <label for="nuevaContrasena2" class="col-form-label">Confirme la nueva contraseña:</label>
-          <input type="password" class="form-control" id="nuevaContrasena2">
-          <div id="valida-nuevaContrasena2"></div>
+        <div class="modal-body">
+            <form id="form-clav">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1" class="label-sty">Nueva Clave</label>
+                    <div class="input-group" id="input-clave">
+                        <input type="password" class="form-control" id="con1" onkeyup="val(this)" placeholder="contraseña">
+                        <div class="input-group-btn">
+                            <!-- <div class="input-btn-most">@</div> -->
+                            <button type="button" class="input-btn-most" id="vc"><i class="far fa-eye-slash"></i></button>
+                        </div>
+                        <!-- <div class="invalid-feedback" id="val-feed">
+                          La contraseña debe contener al menos una mayuscula una minuscula un numero y un caracter especial(!@#$%&*,.?)
+                        </div> -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1" class="label-sty">Confirmar Clave</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="con2" onkeyup="val(this)" placeholder="contraseña">
+                        <div class="input-group-btn">
+                            <!-- <div class="input-btn-most">@</div> -->
+                            <button type="button" class="input-btn-most" id="vcc"><i class="far fa-eye-slash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
-      </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-danger" onclick="cambiarContrasena('{{ route('usuario.cambiarContrasena') }}','{{ Session::get('noEmpleado') }}');">Guardar cambios</button>
+          <button type="button" class="btn btn-primary" id="btn-env" onclick="cambiarContrasena('{{ route('usuario.cambiarContrasena') }}');">Confirmar</button>
+          <!-- <button type="button" class="btn btn-primary mb-2" id="btn-env">Confirmar</button> -->
         </div>
       </div>
     </div>
-  </div> --}}
+  </div>
+    
 @endsection
 
-{{-- 
 @section('scripts')
-  <script>
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      }
-    });
-    
-    function cambiarContrasena(ruta,noEmp){
-      if ($('#nuevaContrasena1').val() == $('#nuevaContrasena2').val()) {
-        let parametros = `noEmp=${ noEmp }&contrasena=${ $('#nuevaContrasena1').val() }`;
-        console.log(ruta);
-        console.log(parametros);
-        $.ajax({
-          url: ruta,
-          method: 'GET',
-          data: parametros,
-          success: ( respuesta )=>{
-            console.log(respuesta);
-            alert('Contraseña cambiada exitosamente');
-            $('#modalCambioContrasena').modal('hide');
-          }
-        });
-      } else {
-        console.log('contrasenas incorrectas');
-      }
-    }
-  </script>
-@endsection --}}
+	<script>
+		var variables = {
+			redireccionLogin: "{{ route('sistema.inicio') }}",
+			contrasenaCorreo: "{{ route('usuario.recuperar') }}",
+		}
+		function Regresar(){
+			window.location = "{{ route('encuesta.mostrarAreas') }}"
+		}
+	</script> 		
+@endsection

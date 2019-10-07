@@ -32,7 +32,7 @@
         <a href="{{ route('usuarios.mostrar') }}" class="list-group-item list-group-item-action bg-light">Usuarios</a>
         <a href="{{ route('reportes.mostrar') }}" class="list-group-item list-group-item-action bg-light">Reportes</a>
         <a href="{{ route('logs.cargar') }}" class="list-group-item list-group-item-action bg-light">Registro de Actividad</a>
-        <a  class="list-group-item list-group-item-action bg-light">Acerca de</a>
+        <a href="{{ route('acerca.de') }}" class="list-group-item list-group-item-action bg-light">Acerca de</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -41,7 +41,7 @@
     <div id="page-content-wrapper">
 
       <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" id="navbar">
-        <!-- <button class="btn btn-primary" id="menu-toggle">Ocultar</button> -->
+        <button class="btn btn-sm " id="menu-toggle"><i class="fas fa-columns"></i> Ocultar</button>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>

@@ -203,3 +203,13 @@
 td { word-wrap: break-word; }
 th, td { width: 40%; } */
 
+
+.btn-filtro-no{
+    background-color: #6c757d;
+    width: 30%;
+}
+
+
+.btn-filtro-si{
+    width: 30%;
+}

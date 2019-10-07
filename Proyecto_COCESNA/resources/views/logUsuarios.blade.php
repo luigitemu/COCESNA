@@ -14,7 +14,7 @@
 
 @section('contenido')
     
-<table class="table mx-2">
+<table class="table mx-2" style="font-size: 13px;">
     <thead class="thead-dark">
       <tr>
         <th scope="col">Fecha</th>

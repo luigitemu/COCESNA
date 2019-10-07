@@ -465,4 +465,12 @@ class MainController extends Controller
                 'preguntaFiltro' => $pregFiltro->pregunta,
             ]);
    }
+
+
+
+   // Acerca de
+   public function acerca_de()
+   {
+       return view('acercaDe');
+   }
 }
