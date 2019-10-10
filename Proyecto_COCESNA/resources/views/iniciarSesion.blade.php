@@ -12,8 +12,8 @@
 {{-- Contenido de <body> --}}
 @section('cuerpoPagina')
     <div class="bg">
-        <div class="cont">
-            <div class="envolver">
+        <div class="cont" id="contenido-inicio">
+            <div class="envolver" id="envolver-inicio">
                 <h3 class="greet">Bienvenido</h3>
                 <form method="POST" action="{{ route('sistema.verificarEmpleadoContrasena') }}">
                     {{method_field('PUT')}}     {{-- cambia de method="POST" a method="PUT" --}}

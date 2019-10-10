@@ -47,11 +47,11 @@ function mostrar(res) {
         <td> ${usuario.turno}</td>
         <td> ${usuario.email}</td>
         <td class="form-inline">
-        <button class="btn btn-success mr-1" onclick="editarUsuario(${usuario.no_empleado},'${usuario.email}','${usuario.posicion}');"> <i class="far fa-edit"></i></button>
-        <button class="btn btn-danger mr-1" onclick="eliminarUsuario(${usuario.no_empleado})"><i class="fas fa-user-minus"></i></button>
-        <button class="btn btn-info mr-1" onclick="cambioClave(${usuario.no_empleado})"><i class="fas fa-unlock"></i></button>
+        <button class="btn btn-black mr-1" onclick="editarUsuario(${usuario.no_empleado},'${usuario.email}','${usuario.posicion}');"> <i class="far fa-edit"></i></button>
+        <button class="btn bg-cos-gray mr-1" onclick="eliminarUsuario(${usuario.no_empleado})"><i class="fas fa-user-minus"></i></button>
+        <button class="btn btn-regresar mr-1" onclick="cambioClave(${usuario.no_empleado})"><i class="fas fa-unlock"></i></button>
         <form method="GET" action="${rutaEstadistica}">
-        <button type="submit" class="btn btn-secondary" name="estadisticaEmpleado" value="${ usuario.no_empleado }"><i class="far fa-chart-bar"></i></button>
+        <button type="submit" class="btn bg-cos bg-cos-list" name="estadisticaEmpleado" value="${ usuario.no_empleado }"><i class="far fa-chart-bar"></i></button>
         </form>
         </td>
         </tr>
@@ -112,6 +112,7 @@ function validarCampoVacio(){
 
 
 
+//edita usuario
 function validar(tipo){
     if (tipo == null) {
 
@@ -124,7 +125,7 @@ function validar(tipo){
             if(campos[i].valido == false || campos[i].corValido == false)
                 return;
         }
-        let parametros = `no_empleado=${porEditar}&email=${$('#input-correo-editar').val()}&posicion=${$('#select-posicion').val()}`;
+        let parametros = `no_empleado=${porEditar}&email=${encodeURIComponent($('#input-correo-editar').val())}&posicion=${$('#select-posicion').val()}`;
         $.ajax({
             url: actualizar,
             method: 'get',

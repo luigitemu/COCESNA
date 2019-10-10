@@ -2,7 +2,7 @@
 
 @section('tituloDashboard')
   <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-3">
-    <h1 class="h3 mb-0 text-gray-800">Sistema de automatización de Factores Humanos</h1>
+    <h1 class="h3 mb-0 text-gray-800">Sistema de Automatización de Factores Humanos</h1>
     {{-- <div>
         <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-regresar shadow-sm" onclick=" window.location = '{{ route('administrador.principal') }}';"><i class="fas fa-arrow-alt-circle-left"></i> Regresar</a>
     </div> --}}

@@ -66,6 +66,11 @@ function guardarMostrar() {
     let parametros = `nombre=${nombre}&descripcion=${descripcion}`;
     $('#'+campos[0].id).val('');
     $('#'+campos[1].id).val('');
+
+    $('#nombre').removeClass('is-valid','is-invalid');
+    $('#descripcion').removeClass('is-valid','is-invalid');
+    $('#valida-nombre').html('');
+    $('#valida-descripcion').html('');
     $.ajax({
         // url: '/agregarArea',
         url: rutas.AgregarArea,
@@ -74,10 +79,10 @@ function guardarMostrar() {
         dataType: 'json',
         success: (res)=>{
             $('#areaPreguntas').html('');
-            $('#nombre').removeClass('is-valid','is-invalid');
-            $('#descripcion').removeClass('is-valid','is-invalid');
-            $('#valida-nombre').html('');
-            $('#valida-descripcion').html('');
+            // $('#nombre').removeClass('is-valid','is-invalid');
+            // $('#descripcion').removeClass('is-valid','is-invalid');
+            // $('#valida-nombre').html('');
+            // $('#valida-descripcion').html('');
             if(res.length == 0)
             {
                 $('#areaPreguntas').html(`
