@@ -5,7 +5,7 @@
     <h1 class="h3 mb-0 text-gray-800">Áreas De Preguntas</h1>
     <div>
       <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-regresar shadow-sm" data-toggle="modal" data-target="#modalEditarPreguntaFiltro"><i class="far fa-edit"></i> Editar pregunta filtro</a>
-      <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg shadow-sm" data-toggle="modal" data-target="#modalAgregarPregunta"><i class="far fa-file-alt mr-1"></i>Crear Área de Preguntas</a>  
+      <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg bg-cos bg-cos-list shadow-sm" data-toggle="modal" data-target="#modalAgregarPregunta"><i class="far fa-file-alt mr-1"></i>Crear Área de Preguntas</a>  
     </div>
   </div>
   <hr>
@@ -27,8 +27,8 @@
           </div>
         </div>
         <div class="card-footer d-flex justify-content-center">
-          <button type="button" class="btn btn-success mb-2 mr-3"  onclick="editar({{ $area->id_area }},'{{ $area->nombre }}','{{ $area->descripcion }}');" data-toggle="modal" > Editar </button>
-          <button type="button" class="btn btn-danger mb-2 mr-3"  onclick="eliminar({{ $area->id_area }});" data-toggle="modal" > Eliminar </button>
+          <button type="button" class="btn bg-cos bg-cos-list mb-2 mr-3"  onclick="editar({{ $area->id_area }},'{{ $area->nombre }}','{{ $area->descripcion }}');" data-toggle="modal" > Editar </button>
+          <button type="button" class="btn bg-cos-gray mb-2 mr-3"  onclick="eliminar({{ $area->id_area }});" data-toggle="modal" > Eliminar </button>
         </div>
       </div>
     </div>

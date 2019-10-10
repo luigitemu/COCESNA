@@ -97,7 +97,7 @@ function guardarMostrar() {
 function mostrarAreas (elemento) {
 
     $('#areaPreguntas').append(`
-    <div class="col-lg-4"  style="z-index:1;">
+    <div class="col-12 col-lg-6 col-xl-4"  style="z-index:1;">
     <div class="card card-style mb-3">
     <div class="card-header"><span class="mr-1 titulo-enc">Encuesta:</span>${elemento.nombre}</div>
     <div class="card-body"  id="${elemento.id_area}" onclick="mostrarPreguntas(this)">
@@ -105,8 +105,8 @@ function mostrarAreas (elemento) {
     <p class="card-text">${elemento.descripcion}</p>
     </div>
     <div class="card-footer d-flex justify-content-center">
-    <button type="button" class="btn btn-success mb-2 mr-3"  onclick="editar(${elemento.id_area},'${elemento.nombre}','${elemento.descripcion}');" data-toggle="modal" > Editar </button>
-    <button type="button" class="btn btn-danger mb-2 mr-3"  onclick="eliminar(${elemento.id_area})" data-toggle="modal" > Eliminar </button>
+    <button type="button" class="btn bg-cos bg-cos-list mb-2 mr-3"  onclick="editar(${elemento.id_area},'${elemento.nombre}','${elemento.descripcion}');" data-toggle="modal" > Editar </button>
+    <button type="button" class="btn bg-cos-gray mb-2 mr-3"  onclick="eliminar(${elemento.id_area})" data-toggle="modal" > Eliminar </button>
     </div>
     </div>
     </div>

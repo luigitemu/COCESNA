@@ -4,9 +4,9 @@
   <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-3">
     <h1 class="h3 mb-0 text-gray-800">Usuarios</h1>
     <div>
-      <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-llenar shadow-sm" data-toggle="modal" data-target="#modalLlenarEncuesta"><i class="fas fa-marker"></i>  Llenar encuesta de un controlador</a>
+      <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-llenar bg-cos-gray shadow-sm" data-toggle="modal" data-target="#modalLlenarEncuesta"><i class="fas fa-marker"></i>  Llenar encuesta de un controlador</a>
       <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-regresar shadow-sm" data-toggle="modal" data-target="#modalNuevaEncuesta"><i class="far fa-plus-square"></i>  Nueva oportunidad de encuesta</a>
-      <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg shadow-sm" data-toggle="modal" data-target="#modalAgregarUsuario"><i class="far fa-file-alt mr-1"></i> Agregar Usuario</a>
+      <a role="button" class="d-none d-sm-inline-block btn btn-sm btn-area-preg bg-cos-list shadow-sm" data-toggle="modal" data-target="#modalAgregarUsuario"><i class="far fa-file-alt mr-1"></i> Agregar Usuario</a>
     </div>
   </div>
   <hr>
@@ -34,11 +34,11 @@
           <td>{{ $usuario->turno }}</td>
           <td>{{ $usuario->email }}</td>
           <td class="form-inline">
-            <button class="btn btn-success mr-1" onclick="editarUsuario({{ $usuario->no_empleado }},'{{ $usuario->email }}','{{ $usuario->posicion }}');"> <i class="far fa-edit"></i></button>
-            <button class="btn btn-danger mr-1" onclick="eliminarUsuario({{ $usuario->no_empleado }});"><i class="fas fa-user-minus"></i></button>
-            <button class="btn btn-info mr-1" onclick="cambioClave({{ $usuario->no_empleado }});"><i class="fas fa-unlock"></i></button>
+            <button class="btn btn-black mr-1" onclick="editarUsuario({{ $usuario->no_empleado }},'{{ $usuario->email }}','{{ $usuario->posicion }}');"> <i class="far fa-edit"></i></button>
+            <button class="btn bg-cos-gray mr-1" onclick="eliminarUsuario({{ $usuario->no_empleado }});"><i class="fas fa-user-minus"></i></button>
+            <button class="btn btn-regresar mr-1" onclick="cambioClave({{ $usuario->no_empleado }});"><i class="fas fa-unlock"></i></button>
             <form method="GET" action="{{ route('controlador.estadisticas') }}">
-              <button type="submit" class="btn btn-secondary" name="estadisticaEmpleado" value="{{ $usuario->no_empleado }}"><i class="far fa-chart-bar"></i></button>
+              <button type="submit" class="btn bg-cos bg-cos-list" name="estadisticaEmpleado" value="{{ $usuario->no_empleado }}"><i class="far fa-chart-bar"></i></button>
             </form>
           </td>
         </tr>

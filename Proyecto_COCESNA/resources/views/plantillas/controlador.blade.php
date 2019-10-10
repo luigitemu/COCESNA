@@ -43,7 +43,7 @@
 
         <div class="container-fluid">
           @yield('tituloDashboard')
-          <div class="row" id="areaPreguntas">
+          <div class="row" id="areaPreguntas" style="overflow-y:auto; overflow-x:hidden; max-height: 400px;">
             @yield('contenido')
           </div>
           @yield('modalEliminar')
@@ -64,6 +64,9 @@
       $("#menu-toggle").click(function(e) {
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
+      });
+      $(document).ready(function(){
+        $('#areaPreguntas').css('max-height',document.body.scrollHeight-36);
       });
     </script>
     @yield('scripts')

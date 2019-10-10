@@ -173,7 +173,7 @@ function nuevaOportunidadDeEncuesta() {
         method: 'get',
         data: parametros,
         success: res=>{
-            alert('Nueva oportunidad asignada con éxito!');
+            // alert('Nueva oportunidad asignada con éxito!');
             $('#modalNuevaEncuesta').modal('hide');
         }
     });
@@ -266,7 +266,7 @@ function cambiarContrasena(ruta){
 
     // console.log(`${linea} == ${confir}`);
     if (confir !== linea){
-        alert("las contraseñas no coinciden");
+        // alert("las contraseñas no coinciden");
     }else{
        if (confir != '') {
             // alert("Contraseñas correctas");
@@ -279,12 +279,12 @@ function cambiarContrasena(ruta){
               data: parametros,
               success: ( respuesta )=>{
                 console.log(respuesta);
-                alert('Contraseña cambiada exitosamente');
+                // alert('Contraseña cambiada exitosamente');
                 $('#modalCambioClave').modal('hide');
               }
             });
        } else {
-          alert('Las contraseña no puede ser nula') 
+        //   alert('Las contraseña no puede ser nula') 
        }
     }
 }

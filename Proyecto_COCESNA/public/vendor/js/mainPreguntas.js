@@ -87,8 +87,8 @@ function mostrar (contenido,id,idTipo) {
           <div class="col-12">
             <div class="row mb-4 d-flex bd-highlight align-items-center mb-3">
               <h3 class="mr-auto p-2 bd-highlight" id="pregunta${id}">${contenido}</h3>
-              <button type="button" class="p-2 bd-highlight mr-3 btn btn-success" onclick="editarPregunta(${id},'${contenido}',${idTipo});" >editar</button>
-              <button type="button" class="btn btn-danger p-2 bd-highlight mr-4" onclick="eliminarPregunta(${id});" >eliminar</button>
+              <button type="button" class="p-2 bd-highlight mr-3 btn bg-cos bg-cos-list" onclick="editarPregunta(${id},'${contenido}',${idTipo});" >editar</button>
+              <button type="button" class="btn bg-cos-gray p-2 bd-highlight mr-4" onclick="eliminarPregunta(${id});" >eliminar</button>
             </div>
             <ul class="list-group list-group-flush" id="respuestasPregunta${id}">
             </ul>

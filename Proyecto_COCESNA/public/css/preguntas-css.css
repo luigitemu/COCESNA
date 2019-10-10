@@ -134,18 +134,29 @@
     /* max-width: 40.333% !important; */
 }
 
-.btn-regresar{
+/* .btn-regresar{
     color: #fff !important;
     background-color: #06c000;
     border-color: #06c000;
-}
+} */
 
 .btn-llenar{
     color: #fff !important;
-    background-color: #00c0a6;
-    border-color: #00c0a6;
+    /* background-color: #00c0a6;
+    border-color: #00c0a6; */
+    background-color: #6c757d;
+    color: white;
 }
 
+.btn-regresar{
+    color: #fff !important;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-regresar:hover{
+    background-color: #006de2;
+}
 
 /* ------------------cambio de clave-------------------------- */
 
@@ -212,4 +223,40 @@ th, td { width: 40%; } */
 
 .btn-filtro-si{
     width: 30%;
+}
+
+
+
+
+/* --------------------------------------------------------------- */
+
+/* .navbar-collapse{
+    position: fixed;
+    overflow: hidden;
+    top: 0px;
+    height: 45px;
+    width: 80%;
+    background-color: white;
+} */
+
+/* .btn-regresar{
+    color: #fff !important;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-regresar:hover{
+    background-color: #006de2;
+} */
+
+/* .container-fluid {
+    width: 84%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-left: 16%;
+} */
+
+.card-cos{
+    background-color: white !important;
+    border-top: 1px solid white !important;
 }

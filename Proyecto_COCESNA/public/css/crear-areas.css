@@ -1,5 +1,5 @@
 body{
-    background-color: #e6f2ff73 !important;
+    background-color: white !important;
 }
 
 .card-header {
@@ -30,8 +30,8 @@ body{
 
 .btn-area-preg{
     color: #fff !important;
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #004085;
+    border-color: #004085;
 }
 
 .list-group .list-group-item:hover{

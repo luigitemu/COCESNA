@@ -58,3 +58,39 @@ background: linear-gradient(to right, #2948ff, #396afc); /* W3C, IE 10+/ Edge, F
 #navbar{
   background: white;
 }
+/* --------------------------------------- */
+
+.bg-cos{
+  background-color: #004085;
+  color: white;
+}
+
+.bg-cos-gray{
+  background-color: #6c757d;
+  color: white;
+}
+
+.bg-cos-gray:hover{
+  background-color: #949ea7;
+  color: white;
+}
+
+.bg-cos:hover{
+  background-color: #004085 !important;
+  color: white !important;
+}
+
+.bg-cos-list:hover{
+  background-color: #003269 !important;
+}
+
+/* .list-group-item {
+  border: 1px solid #004085;
+} */
+
+.btn-black{
+  background-color: rgb(37, 36, 36);
+  color: white !important;
+}
+
+
